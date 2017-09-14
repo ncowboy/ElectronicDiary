@@ -75,6 +75,9 @@ a.desc:after {
 .grid-view th {
     white-space: nowrap;
 }
+.grid-view table th:nth-child(7) {
+    width: 10%;
+}
 
 .hint-block {
     display: block;

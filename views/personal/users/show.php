@@ -51,8 +51,21 @@ $this->title = 'Пользователи';
             'created_at:datetime',
             'updated_at:datetime',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+             'template' => '{view} {update} {delete} {changepass}',
+             'buttons' => [
+                'changepass' => function ($url,$model) {
+                    return Html::a(
+                    '<span class="glyphicon glyphicon-user"></span>', 
+                    $url);
+                },
+                 
+               
+                
+            ],   
+          ],
         ],
+        
     ]);
     
     

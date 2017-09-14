@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
@@ -8,14 +10,31 @@ use yii\helpers\Html;
 $this->title = 'Редактирование пользователя: ' . $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
 $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Редактирование';
+?>
+
+<?php 
+$roles= \app\models\personal\UserRoles::find()->all();
+$items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
+
 ?>
 <div class="users-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'user_role')->dropDownList($items, [
+        'prompt' => 'Выберите роль пользователя',
+    ])?>
+    
+    <div class="form-group">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+    </div>
+    <?php ActiveForm::end(); ?>
 
 </div>
