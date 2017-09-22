@@ -8,6 +8,9 @@ use app\models\personal\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use app\models\personal\ExcelForm;
+use PHPExcel_Shared_Date;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -116,13 +119,52 @@ class UsersController extends Controller
         return $this->redirect(['show']);
     }
 
-    /**
-     * Finds the Users model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Users the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionUpload(){
+        $model = new ExcelForm;
+    
+    if($model->load(Yii::$app->request->post())){
+        $file = UploadedFile::getInstance($model,'file');
+        $filename = 'Data.'.$file->extension;
+        $upload = $file->saveAs('uploads/'.$filename);
+        if($upload){
+            define('FILE_PATH','uploads/');
+            $xls_file = FILE_PATH . $filename;
+            $objPHPExcel = \PHPExcel_IOFactory::load($xls_file);
+            $objPHPExcel->setActiveSheetIndex(0);
+            $aSheet = $objPHPExcel->getActiveSheet();
+            $users = [];
+            foreach($aSheet->getRowIterator() as $row){
+              $cellIterator = $row->getCellIterator();
+              $user = [];
+              foreach($cellIterator as $cell){
+                  $val = $cell->getCalculatedValue();
+              if(PHPExcel_Shared_Date::isDateTime($cell)) {    
+                array_push($user, date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($val)));
+              }
+              else {
+              array_push($user, $val);
+              }
+            }
+            array_push($users, $user);
+            }
+            foreach($users as $user){
+               $modelnew = new Students();
+               $modelnew->name = $user[0];
+               $modelnew->email = $user[1];
+               $modelnew->phone_number = $user[2];
+               $modelnew->parents_number = $user[3];
+               $modelnew->birth = $user[4];
+               $modelnew->save(); 
+            }
+            unlink('uploads/'.$filename);
+            return $this->redirect(['index']);
+        }
+    }else{
+        return $this->render('upload',['model'=>$model]);
+    }
+}
+
+    
     protected function findModel($id)
     {
         if (($model = Users::findOne($id)) !== null) {
