@@ -24,7 +24,11 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password')->passwordInput([
+        'maxlength' => true,
+        'autofocus' => true,
+        'value'=>''
+        ]) ?>
     
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
