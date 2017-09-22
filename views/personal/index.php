@@ -9,7 +9,7 @@ use yii\widgets\Breadcrumbs;
 <div class="row">
   <div class="sidebar col-md-2" > 
    <?=Nav::widget([
-            'options' => ['class' => 'nav-stacked nav-fixed-left'],
+            'options' => ['class' => 'nav nav-pills nav-stacked'],
             'items' => [
                 ['label' => 'Пользователи', 'url' => ['personal/users/show']],
                 ['label' => 'Учебные группы', 'url' => ['/personal']],
