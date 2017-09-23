@@ -15,19 +15,4 @@ class m170829_183700_add_foreign_keys extends Migration
         $this->dropForeignKey(groups, teacher_id);
         $this->dropForeignKey(students, group_id);
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m170829_183700_add_foreign_keys cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

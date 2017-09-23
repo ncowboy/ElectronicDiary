@@ -75,7 +75,7 @@ a.desc:after {
 .grid-view th {
     white-space: nowrap;
 }
-.grid-view table th:nth-child(7) {
+.grid-view table th:nth-child(10) {
     width: 10%;
 }
 

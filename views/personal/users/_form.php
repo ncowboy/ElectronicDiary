@@ -22,6 +22,12 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'user_role')->dropDownList($items, [
         'prompt' => 'Выберите роль пользователя',

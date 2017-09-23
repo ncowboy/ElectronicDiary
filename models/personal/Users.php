@@ -40,7 +40,7 @@ class Users extends \yii\db\ActiveRecord
         return [
             [['username', 'password', 'email'], 'required', 'message' => 'Поле не может быть пустым'],
             [['user_role'], 'integer'],
-            [['username'], 'string', 'max' => 20],
+            [['username', 'name', 'surname', 'patronymic'], 'string', 'max' => 20],
             [['username'], 'match', 'pattern' => '/^[a-zA-Z]\w{2,20}$/i', 'message' => 'Имя пользователя должно быть не короче 3 латинских символов или цифр и начинаться с буквы'],
             [['password'], 'match', 'pattern' => '/[0-9a-zA-Z!@#$%^&*]{6,}/i', 'message' => 'Пароль должен состоять не менее, чем из 6 латинских символов или цифр'],
             [['email'], 'email', 'message' => 'Некорректный формат email'],
@@ -58,6 +58,9 @@ class Users extends \yii\db\ActiveRecord
             'username' => 'Логин',
             'password' => 'Пароль',
             'email' => 'Email',
+            'surname' => 'Фамилия',
+            'name' => 'Имя',
+            'patronymic' => 'Отчество',
             'user_role' => 'Роль',
             'created_at' => 'Добавлено',
             'updated_at' => 'Обновлено',
