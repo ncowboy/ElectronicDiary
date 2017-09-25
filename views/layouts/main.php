@@ -38,7 +38,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [ 
             ['label' => 'Пользователи', 'url' => ['/users/show']],
-            ['label' => 'Учебные группы', 'url' => ['/']],
+            ['label' => 'Учебные группы', 'url' => ['/groups']],
             ['label' => 'Преподаватели', 'url' => ['/']],
             ['label' => 'Ученики', 'url' => ['/']],
             ['label' => 'Отчеты', 'url' => ['/']],
