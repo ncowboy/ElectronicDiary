@@ -1,15 +1,15 @@
 <?php
 
-namespace app\controllers\personal;
+namespace app\controllers;
 
 use Yii;
-use app\models\personal\Users;
-use app\models\personal\UsersSearch;
+use app\models\Users;
+use app\models\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use app\models\personal\ExcelForm;
+use app\models\ExcelForm;
 use PHPExcel_Shared_Date;
 
 /**

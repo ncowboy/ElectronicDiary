@@ -1,8 +1,11 @@
 <?php
 
-namespace app\models\personal;
+namespace app\models;
+use app\helpers\Hasher;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
-use Yii;
+
 
 /**
  * This is the model class for table "users".
@@ -21,7 +24,9 @@ class Users extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
-     */
+     */ 
+    public $new_password;
+    public $new_confirm;
     public static function tableName()
     {
         return 'users';
@@ -34,10 +39,10 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'password', 'email'], 'required', 'message' => 'Поле не может быть пустым'],
-            [['user_role', 'created_at', 'updated_at'], 'integer'],
-            [['username'], 'string', 'max' => 20],
+            [['user_role'], 'integer'],
+            [['username', 'name', 'surname', 'patronymic'], 'string', 'max' => 20],
             [['username'], 'match', 'pattern' => '/^[a-zA-Z]\w{2,20}$/i', 'message' => 'Имя пользователя должно быть не короче 3 латинских символов или цифр и начинаться с буквы'],
-            [['password'], 'match', 'pattern' => '/[0-9a-zA-Z!@#$%^&*]{6,}/i', 'message' => 'Пароль должен состоять не менее, чем из 6 латинских символов'],
+            [['password'], 'match', 'pattern' => '/[0-9a-zA-Z!@#$%^&*]{6,}/i', 'message' => 'Пароль должен состоять не менее, чем из 6 латинских символов или цифр'],
             [['email'], 'email', 'message' => 'Некорректный формат email'],
             [['user_role'], 'exist', 'skipOnError' => true, 'targetClass' => UserRoles::className(), 'targetAttribute' => ['user_role' => 'id_user_role']],
         ];
@@ -53,12 +58,26 @@ class Users extends \yii\db\ActiveRecord
             'username' => 'Логин',
             'password' => 'Пароль',
             'email' => 'Email',
+            'surname' => 'Фамилия',
+            'name' => 'Имя',
+            'patronymic' => 'Отчество',
             'user_role' => 'Роль',
             'created_at' => 'Добавлено',
             'updated_at' => 'Обновлено',
             'userRoleName' => 'Роль',
         ];
     }
+        public function behaviors()
+    {
+    return [
+        [
+            'class' => TimestampBehavior::className(),
+           'value' => new Expression('NOW()'),
+        ]            
+    ];
+    }
+    
+    
     
 
     /**
@@ -71,6 +90,12 @@ class Users extends \yii\db\ActiveRecord
     
     public function getUserRoleName(){
         return $this->userRoles->role_alias;
+    }
+    
+    public function beforeSave($insert) {
+        parent::beforeSave($insert);
+        $this->password = Hasher::hash($this->password);
+        return true;
     }
     
     

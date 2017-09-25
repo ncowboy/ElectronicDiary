@@ -1,14 +1,14 @@
 <?php
 
-namespace app\models\personal;
+namespace app\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\personal\Users;
+use app\models\Users;
 
 /**
- * UsersSearch represents the model behind the search form about `app\models\personal\Users`.
+ * UsersSearch represents the model behind the search form about `app\models\Users`.
  */
 class UsersSearch extends Users
 {
@@ -123,18 +123,15 @@ class UsersSearch extends Users
             'id' => $this->id,
             'user_role' => $this->user_role,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'surname' => $this->surname,
-            'name' => $this->name,
-            'patronymic' => $this->patronymic,
+            'updated_at' => $this->updated_at
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'surname', $this->surname])
-            ->andFilterWhere(['like', 'name', $this->surname])
-            ->andFilterWhere(['like', 'patronymic', $this->surname]);
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'patronymic', $this->patronymic]);
         
         $query->joinWith(['userRoles' => function ($q) {
         $q->where('user_roles.role_alias LIKE "%' . $this->userRoleName . '%"');

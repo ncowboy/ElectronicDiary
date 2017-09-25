@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-use app\models\personal\Users;
+use app\models\Users;
 use app\helpers\Hasher;
 
 

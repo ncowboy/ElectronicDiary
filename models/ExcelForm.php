@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace app\models\personal;
+namespace app\models;
 
 /**
  * Description of ExcelForm

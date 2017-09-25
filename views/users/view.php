@@ -3,39 +3,40 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+
 /* @var $this yii\web\View */
-/* @var $model app\models\personal\Users */
+/* @var $model app\models\Users */
 
-$this->title = $model->iduser;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Пользователь: ' . $model->username;
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+$this->params['breadcrumbs'][] = ['label' => 'Просмотр пользователя: ' . $model->username];
 ?>
-<div class="users-view">
+        <div class="users-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+            <h1 style="text-align: center;"><?= Html::encode($this->title) ?></h1>
+          <div class="col-md-6 col-md-offset-3">   
+            <p>
+                <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Вы действительно хотите удалить пользователя?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+                 <?= Html::a('К списку пользователей', ['/users/show'], ['class'=>'btn btn-warning']) ?>
+            </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->iduser], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->iduser], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'iduser',
-            'username',
-            'password',
-            'email:email',
-            'user_role',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
-
-</div>
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'username',
+                    'email:email',
+                    'userRoleName',
+                    'created_at:datetime',
+                    'updated_at:datetime',
+                ],
+            ]) ?>
+        </div>
+    </div>
+  

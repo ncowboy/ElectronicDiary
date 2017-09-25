@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
@@ -14,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 
 <?php 
-$roles= \app\models\personal\UserRoles::find()->all();
+$roles= \app\models\UserRoles::find()->all();
 $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 ?>
       <div class="users-update">
@@ -33,7 +32,7 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
     
                <div class="form-group">
                  <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-                 <?= Html::a('Отменить', ['/personal/users/show'], ['class'=>'btn btn-danger']) ?>
+                 <?= Html::a('Отменить', ['/users/show'], ['class'=>'btn btn-danger']) ?>
                </div>
                <?php ActiveForm::end(); ?>
           </div>

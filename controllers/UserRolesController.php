@@ -3,8 +3,8 @@
 namespace app\controllers\personal;
 
 use Yii;
-use app\models\personal\UserRoles;
-use app\models\personal\UserRolesSearch;
+use app\models\UserRoles;
+use app\models\UserRolesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
