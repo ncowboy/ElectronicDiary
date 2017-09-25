@@ -9,47 +9,33 @@ use yii\bootstrap\Nav;
 /* @var $model app\models\Users */
 
 $this->title = 'Сменить пароль пользователя: ' . $model->username;
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+$this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 
 <?php 
 $roles= \app\models\personal\UserRoles::find()->all();
 $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 ?>
-<div class="row">
-    <div class="sidebar col-md-2">
-        <?=Nav::widget([
-            'options' => ['class' => 'nav nav-pills nav-stacked'],
-            'items' => [
-                ['label' => 'Пользователи', 'url' => ['personal/users/show']],
-                ['label' => 'Учебные группы', 'url' => ['/personal']],
-                ['label' => 'Преподаватели', 'url' => ['/personal']],
-                ['label' => 'Ученики', 'url' => ['/personal']],
-                ['label' => 'Отчеты', 'url' => ['/personal']],
-          ],
-        ]);
-        ?>
-    </div>
-    <div class="content col-md-10">
       <div class="users-update">
+          <div class="col-md-6 col-md-offset-3">  
 
-        <h1><?= Html::encode($this->title) ?></h1>
+             <h1 style="text-align: center;"><?= Html::encode($this->title) ?></h1>
 
-        <?php $form = ActiveForm::begin(); ?>
+             <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'password')->passwordInput([
+                <?= $form->field($model, 'password')->passwordInput([
            
-        'maxlength' => true,
-        'autofocus' => true,
-        'value'=>''
-        ])->label('Введите новый пароль') ?>
+                'maxlength' => true,
+                'autofocus' => true,
+                'value'=>''
+                ])->label('Введите новый пароль') ?>
     
-    <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Отменить', ['/personal/users/show'], ['class'=>'btn btn-danger']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
-
-    </div>
-  </div>
-</div>    
+               <div class="form-group">
+                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+                 <?= Html::a('Отменить', ['/personal/users/show'], ['class'=>'btn btn-danger']) ?>
+               </div>
+               <?php ActiveForm::end(); ?>
+          </div>
+      </div> 
         

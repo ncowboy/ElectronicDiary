@@ -9,8 +9,8 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Редактирование пользователя: ' . $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
-$this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['update', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Редактирование';
+$this->params['breadcrumbs'][] = ['label' => 'Редактирование пользователя: ' . $model->username];
+
 ?>
 
 <?php 

@@ -85,11 +85,17 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('index.php?r=personal');
+            return $this->render('personal', [
+             'model' => $model  
+            ]);
         }
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model
         ]);
+    }
+    
+    public function actionPersonal() {
+        
     }
 
     /**

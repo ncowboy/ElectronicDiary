@@ -8,26 +8,13 @@ use yii\bootstrap\Nav;
 /* @var $model app\models\Users */
 
 $this->title = 'Пользователь: ' . $model->username;
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+$this->params['breadcrumbs'][] = ['label' => 'Просмотр пользователя: ' . $model->username];
 ?>
-<div class="row">
-    <div class="sidebar col-md-2">
-        <?=Nav::widget([
-            'options' => ['class' => 'nav nav-pills nav-stacked'],
-            'items' => [
-                ['label' => 'Пользователи', 'url' => ['personal/users/show']],
-                ['label' => 'Учебные группы', 'url' => ['/personal']],
-                ['label' => 'Преподаватели', 'url' => ['/personal']],
-                ['label' => 'Ученики', 'url' => ['/personal']],
-                ['label' => 'Отчеты', 'url' => ['/personal']],
-          ],
-        ]);
-        ?>
-    </div>
-    <div class="content col-md-10">
         <div class="users-view">
 
-            <h1><?= Html::encode($this->title) ?></h1>
-
+            <h1 style="text-align: center;"><?= Html::encode($this->title) ?></h1>
+          <div class="col-md-6 col-md-offset-3">   
             <p>
                 <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -50,7 +37,6 @@ $this->title = 'Пользователь: ' . $model->username;
                     'updated_at:datetime',
                 ],
             ]) ?>
-
         </div>
-    </div>  
-</div>
+    </div>
+  
