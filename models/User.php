@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-use app\models\personal\Users;
+use app\models\Users;
 use app\helpers\Hasher;
 
 
@@ -12,6 +12,9 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     public $username;
     public $password;
     public $email;
+    public $name;
+    public $surname;
+    public $patronymic;
     public $user_role;
     public $created_at;
     public $updated_at;

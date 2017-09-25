@@ -2,20 +2,27 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\personal\Users */
-
-$this->title = 'Create Users';
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Добавить пользователя';
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+$this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
-<div class="users-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+      <div class="users-create">
+
+     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-    ]) ?>
+        
+    ]) ;  
+    ?>
 
+    </div>     
+   </div>  
 </div>
+
+
+
+
+
+

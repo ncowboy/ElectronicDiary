@@ -2,35 +2,19 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\bootstrap\Nav;
+use rmrevin\yii\fontawesome\FA;
+rmrevin\yii\fontawesome\AssetBundle::register($this);
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Пользователи';
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+
 
 ?>
-
-<div class="row">
-  <div class="sidebar col-md-2"> 
-   <?=Nav::widget([
-            'options' => ['class' => 'nav nav-pills nav-stacked'],
-            'items' => [
-                ['label' => 'Пользователи', 'url' => ['personal/users/show']],
-                ['label' => 'Учебные группы', 'url' => ['/personal']],
-                ['label' => 'Преподаватели', 'url' => ['/personal']],
-                ['label' => 'Ученики', 'url' => ['/personal']],
-                ['label' => 'Отчеты', 'url' => ['/personal']],
-          ],
-        ]); 
-
-           
-?>
-      
-      
-   </div>
-   <div class="content col-md-10">
       <div class="users-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -38,6 +22,7 @@ $this->title = 'Пользователи';
 
     <p>
         <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Загрузить из файла', ['upload'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -47,6 +32,9 @@ $this->title = 'Пользователи';
             ['class' => 'yii\grid\SerialColumn'],
             'username',
             'email:email',
+            'surname',
+            'name',
+            'patronymic',
             'userRoleName',
             'created_at:datetime',
             'updated_at:datetime',
@@ -57,21 +45,21 @@ $this->title = 'Пользователи';
              'buttons' => [
                 'view' => function ($url,$model) {
                     return Html::a(
-                    '<span class="glyphicon glyphicon-eye-open"></span>',     
+                    FA::icon('eye')->size(FA::SIZE_LARGE),     
                     $url,
                     ['title' => 'Просмотр']
                             );
                 },
                 'update' => function ($url,$model) {
                     return Html::a(
-                    '<span class="glyphicon glyphicon-pencil"></span>',     
+                    FA::icon('pencil')->size(FA::SIZE_LARGE),     
                     $url,
                     ['title' => 'Редактировать']
                             );
                 },
                 'delete' => function($url, $model){
                     return Html::a(
-                   '<span class="glyphicon glyphicon-trash"></span>', 
+                   FA::icon('trash')->size(FA::SIZE_LARGE), 
                    ['delete', 'id' => $model->id],
                    [
                     'class' => '',
@@ -84,7 +72,7 @@ $this->title = 'Пользователи';
                },
                 'changepass' => function ($url,$model) {
                     return Html::a(
-                    '<span class="glyphicon glyphicon-user"></span>',     
+                    FA::icon('key')->size(FA::SIZE_LARGE),     
                     $url,
                     ['title' => 'Сменить пароль']
                             );
@@ -103,6 +91,5 @@ $this->title = 'Пользователи';
     ?>
     
 </div>   
-   </div>    
-</div>
+     
 

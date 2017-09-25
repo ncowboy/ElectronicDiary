@@ -75,8 +75,13 @@ a.desc:after {
 .grid-view th {
     white-space: nowrap;
 }
-.grid-view table th:nth-child(7) {
+.grid-view table th:nth-child(10) {
     width: 10%;
+}
+
+.grid-view table a{
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .hint-block {

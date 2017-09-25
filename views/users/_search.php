@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\personal\UsersSearch */
+/* @var $model app\models\UsersSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'iduser') ?>
+    <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'username') ?>
 
@@ -24,10 +24,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'email') ?>
 
     <?= $form->field($model, 'user_role') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
