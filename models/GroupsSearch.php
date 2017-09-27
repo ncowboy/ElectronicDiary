@@ -14,19 +14,16 @@ class GroupsSearch extends Groups
 {
     /**
      * @inheritdoc
-     * 
      */
-    
-    public $BuildingName;
-    public $groupCode;
+    public $buildingName;
     public $subjectName;
-    
+    public $groupCode;
     
     public function rules()
     {
         return [
             [['id', 'building_id', 'subject_id', 'group_type_id'], 'integer'],
-            [['BuildingName', 'subjectName'], 'safe'],
+            [['buildingName', 'subjectName'], 'safe']
         ];
     }
 
@@ -47,31 +44,31 @@ class GroupsSearch extends Groups
      * @return ActiveDataProvider
      */
     
-       protected function addCondition($query, $attribute, $partialMatch = false)
+    protected function addCondition($query, $attribute, $partialMatch = false)
 {
     if (($pos = strrpos($attribute, '.')) !== false) {
         $modelAttribute = substr($attribute, $pos + 1);
     } else {
         $modelAttribute = $attribute;
     }
-
+ 
     $value = $this->$modelAttribute;
     if (trim($value) === '') {
         return;
     }
-
-    
-    $attribute = "buildings.$attribute";
-
+ 
+    /*
+     * Для корректной работы фильтра со связью со
+     * свой же моделью делаем:
+     */
+  //  $attribute = "buildings.$attribute";
+ 
     if ($partialMatch) {
         $query->andWhere(['like', $attribute, $value]);
     } else {
         $query->andWhere([$attribute => $value]);
     }
 }
-
-
-
     public function search($params)
     {
         $query = Groups::find();
@@ -82,23 +79,20 @@ class GroupsSearch extends Groups
             'query' => $query,
         ]);
         
-         $dataProvider->setSort([
+        $dataProvider->setSort([
         'attributes' => [
-            'BuildingName' => [
+            'buildingName' => [
                 'asc' => ['buildings.alias' => SORT_ASC],
-                'desc' => ['buildings.alias' => SORT_DESC]
+                'desc' => ['buildings.alias' => SORT_DESC],
+            ],
+            'subjectName' => [
+                'asc' => ['subjects.alias' => SORT_ASC],
+                'desc' => ['subjects.alias' => SORT_DESC],
             ],
             'groupCode' => [
-                'asc' => ['building_id' => SORT_ASC, 'subject_id' => SORT_ASC, 'group_type_id' => SORT_ASC],
-                'desc' => ['building_id' => SORT_DESC, 'subject_id' => SORT_DESC, 'group_type_id' => SORT_DESC],
-                'label' => 'Full Name',
-                'default' => SORT_ASC
+                'asc' => [ 'id' => SORT_ASC],
+                'desc' => ['id' => SORT_DESC],
             ],
-             'subjectName' => [
-                'asc' => ['subjects.name' => SORT_ASC],
-                'desc' => ['subjects.name' => SORT_DESC]
-            ],
-           
             
             
         ]
@@ -107,29 +101,21 @@ class GroupsSearch extends Groups
         $this->load($params);
 
         if (!$this->validate()) {
-            $query->joinWith(['building']);
-          
+            $query->joinWith(['building'])->joinWith(['subjects']);
             return $dataProvider;
         }
-
+       $this->addCondition($query, 'building_id');
+       $this->addCondition($query, 'subject_id');
+       
         // grid filtering conditions
-        $this->addCondition($query, 'building_id');
-        $query->andFilterWhere([
-            'building_id' => $this->building_id,
-        ]);
-        
-        $this->addCondition($query, 'subject_id');
-        $query->andFilterWhere([
-            
-            'subject_id' => $this->subject_id,
-            
-        ]);
-        
+    
         $query->joinWith(['building' => function ($q) {
-        $q->where('buildings.alias LIKE "%' . $this->BuildingName . '%"');
+        $q->where('buildings.alias LIKE "%' . $this->buildingName . '%"');
+    }])->joinWith(['subject' => function ($q) {
+        $q->where('subjects.alias LIKE "%' . $this->subjectName . '%"');
     }]);
-         
-
+    $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
+    
         return $dataProvider;
     }
 }

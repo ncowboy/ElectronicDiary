@@ -51,7 +51,7 @@ class Groups extends \yii\db\ActiveRecord
             'subject_id' => 'Subject ID',
             'group_type_id' => 'Group Type ID',
             'groupCode' => 'Номер группы',
-            'BuildingName' =>'Филиал',	
+            'buildingName' =>'Филиал',	
             'subjectName' => 'Предмет'
         ];
     }
