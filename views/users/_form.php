@@ -40,5 +40,5 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
         </div>
 
         <?php ActiveForm::end(); ?>
-
+    </div>    
 </div>
