@@ -47,12 +47,12 @@ class Groups extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'building_id' => 'Building ID',
-            'subject_id' => 'Subject ID',
-            'group_type_id' => 'Group Type ID',
+            'building_id' => 'Филиал',
+            'subject_id' => 'Предмет',
+            'group_type_id' => 'Тип группы',
             'groupCode' => 'Номер группы',
             'buildingName' =>'Филиал',	
-            'subjectName' => 'Предмет'
+            'subjectName' => 'Предмет',
         ];
     }
 
