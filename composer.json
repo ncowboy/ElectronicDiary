@@ -21,7 +21,8 @@
         "schmunk42/yii2-giiant": "@stable",
         "moonlandsoft/yii2-phpexcel": "*",
         "ruskid/yii2-csv-importer": "dev-master",
-        "phpoffice/phpexcel": "dev-develop"
+        "phpoffice/phpexcel": "dev-develop",
+        "rmrevin/yii2-fontawesome": "~2.17"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

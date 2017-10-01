@@ -36,10 +36,15 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            
+        'items' => [ 
+            ['label' => 'Пользователи', 'url' => ['/users/show']],
+            ['label' => 'Учебные группы', 'url' => ['/groups']],
+            ['label' => 'Преподаватели', 'url' => ['/']],
+            ['label' => 'Ученики', 'url' => ['/']],
+            ['label' => 'Отчеты', 'url' => ['/']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
+                    
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -50,6 +55,7 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             )
+            
         ],
     ]);
     NavBar::end();

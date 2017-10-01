@@ -2,33 +2,43 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\personal\Users */
+/* @var $model app\models\Users */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<?php 
+$roles= \app\models\UserRoles::find()->all();
+$items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 
+?>
 <div class="users-form">
+    <div class="col-md-6 col-md-offset-3">
 
-    <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'user_role')->textInput() ?>
+        <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+        <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-    
+        <?= $form->field($model, 'user_role')->dropDownList($items, [
+            'prompt' => 'Выберите роль пользователя',
+        ])?>
 
-    <?php ActiveForm::end(); ?>
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::a('Отменить', ['/users/show'], ['class'=>'btn btn-danger']) ?>
+        </div>
 
+        <?php ActiveForm::end(); ?>
+    </div>    
 </div>
