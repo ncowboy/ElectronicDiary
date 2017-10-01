@@ -50,6 +50,7 @@ class Groups extends \yii\db\ActiveRecord
             'building_id' => 'Филиал',
             'subject_id' => 'Предмет',
             'group_type_id' => 'Тип группы',
+            'groupTypeName' => 'Тип группы',
             'groupCode' => 'Номер группы',
             'buildingName' =>'Филиал',	
             'subjectName' => 'Предмет',
@@ -80,6 +81,10 @@ class Groups extends \yii\db\ActiveRecord
     
     public function getGroupTypeCode(){
         return $this->groupType->type_alias;
+    }
+    
+    public function getGroupTypeName(){
+        return $this->groupType->description;
     }
     
     public function getGroupCode()

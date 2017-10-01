@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
+use rmrevin\yii\fontawesome\FA;
+rmrevin\yii\fontawesome\AssetBundle::register($this);
+
 
 
 /* @var $this yii\web\View */
@@ -43,7 +46,39 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
              ], 
           
 
-            ['class' => 'yii\grid\ActionColumn'],
+           ['class' => 'yii\grid\ActionColumn',
+             'template' => '{view} {update} {delete}',
+             'header' => 'Действия',   
+             'buttons' => [
+                'view' => function ($url,$model) {
+                    return Html::a(
+                    FA::icon('eye')->size(FA::SIZE_LARGE),     
+                    $url,
+                    ['title' => 'Просмотр']
+                            );
+                },
+                'update' => function ($url,$model) {
+                    return Html::a(
+                    FA::icon('pencil')->size(FA::SIZE_LARGE),     
+                    $url,
+                    ['title' => 'Редактировать']
+                            );
+                },
+                'delete' => function($url, $model){
+                    return Html::a(
+                   FA::icon('trash')->size(FA::SIZE_LARGE), 
+                   ['delete', 'id' => $model->id],
+                   [
+                    'class' => '',
+                    'title' => 'Удалить',   
+                    'data' => [
+                    'confirm' => 'Вы действительно хотите удалить группу?',
+                    'method' => 'post',
+                         ],
+                    ]);
+               },
+            ],   
+          ],
         ],
     ]); ?>
 </div>
