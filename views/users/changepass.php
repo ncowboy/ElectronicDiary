@@ -17,9 +17,10 @@ $roles= \app\models\UserRoles::find()->all();
 $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 ?>
       <div class="users-update">
+          <h1><?= Html::encode($this->title) ?></h1>
           <div class="col-md-6 col-md-offset-3">  
 
-             <h1 style="text-align: center;"><?= Html::encode($this->title) ?></h1>
+             
 
              <?php $form = ActiveForm::begin(); ?>
 

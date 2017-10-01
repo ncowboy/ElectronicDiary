@@ -19,7 +19,7 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 ?>
 
       <div class="users-update">
-          <h1 style="text-align: center"><?= Html::encode($this->title) ?></h1>
+          <h1><?= Html::encode($this->title) ?></h1>
             <div class="col-md-6 col-md-offset-3">
 
                 <?php $form = ActiveForm::begin(); ?>

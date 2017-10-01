@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Просмотр пользова�
 ?>
         <div class="users-view">
 
-            <h1 style="text-align: center;"><?= Html::encode($this->title) ?></h1>
+            <h1><?= Html::encode($this->title) ?></h1>
           <div class="col-md-6 col-md-offset-3">   
             <p>
                 <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
