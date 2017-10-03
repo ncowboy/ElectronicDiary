@@ -47,7 +47,7 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
           
 
            ['class' => 'yii\grid\ActionColumn',
-             'template' => '{view} {update} {delete}',
+             'template' => '{view} {update} {delete} {group-content}',
              'header' => 'Действия',   
              'buttons' => [
                 'view' => function ($url,$model) {
@@ -77,6 +77,14 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
                          ],
                     ]);
                },
+                  'group-content' => function ($url,$model) {
+                    return Html::a(
+                    FA::icon('users')->size(FA::SIZE_LARGE),     
+                    $url,
+                    ['title' => 'Состав группы']
+                            );
+                },      
+                       
             ],   
           ],
         ],
