@@ -18,21 +18,23 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <p>
-        <?= Html::a('Добавить студента', ['Добавить'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить студента', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'summary' => "Показано с {begin} по {end} из {totalCount}",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
                 'userFullName',
+                'userName',
                 'groupsAsString',
                 'phone_number',
                 'parents_name',
                 'parents_number',
-                'birth',
+                'birth:date',
 
                 ['class' => 'yii\grid\ActionColumn'],
             ],

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Students;
+use app\models\Users;
 use app\models\StudentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -63,14 +64,23 @@ class StudentsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Students();
+        $student = new Students();
+        $user = new Users();
+        $user->user_role = 5;
+      
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($student->load(Yii::$app->request->post()) && $student->save() && $user->load(Yii::$app->request->post()) && $user->save()) {
+              $student->user_id = $user->id;
+              $student->save();
+              return $this->redirect(['view', 'id' => $student->id]);
         } else {
+            
+           
             return $this->render('create', [
-                'model' => $model,
+                'student' => $student,
+                'user' => $user
             ]);
+            
         }
     }
 
