@@ -29,64 +29,67 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
     <p>
         <?= Html::a('Добавить группу', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+      <div class="table-responsive"> 
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'summary' => "Показано с {begin} по {end} из {totalCount}",
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'groupCode',
-             [
-            'attribute'=>'buildingName',
-            'filter'=> $buildItems
-             ],  
-            [
-            'attribute'=>'subjectName',
-            'filter'=> $SubjItems
-             ], 
-          
+                'groupCode',
+                 [
+                'attribute'=>'buildingName',
+                'filter'=> $buildItems
+                 ],  
+                [
+                'attribute'=>'subjectName',
+                'filter'=> $SubjItems
+                 ], 
 
-           ['class' => 'yii\grid\ActionColumn',
-             'template' => '{view} {update} {delete} {group-content}',
-             'header' => 'Действия',   
-             'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    FA::icon('eye')->size(FA::SIZE_LARGE),     
-                    $url,
-                    ['title' => 'Просмотр']
-                            );
-                },
-                'update' => function ($url,$model) {
-                    return Html::a(
-                    FA::icon('pencil')->size(FA::SIZE_LARGE),     
-                    $url,
-                    ['title' => 'Редактировать']
-                            );
-                },
-                'delete' => function($url, $model){
-                    return Html::a(
-                   FA::icon('trash')->size(FA::SIZE_LARGE), 
-                   ['delete', 'id' => $model->id],
-                   [
-                    'class' => '',
-                    'title' => 'Удалить',   
-                    'data' => [
-                    'confirm' => 'Вы действительно хотите удалить группу?',
-                    'method' => 'post',
-                         ],
-                    ]);
-               },
-                  'group-content' => function ($url,$model) {
-                    return Html::a(
-                    FA::icon('users')->size(FA::SIZE_LARGE),     
-                    $url,
-                    ['title' => 'Состав группы']
-                            );
-                },      
-                       
-            ],   
-          ],
-        ],
-    ]); ?>
+
+               ['class' => 'yii\grid\ActionColumn',
+                 'template' => '{view} {update} {delete} {group-content}',
+                 'header' => 'Действия',   
+                 'buttons' => [
+                    'view' => function ($url,$model) {
+                        return Html::a(
+                        FA::icon('eye')->size(FA::SIZE_LARGE),     
+                        $url,
+                        ['title' => 'Просмотр']
+                                );
+                    },
+                    'update' => function ($url,$model) {
+                        return Html::a(
+                        FA::icon('pencil')->size(FA::SIZE_LARGE),     
+                        $url,
+                        ['title' => 'Редактировать']
+                                );
+                    },
+                    'delete' => function($url, $model){
+                        return Html::a(
+                       FA::icon('trash')->size(FA::SIZE_LARGE), 
+                       ['delete', 'id' => $model->id],
+                       [
+                        'class' => '',
+                        'title' => 'Удалить',   
+                        'data' => [
+                        'confirm' => 'Вы действительно хотите удалить группу?',
+                        'method' => 'post',
+                             ],
+                        ]);
+                   },
+                      'group-content' => function ($url,$model) {
+                        return Html::a(
+                        FA::icon('users')->size(FA::SIZE_LARGE),     
+                        $url,
+                        ['title' => 'Состав группы']
+                                );
+                    },      
+
+                ],   
+              ],
+            ],
+        ]); ?>
+     </div>     
 </div>

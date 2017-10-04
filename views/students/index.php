@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StudentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Students';
+$this->title = 'Студенты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-index">
@@ -18,24 +18,26 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <p>
-        <?= Html::a('Create Students', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить студента', ['Добавить'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+      <div class="table-responsive">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'userFullName',
-            'groupsAsString',
-            'phone_number',
-            'parents_name',
-            'parents_number',
-            'birth',
+                'userFullName',
+                'groupsAsString',
+                'phone_number',
+                'parents_name',
+                'parents_number',
+                'birth',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]);
-   
-     ?>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]);
+
+         ?>
+     </div>     
 </div>
