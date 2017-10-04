@@ -8,6 +8,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use rmrevin\yii\fontawesome\FA;
+rmrevin\yii\fontawesome\AssetBundle::register($this);
+
 
 AppAsset::register($this);
 ?>
@@ -63,8 +66,11 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
+            'homeLink' => ['label' => '', 'url' => '/', 'class' => 'fa fa-home fa-lg',],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        ])
+        
+            ?>
         <?= $content ?>
     </div>
 </div>

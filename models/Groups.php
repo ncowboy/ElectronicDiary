@@ -63,7 +63,7 @@ class Groups extends \yii\db\ActiveRecord
     
     
     
-    
+    /* buildings getter */
     public function getBuilding()
     {
         return $this->hasOne(Buildings::className(), ['id' => 'building_id']);
@@ -73,7 +73,7 @@ class Groups extends \yii\db\ActiveRecord
         return $this->building->alias;
     }
 
- 
+    /* group type getter */
     public function getGroupType()
     {
         return $this->hasOne(GroupTypes::className(), ['id' => 'group_type_id']);
@@ -87,14 +87,20 @@ class Groups extends \yii\db\ActiveRecord
         return $this->groupType->description;
     }
     
-    public function getGroupCode()
+   /* full group code getter */
+     public function getGroupCode()
     {
         return $this->addNull($this->building_id) . "." . $this->addNull($this->subject_id) . "-" . $this->getGroupTypeCode() . "-" . $this->addNull($this->id) ;
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    
+    public function addNull($int) {
+       if ($int < 10)
+        $int = '0' . $int;
+       return $int;
+    }
+    
+    
+    /* Subject getter */
     public function getSubject()
     {
         return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
@@ -105,9 +111,13 @@ class Groups extends \yii\db\ActiveRecord
         return $this->subject->alias;
     }
     
-    public function addNull($int) {
-       if ($int < 10)
-        $int = '0' . $int;
-       return $int;
+        public function getStudents()
+    {
+        return $this->hasMany(Students::className(), ['id' => 'student_id'])
+                ->viaTable('students_in_group', ['group_id' => 'id']);
     }
+    
+  
+    
 }
+      
