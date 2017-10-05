@@ -54,7 +54,7 @@ class Students extends \yii\db\ActiveRecord
             'userName' => 'Логин',
             'group_id' => 'Group ID',
             'phone_number' => 'Телефон',
-            'parents_name' => 'ФИО Представителя',
+            'parents_name' => 'Представитель',
             'parents_number' => 'Телефон представителя',
             'birth' => 'Дата рождения',
         ];
@@ -88,11 +88,16 @@ class Students extends \yii\db\ActiveRecord
     }
     
      public function getGroupsAsString() {
+       if ($this->groups) {  
         $string = ""; 
         foreach ($this->groups as $value) {
-         $string = $string . $value->groupCode . "," . PHP_EOL;   
+         $string = $string . $value->groupCode . ", " . PHP_EOL;   
         }
         return $string;
+       } else {
+           return "Не зачислен в группу";
+       }
+       
     }
   
 }
