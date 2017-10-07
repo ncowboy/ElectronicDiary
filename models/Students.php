@@ -34,10 +34,10 @@ class Students extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'group_id'], 'integer'],
+            [['user_id'], 'integer'],
             [['phone_number', 'parents_number'], 'required'],
             [['birth'], 'safe'],
-            [['phone_number', 'parents_number'], 'string', 'max' => 12],
+            [['phone_number', 'parents_number'], 'string', 'max' => 20],
             [['parents_name'], 'string', 'max' => 50],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -52,7 +52,6 @@ class Students extends \yii\db\ActiveRecord
             'userFullName' => 'ФИО',
             'groupsAsString' => 'Группы',
             'userName' => 'Логин',
-            'group_id' => 'Group ID',
             'phone_number' => 'Телефон',
             'parents_name' => 'Представитель',
             'parents_number' => 'Телефон представителя',

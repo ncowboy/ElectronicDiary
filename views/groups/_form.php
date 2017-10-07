@@ -36,7 +36,7 @@ $itemsGroupTypes= ArrayHelper::map($groupTypes, 'id', 'description');
         ])?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
          <?= Html::a('Отменить', ['/groups'], ['class'=>'btn btn-danger']) ?>
     </div>
 
