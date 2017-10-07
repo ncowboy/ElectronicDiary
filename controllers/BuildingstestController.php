@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Groups;
-use app\models\GroupsSearch;
+use app\models\Buildingstest;
+use app\models\BuildingstestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GroupsController implements the CRUD actions for Groups model.
+ * BuildingstestController implements the CRUD actions for Buildingstest model.
  */
-class GroupsController extends Controller
+class BuildingstestController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class GroupsController extends Controller
     }
 
     /**
-     * Lists all Groups models.
+     * Lists all Buildingstest models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GroupsSearch();
+        $searchModel = new BuildingstestSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class GroupsController extends Controller
     }
 
     /**
-     * Displays a single Groups model.
+     * Displays a single Buildingstest model.
      * @param integer $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class GroupsController extends Controller
     }
 
     /**
-     * Creates a new Groups model.
+     * Creates a new Buildingstest model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Groups();
+        $model = new Buildingstest();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -75,7 +75,7 @@ class GroupsController extends Controller
     }
 
     /**
-     * Updates an existing Groups model.
+     * Updates an existing Buildingstest model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -94,7 +94,7 @@ class GroupsController extends Controller
     }
 
     /**
-     * Deletes an existing Groups model.
+     * Deletes an existing Buildingstest model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -105,24 +105,17 @@ class GroupsController extends Controller
 
         return $this->redirect(['index']);
     }
-    
-     public function actionGroupContent($id)
-    {
-        return $this->render('group-content', [
-            'model' => $this->findModel($id),
-        ]);
-    }
 
     /**
-     * Finds the Groups model based on its primary key value.
+     * Finds the Buildingstest model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Groups the loaded model
+     * @return Buildingstest the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Groups::findOne($id)) !== null) {
+        if (($model = Buildingstest::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

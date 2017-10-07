@@ -2,34 +2,28 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
 use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
-
-
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\GroupsSearch */
+/* @var $searchModel app\models\StudentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Группы';
+$this->title = 'Студенты';
 $this->params['breadcrumbs'][] = $this->title;
-
-$buildings = app\models\Buildings::find()->all();
-$subjects = app\models\Subjects::find()->all();
-
-$buildItems = ArrayHelper::map($buildings, 'alias', 'alias');
-$SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
 ?>
-<div class="groups-index">
+<div class="students-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+
+    ?>
 
     <p>
-        <?= Html::a('Добавить группу', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить студента', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-      <div class="table-responsive"> 
+      <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -37,19 +31,15 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'groupCode',
-                 [
-                'attribute'=>'buildingName',
-                'filter'=> $buildItems
-                 ],  
-                [
-                'attribute'=>'subjectName',
-                'filter'=> $SubjItems
-                 ], 
+                'userFullName',
+                'userName',
+                'phone_number',
+                'parents_name',
+                'parents_number',
+                'birth:date',
 
-
-               ['class' => 'yii\grid\ActionColumn',
-                 'template' => '{view} {update} {delete} {group-content}',
+                 ['class' => 'yii\grid\ActionColumn',
+                 'template' => '{view} {update} {delete} {show-groups}',
                  'header' => 'Действия',   
                  'buttons' => [
                     'view' => function ($url,$model) {
@@ -74,22 +64,17 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
                         'class' => '',
                         'title' => 'Удалить',   
                         'data' => [
-                        'confirm' => 'Вы действительно хотите удалить группу?',
+                        'confirm' => 'Вы действительно хотите удалить студента?',
                         'method' => 'post',
                              ],
                         ]);
                    },
-                      'group-content' => function ($url,$model) {
-                        return Html::a(
-                        FA::icon('users')->size(FA::SIZE_LARGE),     
-                        $url,
-                        ['title' => 'Состав группы']
-                                );
-                    },      
-
+                 
                 ],   
               ],
             ],
-        ]); ?>
+        ]);
+ 
+         ?>
      </div>     
 </div>
