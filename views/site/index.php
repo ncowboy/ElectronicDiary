@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Курсы по подготовке к ЕГЭ и ОГЭ в Москве - Merlin';
 ?>
 <div class="site-index">
 
