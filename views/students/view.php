@@ -6,40 +6,40 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
+$this->title = $model->userFullName;
+$this->params['breadcrumbs'][] = ['label' => 'Студенты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+        <div class="col-md-6 col-md-offset-3">   
+            <p>
+                <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Вы действительно хотите удалить студента?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+                <?= Html::a('К списку студентов', ['/students'], ['class'=>'btn btn-warning']) ?>
+            </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'attributes' => [
+                        'userName',
+                        'groupsAsString',
+                        'phone_number',
+                        'parents_name',
+                        'parents_number',
+                        'birth',
+                    ],
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'user_id',
-            'group_id',
-            'phone_number',
-            'parents_name',
-            'parents_number',
-            'birth',
-        ],
-       
 
-    ]);
-        
-        ?>
+                ]);
 
+                    ?>
+        </div>    
 </div>

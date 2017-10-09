@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use app\models\Students;
 
 /**
- * StudentsSearch represents the model behind the search form about `app\models\Students`.
+ * SearchStudents represents the model behind the search form about `app\models\Students`.
  */
-class StudentsSearch extends Students
+class SearchStudents extends Students
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class StudentsSearch extends Students
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['phone_number', 'parents_name', 'parents_number', 'birth'], 'safe'],
+            [['id', 'user_id', 'group_id'], 'integer'],
+            [['name', 'phone_number', 'parent_name', 'parents_number', 'birth'], 'safe'],
         ];
     }
 
@@ -61,11 +61,13 @@ class StudentsSearch extends Students
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'group_id' => $this->group_id,
             'birth' => $this->birth,
         ]);
 
-        $query->andFilterWhere(['like', 'phone_number', $this->phone_number])
-            ->andFilterWhere(['like', 'parents_name', $this->parents_name])
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'phone_number', $this->phone_number])
+            ->andFilterWhere(['like', 'parent_name', $this->parent_name])
             ->andFilterWhere(['like', 'parents_number', $this->parents_number]);
 
         return $dataProvider;

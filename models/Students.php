@@ -34,10 +34,10 @@ class Students extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'group_id'], 'integer'],
+            [['user_id'], 'integer'],
             [['phone_number', 'parents_number'], 'required'],
             [['birth'], 'safe'],
-            [['phone_number', 'parents_number'], 'string', 'max' => 12],
+            [['phone_number', 'parents_number'], 'string', 'max' => 20],
             [['parents_name'], 'string', 'max' => 50],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -51,9 +51,9 @@ class Students extends \yii\db\ActiveRecord
         return [
             'userFullName' => 'ФИО',
             'groupsAsString' => 'Группы',
-            'group_id' => 'Group ID',
+            'userName' => 'Логин',
             'phone_number' => 'Телефон',
-            'parents_name' => 'ФИО Представителя',
+            'parents_name' => 'Представитель',
             'parents_number' => 'Телефон представителя',
             'birth' => 'Дата рождения',
         ];
@@ -67,6 +67,10 @@ class Students extends \yii\db\ActiveRecord
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
 
+     public function getUserName() {
+       return $this->user->username;
+    }
+    
     public function getUserFullName() {
        return $this->user->surname . ' ' . $this->user->name . ' ' . $this->user->patronymic;
     }
@@ -83,11 +87,16 @@ class Students extends \yii\db\ActiveRecord
     }
     
      public function getGroupsAsString() {
+       if ($this->groups) {  
         $string = ""; 
         foreach ($this->groups as $value) {
-         $string = $string . $value->groupCode . "," . PHP_EOL;   
+         $string = $string . $value->groupCode . ", " . PHP_EOL;   
         }
         return $string;
+       } else {
+           return "Не зачислен в группу";
+       }
+       
     }
   
 }

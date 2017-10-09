@@ -78,9 +78,7 @@ a.desc:after {
 .grid-view th {
     white-space: nowrap;
 }
-.grid-view table th:nth-child(10) {
-    width: 10%;
-}
+
 
 .grid-view table a{
     margin-left: 2px;
@@ -129,4 +127,7 @@ background-image: url('img/logo.png');
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+.users-index table th:nth-child(10), .students-index table th:nth-child(8) {
+    width: 10%;
 }
