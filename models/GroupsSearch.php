@@ -18,12 +18,13 @@ class GroupsSearch extends Groups
     public $buildingName;
     public $subjectName;
     public $groupCode;
+    public $teacherName;
     
     public function rules()
     {
         return [
             [['id', 'building_id', 'subject_id', 'group_type_id'], 'integer'],
-            [['buildingName', 'subjectName'], 'safe']
+            [['buildingName', 'subjectName', 'teacherName'], 'safe']
         ];
     }
 
@@ -94,6 +95,11 @@ class GroupsSearch extends Groups
                 'desc' => ['id' => SORT_DESC],
             ],
             
+            'teacherName' => [
+                'asc' => ['teachers.name' => SORT_ASC],
+                'desc' => ['teachers.name' => SORT_DESC],
+            ],
+            
             
         ]
     ]);
@@ -101,11 +107,12 @@ class GroupsSearch extends Groups
         $this->load($params);
 
         if (!$this->validate()) {
-            $query->joinWith(['building'])->joinWith(['subjects']);
+            $query->joinWith(['building'])->joinWith(['subjects'])->joinWith(['teachers']);
             return $dataProvider;
         }
        $this->addCondition($query, 'building_id');
        $this->addCondition($query, 'subject_id');
+       $this->addCondition($query, 'teacher_id');
        
         // grid filtering conditions
     
@@ -113,6 +120,8 @@ class GroupsSearch extends Groups
         $q->where('buildings.alias LIKE "%' . $this->buildingName . '%"');
     }])->joinWith(['subject' => function ($q) {
         $q->where('subjects.alias LIKE "%' . $this->subjectName . '%"');
+    }])->joinWith(['teachers' => function ($q) {
+        $q->where('teachers.name LIKE "%' . $this->teacherName . '%"');
     }]);
     $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
     
