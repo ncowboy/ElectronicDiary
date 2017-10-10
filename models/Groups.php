@@ -34,7 +34,7 @@ class Groups extends \yii\db\ActiveRecord
         return [
             [['building_id', 'subject_id', 'group_type_id'], 'required'],
             [['building_id', 'subject_id', 'group_type_id', 'subject_id'], 'integer'],
-            [['teacher_id'], 'default', 'vakue' => 0],
+            [['teacher_id'], 'default', 'value' => 0],
             [['building_id'], 'exist', 'skipOnError' => true, 'targetClass' => Buildings::className(), 'targetAttribute' => ['building_id' => 'id']],
             [['group_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => GroupTypes::className(), 'targetAttribute' => ['group_type_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
@@ -128,7 +128,7 @@ class Groups extends \yii\db\ActiveRecord
     
     public function getTeacherName()
     {
-        return $this->teachers->name;
+        return $this->teachers->userFullName;
     }
     
     

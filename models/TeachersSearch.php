@@ -18,8 +18,8 @@ class TeachersSearch extends Teachers
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'specialization'], 'safe'],
+            [['id', 'user_id'], 'integer'],
+            [['specialization'], 'safe'],
         ];
     }
 
@@ -60,11 +60,11 @@ class TeachersSearch extends Teachers
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'specialization', $this->specialization])
-            ->andFilterWhere(['not like', 'id', 0]);
+        $query->andFilterWhere(['like', 'specialization', $this->specialization])
+               ->andFilterWhere(['not like', 'id', 0]);
 
         return $dataProvider;
     }

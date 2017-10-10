@@ -120,9 +120,10 @@ class GroupsSearch extends Groups
         $q->where('buildings.alias LIKE "%' . $this->buildingName . '%"');
     }])->joinWith(['subject' => function ($q) {
         $q->where('subjects.alias LIKE "%' . $this->subjectName . '%"');
-    }])->joinWith(['teachers' => function ($q) {
-        $q->where('teachers.name LIKE "%' . $this->teacherName . '%"');
     }]);
+            //->joinWith(['teachers' => function ($q) {
+       // $q->where('teachers.name LIKE "%' . $this->teacherName . '%"');
+   // }]);
     $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
     
         return $dataProvider;
