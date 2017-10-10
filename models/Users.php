@@ -44,6 +44,7 @@ class Users extends \yii\db\ActiveRecord
             [['username'], 'match', 'pattern' => '/^[a-zA-Z]\w{2,20}$/i', 'message' => 'Имя пользователя должно быть не короче 3 латинских символов или цифр и начинаться с буквы'],
             [['password'], 'match', 'pattern' => '/[0-9a-zA-Z!@#$%^&*]{6,}/i', 'message' => 'Пароль должен состоять не менее, чем из 6 латинских символов или цифр'],
             [['email'], 'email', 'message' => 'Некорректный формат email'],
+            [['user_role'], 'default', 'value' => 0],
             [['user_role'], 'exist', 'skipOnError' => true, 'targetClass' => UserRoles::className(), 'targetAttribute' => ['user_role' => 'id_user_role']],
         ];
     }

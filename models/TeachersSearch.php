@@ -63,7 +63,8 @@ class TeachersSearch extends Teachers
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'specialization', $this->specialization]);
+            ->andFilterWhere(['like', 'specialization', $this->specialization])
+            ->andFilterWhere(['not like', 'id', 0]);
 
         return $dataProvider;
     }

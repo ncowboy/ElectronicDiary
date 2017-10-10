@@ -134,9 +134,11 @@ class UsersSearch extends Users
             ->andFilterWhere(['like', 'patronymic', $this->patronymic]);
         
         $query->joinWith(['userRoles' => function ($q) {
-        $q->where('user_roles.role_alias LIKE "%' . $this->userRoleName . '%" OR user_roles.role_alias = NULL ');
+        $q->where('user_roles.role_alias LIKE "%' . $this->userRoleName . '%" OR user_roles.role_alias IS NULL');
     }]);
 
         return $dataProvider;
-    }
+       
+        }
+        
 }

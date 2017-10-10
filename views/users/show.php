@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' =
 $roles = \app\models\UserRoles::find()->all();
 $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
 
+
+
 ?>
       <div class="users-index">
 
@@ -93,8 +95,6 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
             ],
 
         ]);
-
-
         ?>
      </div>     
     
