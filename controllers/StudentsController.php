@@ -111,7 +111,10 @@ class StudentsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $student = $this->findModel($id);
+        $user = Users::findOne($id = $student->user_id);
+        $user->delete();
+        $student->delete();
 
         return $this->redirect(['index']);
     }

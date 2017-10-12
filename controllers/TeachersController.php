@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Teachers;
 use app\models\TeachersSearch;
+use app\models\Users;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -63,14 +64,19 @@ class TeachersController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Teachers();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $teacher = new Teachers();
+        $user = new Users();
+        $user->user_role = 4;
+        if ($teacher->load(Yii::$app->request->post()) && $teacher->save() && $user->load(Yii::$app->request->post()) && $user->save()) {
+                     $teacher->user_id = $user->id;
+                     $teacher->save();
+                     return $this->redirect(['view', 'id' => $teacher->id]);
+               } else {
+                   return $this->render('create', [
+                       'teacher' => $teacher,
+                       'user' => $user
+                   ]);
+            
         }
     }
 
@@ -101,7 +107,10 @@ class TeachersController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $teacher = $this->findModel($id);
+        $user = Users::findOne($id = $teacher->user_id);
+        $user->delete();
+        $teacher->delete();
 
         return $this->redirect(['index']);
     }
