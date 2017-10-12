@@ -7,19 +7,17 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Teachers;
 
-/**
- * TeachersSearch represents the model behind the search form about `app\models\Teachers`.
- */
+
 class TeachersSearch extends Teachers
-{
-    /**
-     * @inheritdoc
-     */
+{ 
+    public $userFullName;
+    public $username;
+    
     public function rules()
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['specialization'], 'safe'],
+            [['specialization', 'username', 'userFullName'], 'safe'],
         ];
     }
 
@@ -39,6 +37,32 @@ class TeachersSearch extends Teachers
      *
      * @return ActiveDataProvider
      */
+          protected function addCondition($query, $attribute, $partialMatch = false)
+{
+    if (($pos = strrpos($attribute, '.')) !== false) {
+        $modelAttribute = substr($attribute, $pos + 1);
+    } else {
+        $modelAttribute = $attribute;
+    }
+ 
+    $value = $this->$modelAttribute;
+    if (trim($value) === '') {
+        return;
+    }
+ 
+    /*
+     * Для корректной работы фильтра со связью со
+     * свой же моделью делаем:
+     */
+  //  $attribute = "buildings.$attribute";
+ 
+    if ($partialMatch) {
+        $query->andWhere(['like', $attribute, $value]);
+    } else {
+        $query->andWhere([$attribute => $value]);
+    }
+}
+
     public function search($params)
     {
         $query = Teachers::find();
@@ -48,14 +72,31 @@ class TeachersSearch extends Teachers
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        
+    $dataProvider->setSort([
+        'attributes' => [
+            'specialization' => [
+                'asc' => ['specialization' => SORT_ASC],
+                'desc' => ['specialization' => SORT_DESC],
+            ],
+            'userFullName' => [
+                'asc' => [ 'users.surname' => SORT_ASC, 'users.name' => SORT_ASC, 'users.patronymic' => SORT_ASC],
+                'desc' => ['users.surname' => SORT_DESC, 'users.name' => SORT_DESC, 'users.patronymic' => SORT_DESC],
+            ],
+            'username' => [
+                'asc' => [ 'users.username' => SORT_ASC],
+                'desc' => ['users.username' => SORT_DESC],
+            ],
+            
+        ]
+    ]);
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->joinWith(['users']);
             return $dataProvider;
         }
+          $this->addCondition($query, 'user_id');
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -63,8 +104,15 @@ class TeachersSearch extends Teachers
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'specialization', $this->specialization])
-               ->andFilterWhere(['not like', 'id', 0]);
+        $query->andFilterWhere(['like', 'specialization', $this->specialization]);
+       
+        
+        $query->joinWith(['user' => function ($q) {
+                $q->where('users.surname LIKE "%' . $this->userFullName . '%" ' .
+                'OR users.name LIKE "%' . $this->userFullName . '%"' .
+                'OR users.patronymic LIKE "%' . $this->userFullName . '%"'        
+            )->andWhere('users.username LIKE "%' . $this->username . '%" ');
+            }]);
 
         return $dataProvider;
     }

@@ -58,11 +58,6 @@ class GroupsSearch extends Groups
         return;
     }
  
-    /*
-     * Для корректной работы фильтра со связью со
-     * свой же моделью делаем:
-     */
-  //  $attribute = "buildings.$attribute";
  
     if ($partialMatch) {
         $query->andWhere(['like', $attribute, $value]);
@@ -95,12 +90,6 @@ class GroupsSearch extends Groups
                 'desc' => ['id' => SORT_DESC],
             ],
             
-            'teacherName' => [
-                'asc' => ['teachers.name' => SORT_ASC],
-                'desc' => ['teachers.name' => SORT_DESC],
-            ],
-            
-            
         ]
     ]);
 
@@ -121,9 +110,6 @@ class GroupsSearch extends Groups
     }])->joinWith(['subject' => function ($q) {
         $q->where('subjects.alias LIKE "%' . $this->subjectName . '%"');
     }]);
-            //->joinWith(['teachers' => function ($q) {
-       // $q->where('teachers.name LIKE "%' . $this->teacherName . '%"');
-   // }]);
     $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
     
         return $dataProvider;

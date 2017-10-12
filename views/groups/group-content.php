@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-md-6 col-md-offset-3 group-content"> 
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
       <div class="panel-heading">
           Преподаватель
       </div>
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
              Какой-то препод
      </div>  
     </div>
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
       <div class="panel-heading">
           Ученики <span class="badge"> <?php echo count($model->students)?> </span>
       </div>  
