@@ -138,5 +138,7 @@ class UsersSearch extends Users
     }]);
 
         return $dataProvider;
-    }
+       
+        }
+        
 }

@@ -20,13 +20,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
           <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'parents_name')->textInput(['maxlength' => true]) ?>
+          <?= $form->field($model, 'parents_name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'parents_number')->textInput(['maxlength' => true]) ?>
+          <?= $form->field($model, 'parents_number')->textInput(['maxlength' => true]) ?>
     
-        <?= '<label class="control-label">Дата рождения</label>'; ?>
+          <?= '<label class="control-label">Дата рождения</label>'; ?>
       
-        <?= DatePicker::widget([
+          <?= DatePicker::widget([
             'model' => $model,
             'attribute' => 'birth',
             'options' => [

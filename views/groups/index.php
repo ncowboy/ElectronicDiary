@@ -45,8 +45,7 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
                 [
                 'attribute'=>'subjectName',
                 'filter'=> $SubjItems
-                 ], 
-
+                 ],
 
                ['class' => 'yii\grid\ActionColumn',
                  'template' => '{view} {update} {delete} {group-content}',

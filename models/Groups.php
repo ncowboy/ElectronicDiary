@@ -33,10 +33,12 @@ class Groups extends \yii\db\ActiveRecord
     {
         return [
             [['building_id', 'subject_id', 'group_type_id'], 'required'],
-            [['building_id', 'subject_id', 'group_type_id'], 'integer'],
+            [['building_id', 'subject_id', 'group_type_id', 'subject_id'], 'integer'],
+            [['teacher_id'], 'default', 'value' => 0],
             [['building_id'], 'exist', 'skipOnError' => true, 'targetClass' => Buildings::className(), 'targetAttribute' => ['building_id' => 'id']],
             [['group_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => GroupTypes::className(), 'targetAttribute' => ['group_type_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
+            [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teachers::className(), 'targetAttribute' => ['teacher_id' => 'id']],
         ];
     }
 
@@ -54,6 +56,7 @@ class Groups extends \yii\db\ActiveRecord
             'groupCode' => 'Номер группы',
             'buildingName' =>'Филиал',	
             'subjectName' => 'Предмет',
+            'teacherName' => 'Преподаватель'
         ];
     }
 
@@ -117,7 +120,17 @@ class Groups extends \yii\db\ActiveRecord
                 ->viaTable('students_in_group', ['group_id' => 'id']);
     }
     
-  
+  /* Teacher getter */
+    public function getTeachers()
+    {
+        return $this->hasOne(Teachers::className(), ['id' => 'teacher_id']);
+    }
+    
+    public function getTeacherName()
+    {
+        return $this->teachers->userFullName;
+    }
+    
     
 }
       

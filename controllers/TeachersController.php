@@ -3,17 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Students;
+use app\models\Teachers;
+use app\models\TeachersSearch;
 use app\models\Users;
-use app\models\StudentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StudentsController implements the CRUD actions for Students model.
+ * TeachersController implements the CRUD actions for Teachers model.
  */
-class StudentsController extends Controller
+class TeachersController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +31,12 @@ class StudentsController extends Controller
     }
 
     /**
-     * Lists all Students models.
+     * Lists all Teachers models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StudentsSearch();
+        $searchModel = new TeachersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +46,7 @@ class StudentsController extends Controller
     }
 
     /**
-     * Displays a single Students model.
+     * Displays a single Teachers model.
      * @param integer $id
      * @return mixed
      */
@@ -58,34 +58,30 @@ class StudentsController extends Controller
     }
 
     /**
-     * Creates a new Students model.
+     * Creates a new Teachers model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $student = new Students();
+        $teacher = new Teachers();
         $user = new Users();
-        $user->user_role = 5;
-      
-
-        if ($student->load(Yii::$app->request->post()) && $student->save() && $user->load(Yii::$app->request->post()) && $user->save()) {
-              $student->user_id = $user->id;
-              $student->save();
-              return $this->redirect(['view', 'id' => $student->id]);
-        } else {
-            
-           
-            return $this->render('create', [
-                'student' => $student,
-                'user' => $user
-            ]);
+        $user->user_role = 4;
+        if ($teacher->load(Yii::$app->request->post()) && $teacher->save() && $user->load(Yii::$app->request->post()) && $user->save()) {
+                     $teacher->user_id = $user->id;
+                     $teacher->save();
+                     return $this->redirect(['view', 'id' => $teacher->id]);
+               } else {
+                   return $this->render('create', [
+                       'teacher' => $teacher,
+                       'user' => $user
+                   ]);
             
         }
     }
 
     /**
-     * Updates an existing Students model.
+     * Updates an existing Teachers model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -104,31 +100,31 @@ class StudentsController extends Controller
     }
 
     /**
-     * Deletes an existing Students model.
+     * Deletes an existing Teachers model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $student = $this->findModel($id);
-        $user = Users::findOne($id = $student->user_id);
+        $teacher = $this->findModel($id);
+        $user = Users::findOne($id = $teacher->user_id);
         $user->delete();
-        $student->delete();
+        $teacher->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Students model based on its primary key value.
+     * Finds the Teachers model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Students the loaded model
+     * @return Teachers the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Students::findOne($id)) !== null) {
+        if (($model = Teachers::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

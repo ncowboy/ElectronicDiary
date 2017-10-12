@@ -18,12 +18,13 @@ class GroupsSearch extends Groups
     public $buildingName;
     public $subjectName;
     public $groupCode;
+    public $teacherName;
     
     public function rules()
     {
         return [
             [['id', 'building_id', 'subject_id', 'group_type_id'], 'integer'],
-            [['buildingName', 'subjectName'], 'safe']
+            [['buildingName', 'subjectName', 'teacherName'], 'safe']
         ];
     }
 
@@ -57,11 +58,6 @@ class GroupsSearch extends Groups
         return;
     }
  
-    /*
-     * Для корректной работы фильтра со связью со
-     * свой же моделью делаем:
-     */
-  //  $attribute = "buildings.$attribute";
  
     if ($partialMatch) {
         $query->andWhere(['like', $attribute, $value]);
@@ -94,18 +90,18 @@ class GroupsSearch extends Groups
                 'desc' => ['id' => SORT_DESC],
             ],
             
-            
         ]
     ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            $query->joinWith(['building'])->joinWith(['subjects']);
+            $query->joinWith(['building'])->joinWith(['subjects'])->joinWith(['teachers']);
             return $dataProvider;
         }
        $this->addCondition($query, 'building_id');
        $this->addCondition($query, 'subject_id');
+       $this->addCondition($query, 'teacher_id');
        
         // grid filtering conditions
     

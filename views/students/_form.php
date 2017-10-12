@@ -2,15 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\Users;
 use kartik\date\DatePicker;
-
-
-
-
-$roles = Users::find()->where(['user_role' => 5])->all();
-$items = ArrayHelper::map($roles, 'id', 'username');
 ?>
 
 <div class="students-form">
