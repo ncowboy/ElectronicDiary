@@ -2,9 +2,8 @@ html,
 body {
     height: 100%;
 }
-
-a {
-    cursor: pointer;
+a:focus {
+    cursor: pointer!important;
 }
 .container h1 {
     text-align: center;

@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => '<h3>Выберите преподавателя</h3>',
                 'toggleButton' => [
                     'tag' => 'a',
-                    'class' => '',
+                    'class' => 'dropdown-toggle',
+                    'style' => 'cursor: pointer;',
                     'label' => $label,
                 ]
             ]);
