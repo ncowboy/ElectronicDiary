@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\data\ArrayDataProvider;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -13,12 +14,30 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-md-6 col-md-offset-3 group-content"> 
     <div class="panel panel-info">
-      <div class="panel-heading">
+      <div class="panel-heading">   
           Преподаватель
       </div>
          <div class="panel-body">  
-             Какой-то препод
-     </div>  
+            <span> <?php echo $model->teacherName; ?></span>
+                <?php $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
+             
+           Modal::begin([
+                'header' => '<h3>Выберите преподавателя</h3>',
+                'toggleButton' => [
+                    'tag' => 'a',
+                    'class' => '',
+                    'label' => $label,
+                ]
+            ]);
+ 
+echo $this->render('teachers-list', [
+    'group_id' => $model->id
+]);
+ 
+Modal::end();
+ ?>
+          
+         </div>  
     </div>
     <div class="panel panel-info">
       <div class="panel-heading">

@@ -92,6 +92,23 @@ class GroupsController extends Controller
             ]);
         }
     }
+    
+    public function actionTeachersList($id)
+    {
+        return $this->render('teacher-list', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+    
+    public function actionTeacherSet($group_id, $teacher_id)
+    {
+          $model = $this->findModel($group_id);
+          $model->teacher_id = $teacher_id;
+          $model->save();
+          return $this->render('group-content', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Deletes an existing Groups model.

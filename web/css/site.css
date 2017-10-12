@@ -3,6 +3,9 @@ body {
     height: 100%;
 }
 
+a {
+    cursor: pointer;
+}
 .container h1 {
     text-align: center;
 }
