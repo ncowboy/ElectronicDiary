@@ -32,7 +32,7 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            'summary' => "Показано с {begin} по {end} из {totalCount}",
+            'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'username',

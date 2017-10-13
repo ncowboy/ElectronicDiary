@@ -105,7 +105,7 @@ class GroupsController extends Controller
           $model = $this->findModel($group_id);
           $model->teacher_id = $teacher_id;
           $model->save();
-           return $this->redirect('/index.php?r=groups');
+          return $this->redirect('/index.php?r=groups/group-content&id=' . $group_id);
     }
 
     /**

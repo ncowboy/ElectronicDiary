@@ -24,7 +24,7 @@ class GroupsSearch extends Groups
     {
         return [
             [['id', 'building_id', 'subject_id', 'group_type_id'], 'integer'],
-            [['buildingName', 'subjectName', 'teacherName'], 'safe']
+            [['buildingName', 'subjectName', 'teacherName', 'groupCode'], 'safe']
         ];
     }
 
@@ -72,7 +72,7 @@ class GroupsSearch extends Groups
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
         
         $dataProvider->setSort([
@@ -86,8 +86,8 @@ class GroupsSearch extends Groups
                 'desc' => ['subjects.alias' => SORT_DESC],
             ],
             'groupCode' => [
-                'asc' => [ 'id' => SORT_ASC],
-                'desc' => ['id' => SORT_DESC],
+                'asc' => ['building_id' => SORT_ASC, 'subject_id' => SORT_ASC, 'id' => SORT_ASC],
+                'desc' => ['building_id' => SORT_DESC, 'subject_id' => SORT_DESC, 'id' => SORT_DESC],
             ],
             
         ]

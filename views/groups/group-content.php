@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\data\ArrayDataProvider;
 use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -12,6 +13,7 @@ $this->title = $model->groupCode;
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php Pjax::begin(); ?>
 <div class="col-md-6 col-md-offset-3 group-content"> 
     <div class="panel panel-info">
       <div class="panel-heading">   
@@ -63,3 +65,4 @@ Modal::end();
     
     
 </div>
+<?php Pjax::end();

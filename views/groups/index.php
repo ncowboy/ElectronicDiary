@@ -17,9 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $buildings = app\models\Buildings::find()->all();
 $subjects = app\models\Subjects::find()->all();
+$groups = \app\models\Groups::find()->all();
 
 $buildItems = ArrayHelper::map($buildings, 'alias', 'alias');
 $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
+$groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 ?>
 <div class="groups-index">
 
@@ -33,11 +35,14 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            'summary' => "Показано с {begin} по {end} из {totalCount}",
+            'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'groupCode',
+                 [
+                'attribute' => 'groupCode',
+                'filter'=> $groupItems
+                 ], 
                  [
                 'attribute'=>'buildingName',
                 'filter'=> $buildItems
