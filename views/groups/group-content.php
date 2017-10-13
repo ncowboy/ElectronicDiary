@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\data\ArrayDataProvider;
 use yii\bootstrap\Modal;
-use yii\widgets\Pjax;
+use rmrevin\yii\fontawesome\FA;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -12,8 +12,12 @@ use yii\widgets\Pjax;
 $this->title = $model->groupCode;
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$studentsDataProvider = new ArrayDataProvider([
+'allModels' => $model->students,
+]);
+
 ?>
-<?php Pjax::begin(); ?>
 <div class="col-md-6 col-md-offset-3 group-content"> 
     <div class="panel panel-info">
       <div class="panel-heading">   
@@ -23,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <span> <?php echo $model->teacherName; ?></span>
                 <?php $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
              
-           Modal::begin([
+            Modal::begin([
                 'header' => '<h3>Выберите преподавателя</h3>',
                 'toggleButton' => [
                     'tag' => 'a',
@@ -33,36 +37,40 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]);
  
-echo $this->render('teachers-list', [
-    'group_id' => $model->id
-]);
- 
-Modal::end();
- ?>
+            echo $this->render('teachers-list', [
+                'group_id' => $model->id
+            ]);
+
+            Modal::end();
+             ?>
           
          </div>  
     </div>
     <div class="panel panel-info">
       <div class="panel-heading">
-          Ученики <span class="badge"> <?php echo count($model->students)?> </span>
+          <p class="col-xs-8"><span>Студенты</span>
+          <span class="badge"> <?php echo count($model->students)?> </span></p>
+            <?php echo Html::a('Добавить в группу', ['groups/student-delete', 'id' => $model->id],
+               ['class' => 'btn btn-primary btn-sm class="col-xs-4"']); ?> 
       </div>  
       <div class="panel-body">  
-        <?php 
-         $studentsDataProvider = new ArrayDataProvider([
-         'allModels' => $model->students,
-         ]);
-    
-        echo ListView::widget([
-        'dataProvider' => $studentsDataProvider,
-        'itemView' => '_studentlist',
-        'summary' => '',
-        'emptyText' => 'В группе нет ни одного студента'
-        ]);
-        ?>
+
+          <table class="table table-hover"> 
+            <?php 
+              echo ListView::widget([
+                'dataProvider' => $studentsDataProvider,
+                'itemView' => '_studentlist',
+                'summary' => '',
+                'emptyText' => 'В группе нет ни одного студента'
+                ]); 
+            ?>  
+          </table>
+       
+       
      </div>     
     </div> 
     
     
     
 </div>
-<?php Pjax::end();
+
