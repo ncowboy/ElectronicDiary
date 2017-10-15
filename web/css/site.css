@@ -2,7 +2,9 @@ html,
 body {
     height: 100%;
 }
-
+a:focus {
+    cursor: pointer!important;
+}
 .container h1 {
     text-align: center;
 }

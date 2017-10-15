@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use rmrevin\yii\fontawesome\FA;
+use yii\bootstrap\Modal;
 
 
 /* @var $this yii\web\View */

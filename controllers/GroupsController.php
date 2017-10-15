@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Groups;
 use app\models\GroupsSearch;
+use app\models\StudentsInGroup;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -92,13 +93,48 @@ class GroupsController extends Controller
             ]);
         }
     }
+    
+    public function actionTeachersList()
+    {
+        return $this->render('teacher-list');
+    }
+    
+    public function actionTeacherSet($group_id, $teacher_id)
+    {
+          $model = $this->findModel($group_id);
+          $model->teacher_id = $teacher_id;
+          $model->save();
+          return $this->redirect('/index.php?r=groups/group-content&id=' . $group_id);
+    }
 
-    /**
-     * Deletes an existing Groups model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
+    public function actionStudentsList($groupId)
+    {
+        return $this->render('students-list', [
+            'groupId' => $groupId
+        ]);
+    }
+    
+     public function actionAddStudents()
+    {
+         if(isset($_REQUEST['selection']))
+    {             
+             foreach ($_REQUEST['selection'] as $value) {
+               $model = new StudentsInGroup;
+               $model->group_id = $_REQUEST[2]['groupId'];
+               $model->student_id = $value;
+               $model->save();
+             }
+     } 
+     
+                 return $this->redirect('/index.php?r=groups/group-content&id=' . $_REQUEST[2]['groupId']);
+    }
+    
+    public function actionDeleteStudent($groupId, $studentId)
+    {   
+       $this->findStudentInGroupModel($groupId, $studentId)->delete();
+       return $this->redirect('/index.php?r=groups/group-content&id=' . $groupId);
+    }
+    
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -123,6 +159,18 @@ class GroupsController extends Controller
     protected function findModel($id)
     {
         if (($model = Groups::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function findStudentInGroupModel($groupId, $studentId)
+    {
+        if (($model = StudentsInGroup::findOne([
+                 'group_id' => $groupId,
+          'student_id' => $studentId
+        ])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
