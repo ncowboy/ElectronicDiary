@@ -9,7 +9,7 @@ use rmrevin\yii\fontawesome\FA;
     </td>
     <td>
        <?php echo Html::a(FA::icon('minus')->size(FA::SIZE_LARGE), 
-               ['groups/student-delete', 'id' => $model->id],
+               ['groups/delete-student', 'studentId' => $model->id, 'groupId' => $groupId],
                ['title' => 'Удалить из группы']
                
                ); ?> 

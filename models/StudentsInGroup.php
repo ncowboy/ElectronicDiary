@@ -31,6 +31,8 @@ class StudentsInGroup extends \yii\db\ActiveRecord
         return [
             [['student_id', 'group_id'], 'required'],
             [['student_id', 'group_id'], 'integer'],
+            [['student_id'], 'unique', 'targetAttribute' => ['student_id', 'group_id']],
+            [['group_id'], 'unique', 'targetAttribute' => ['group_id', 'student_id']],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['group_id' => 'id']],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => Students::className(), 'targetAttribute' => ['student_id' => 'id']],
         ];

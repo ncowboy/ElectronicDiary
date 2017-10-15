@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $studentsDataProvider = new ArrayDataProvider([
 'allModels' => $model->students,
 ]);
-
 ?>
 <div class="col-md-6 col-md-offset-3 group-content"> 
     <div class="panel panel-info">
@@ -50,8 +49,24 @@ $studentsDataProvider = new ArrayDataProvider([
       <div class="panel-heading">
           <p class="col-xs-8"><span>Студенты</span>
           <span class="badge"> <?php echo count($model->students)?> </span></p>
-            <?php echo Html::a('Добавить в группу', ['groups/student-delete', 'id' => $model->id],
-               ['class' => 'btn btn-primary btn-sm class="col-xs-4"']); ?> 
+            <?php 
+             Modal::begin([
+                'header' => '<h3>Выберите одного или несколько студентов</h3>',
+                'toggleButton' => [
+                    'tag' => 'a',
+                    'class' => 'btn btn-primary btn-sm',
+                    'style' => 'cursor: pointer;',
+                    'label' => 'Добавить в группу',
+                ]
+            ]);
+            
+            echo $this->render('students-list', [
+                'groupId' => $model->id
+            ]);
+            
+             Modal::end();
+             ?>
+             
       </div>  
       <div class="panel-body">  
 
@@ -59,9 +74,13 @@ $studentsDataProvider = new ArrayDataProvider([
             <?php 
               echo ListView::widget([
                 'dataProvider' => $studentsDataProvider,
-                'itemView' => '_studentlist',
+                'itemView' => 'students-in-group',
+                'viewParams' => [
+                    'groupId' => $model->id
+                ],
                 'summary' => '',
                 'emptyText' => 'В группе нет ни одного студента'
+                
                 ]); 
             ?>  
           </table>
