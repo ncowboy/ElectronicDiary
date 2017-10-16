@@ -5,35 +5,36 @@ use yii\grid\GridView;
 use rmrevin\yii\fontawesome\FA;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\BuildingsSearch */
+/* @var $searchModel app\models\LessonsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Филиалы';
+$this->title = 'Lessons';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="buildings-index">
+<div class="lessons-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить филиал', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Lessons', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-      <div class="table-responsive">
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'name',
-                'alias',
-                'region',
-                'metro',
-                'adress',
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            
+             [
+                 'attribute' => 'datetime',
+                 'format' => ['dateTime', 'php:d/m/Y в H:i']
+                        ],    
+            'theme',
+            'groupCode',
+            'subjectAlias',
 
-                ['class' => 'yii\grid\ActionColumn',
-                    'template' => '{update} {delete}',
+            ['class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {delete} {results}',
                     'header' => 'Действия',  
                      'buttons' => [
                         'update' => function ($url,$model) {
@@ -56,10 +57,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                  ],
                             ]);
                        },
+                               
+                        'results' => function ($url,$model) {
+                        return Html::a(
+                        FA::icon('graduation-cap')->size(FA::SIZE_LARGE),     
+                        $url,
+                        ['title' => 'Оценки']
+                                );
+                    },      
 
-                    ]
-                ],
-            ],
-        ]); ?>
-      </div>     
+                    ]],
+        ],
+    ]); ?>
 </div>

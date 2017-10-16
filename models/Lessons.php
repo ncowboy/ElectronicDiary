@@ -49,11 +49,11 @@ class Lessons extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'datetime' => 'Datetime',
-            'theme' => 'Theme',
-            'group_id' => 'Group ID',
-            'subject_id' => 'Subject ID',
+            
+            'datetime' => 'Дата и время',
+            'theme' => 'Тема',
+            'groupCode' => 'Код группы',
+            'subjectAlias' => 'Предмет',
         ];
     }
 
@@ -64,6 +64,17 @@ class Lessons extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Groups::className(), ['id' => 'group_id']);
     }
+    
+    public function getGroupCode()
+    {
+        return $this->addNull($this->group->building_id) . "." . $this->addNull($this->group->subject_id) . "-" . $this->group->groupType->type_alias . "-" . $this->addNull($this->group->id) ;
+    }
+    
+    public function addNull($int) {
+       if ($int < 10)
+        $int = '0' . $int;
+       return $int;
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -71,6 +82,11 @@ class Lessons extends \yii\db\ActiveRecord
     public function getSubject()
     {
         return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+    }
+    
+      public function getSubjectAlias()
+    {
+        return $this->subject->alias;
     }
 
     /**
