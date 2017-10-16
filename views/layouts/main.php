@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
 
@@ -42,9 +43,15 @@ AppAsset::register($this);
         'items' => [ 
             ['label' => 'Пользователи', 'url' => ['/users/show']],
             ['label' => 'Учебные группы', 'url' => ['/groups']],
-            ['label' => 'Ученики', 'url' => ['/students']],
+            ['label' => 'Студенты', 'url' => ['/students']],
             ['label' => 'Преподаватели', 'url' => ['/teachers']],
-            ['label' => 'Отчеты', 'url' => ['/']],
+            ['label' => 'Уроки', 'url' => ['/lessons']],
+            ['label' => 'Каталог', 'items' => [
+                ['label' => 'Филиалы', 'url' => ['/buildings']],
+                ['label' => 'Предметы', 'url' => ['/subjects']],
+                ['label' => 'Типы групп', 'url' => ['/group-types']]
+            ]],
+          
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
                     

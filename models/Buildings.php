@@ -45,11 +45,11 @@ class Buildings extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'alias' => 'Alias',
-            'region' => 'Region',
-            'metro' => 'Metro',
-            'adress' => 'Adress',
+            'name' => 'Имя на сервере',
+            'alias' => 'Название',
+            'region' => 'Район',
+            'metro' => 'Метро',
+            'adress' => 'Адрес',
         ];
     }
 

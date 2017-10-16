@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="buildings-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="col-md-6 col-md-offset-3"> 
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>    
 </div>
