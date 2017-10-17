@@ -118,7 +118,8 @@ class LessonsController extends Controller
         
          
          return $this->render('results', [
-             'dataProvider' => $dataProvider
+             'dataProvider' => $dataProvider,
+             'model' => $this->findModel($id)
          ]);  
         }
 

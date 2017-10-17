@@ -25,6 +25,14 @@ $config = [
             'thousandSeparator' => ' ',
             'currencyCode' => 'RUR',
 ],
+          'i18n' => [
+        'translations' => [
+            'kvgrid' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@vendor/kartik-v/yii2-grid/messages',
+            ],
+      ],
+ ],
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
@@ -63,6 +71,9 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
+        'gridview' =>  [
+        'class' => '\kartik\grid\Module'
+    ]
     ],
 ];
 

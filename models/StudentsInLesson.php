@@ -70,4 +70,9 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Students::className(), ['id' => 'student_id']);
     }
+    
+    public function getUserFullName()
+    {
+        return $this->student->userFullName;
+    }
 }

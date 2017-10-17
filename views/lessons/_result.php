@@ -1,10 +1,24 @@
-<?php
 
-echo 'Здесь будет студент: ' . $model->student->userFullName .  ' и его оценки за урок';
+<tr>
+    <td>
+       <?= $model->student->userFullName; ?>
+    </td>
+    <td>
+       <?= $model->attendance; ?>
+    </td>
+    <td>
+       <?= $model->mark_work_at_lesson; ?>
+    </td>
+    <td>
+       <?= $model->mark_homework; ?>
+    </td>
+    <td>
+       <?= $model->mark_dictation; ?>
+    </td>
+</tr>
 
 
 
-?>
 
-<hr>
+
 

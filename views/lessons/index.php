@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'results' => function ($url,$model) {
                         return Html::a(
                         FA::icon('graduation-cap')->size(FA::SIZE_LARGE),     
-                        $url,
+                        $url,    
                         ['title' => 'Оценки']
                                 );
                     },      
