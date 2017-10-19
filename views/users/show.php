@@ -26,7 +26,6 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
 
     <p>
         <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Загрузить из файла', ['upload'], ['class' => 'btn btn-primary']) ?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([

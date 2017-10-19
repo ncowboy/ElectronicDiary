@@ -93,7 +93,24 @@ class LessonsController extends Controller
                 'model' => $model,
             ]);
         }
-    }
+    }   
+    
+    public function actionUpdateresults($lesson_id, $student_id)
+    {
+        $model = StudentsInLesson::findOne([
+            'lesson_id' => $lesson_id,
+            'student_id' => $student_id
+        ]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['lessons/results', 'id' => $lesson_id]);
+        } else {
+            return $this->render('update-results', [
+                'model' => $model,
+           ]);
+        }
+        
+      }
 
     /**
      * Deletes an existing Lessons model.

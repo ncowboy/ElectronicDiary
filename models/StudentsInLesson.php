@@ -34,7 +34,8 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     {
         return [
             [['lesson_id', 'student_id'], 'required'],
-            [['lesson_id', 'student_id', 'attendance', 'mark_work_at_lesson', 'mark_homework', 'mark_dictation'], 'integer'],
+            [['lesson_id', 'student_id', 'mark_work_at_lesson', 'mark_homework', 'mark_dictation'], 'integer'],
+            [['attendance'], 'boolean'],
             [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lessons::className(), 'targetAttribute' => ['lesson_id' => 'id']],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => Students::className(), 'targetAttribute' => ['student_id' => 'id']],
         ];
