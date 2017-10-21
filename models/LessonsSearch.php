@@ -15,11 +15,14 @@ class LessonsSearch extends Lessons
     /**
      * @inheritdoc
      */
+    
+    public $subjectAlias;
+    
     public function rules()
     {
         return [
             [['id', 'group_id', 'subject_id'], 'integer'],
-            [['datetime', 'theme'], 'safe'],
+            [['theme', 'subjectAlias'], 'safe'],
         ];
     }
 
@@ -39,6 +42,29 @@ class LessonsSearch extends Lessons
      *
      * @return ActiveDataProvider
      */
+       protected function addCondition($query, $attribute, $partialMatch = false)
+{
+    if (($pos = strrpos($attribute, '.')) !== false) {
+        $modelAttribute = substr($attribute, $pos + 1);
+    } else {
+        $modelAttribute = $attribute;
+    }
+
+    $value = $this->$modelAttribute;
+    if (trim($value) === '') {
+        return;
+    }
+
+    
+    $attribute = "user_roles.$attribute";
+
+    if ($partialMatch) {
+        $query->andWhere(['like', $attribute, $value]);
+    } else {
+        $query->andWhere([$attribute => $value]);
+    }
+}
+
     public function search($params)
     {
         $query = Lessons::find();
@@ -48,12 +74,31 @@ class LessonsSearch extends Lessons
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $dataProvider->setSort([
+        'attributes' => [
+            'subjectAlias' => [
+                'asc' => ['subjects.alias' => SORT_ASC],
+                'desc' => ['subjects.alias' => SORT_DESC]
+            ],
+            'datetime' => [
+                'asc' => ['datetime' => SORT_ASC],
+                'desc' => ['datetime' => SORT_DESC]
+            ],
+            'theme' => [
+                'asc' => ['theme' => SORT_ASC],
+                'desc' => ['theme' => SORT_DESC]
+            ],
+        ],
+            'defaultOrder' => ['datetime' => SORT_ASC]
+    ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
+            $query->joinWith(['subjects']);
             return $dataProvider;
         }
 
@@ -65,8 +110,12 @@ class LessonsSearch extends Lessons
             'subject_id' => $this->subject_id,
         ]);
 
-        $query->andFilterWhere(['like', 'theme', $this->theme]);
-
+        $query->andFilterWhere(['like', 'datetime', $this->datetime])
+            ->andFilterWhere(['like', 'theme', $this->theme]);
+        
+        $query->joinWith(['subject' => function ($q) {
+        $q->where('subjects.alias LIKE "%' . $this->subjectAlias . '%"');
+    }]);
         return $dataProvider;
     }
 }

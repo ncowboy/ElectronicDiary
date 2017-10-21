@@ -8,7 +8,7 @@ use rmrevin\yii\fontawesome\FA;
 /* @var $searchModel app\models\LessonsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lessons';
+$this->title = 'Уроки';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lessons-index">
@@ -17,20 +17,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Lessons', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
              [
                  'attribute' => 'datetime',
                  'format' => ['dateTime', 'php:d/m/Y в H:i']
-                        ],    
+             ],
+             'groupCode',
             'theme',
-            'groupCode',
             'subjectAlias',
 
             ['class' => 'yii\grid\ActionColumn',
