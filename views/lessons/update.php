@@ -5,10 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lessons */
 
-$this->title = 'Update Lessons: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактирование урока: ' . date('d/m/Y в H:i', strtotime($model->datetime));
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 <div class="lessons-update">
 

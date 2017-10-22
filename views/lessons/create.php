@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lessons */
 
-$this->title = 'Create Lessons';
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Добавить урок';
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 <div class="lessons-create">
 

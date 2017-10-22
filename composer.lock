@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f3bd195fcce33769a8855b7b4f8ae34",
+    "content-hash": "84a1cd7eeab883a8aab228f78678f77c",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -114,8 +114,7 @@
                 "mobile-first",
                 "responsive",
                 "web"
-            ],
-            "time": "2016-07-25T15:51:55+00:00"
+            ]
         },
         {
             "name": "bower-asset/bootstrap-datepicker",
@@ -230,8 +229,7 @@
                 "javascript",
                 "jquery",
                 "library"
-            ],
-            "time": "2016-05-20T17:24:43+00:00"
+            ]
         },
         {
             "name": "bower-asset/jquery.inputmask",
@@ -290,8 +288,7 @@
                 "jquery",
                 "mask",
                 "plugins"
-            ],
-            "time": "2017-08-24T08:08:54+00:00"
+            ]
         },
         {
             "name": "bower-asset/punycode",
@@ -319,8 +316,7 @@
                     "node_modules",
                     "package.json"
                 ]
-            },
-            "time": "2014-10-22T12:02:42+00:00"
+            }
         },
         {
             "name": "bower-asset/typeahead.js",
@@ -347,8 +343,7 @@
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": "dist/typeahead.bundle.js"
-            },
-            "time": "2015-04-27T04:02:14+00:00"
+            }
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -382,8 +377,7 @@
             },
             "license": [
                 "MIT"
-            ],
-            "time": "2016-03-04T13:24:47+00:00"
+            ]
         },
         {
             "name": "cebe/markdown",
@@ -1117,12 +1111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "b6e5219a392f3df28aa5d05b6c89addd81ab0823"
+                "reference": "a6ec65b8063754a0994ed21bcb737bb371474db1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/b6e5219a392f3df28aa5d05b6c89addd81ab0823",
-                "reference": "b6e5219a392f3df28aa5d05b6c89addd81ab0823",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/a6ec65b8063754a0994ed21bcb737bb371474db1",
+                "reference": "a6ec65b8063754a0994ed21bcb737bb371474db1",
                 "shasum": ""
             },
             "require": {
@@ -1162,7 +1156,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-13T15:21:52+00:00"
+            "time": "2017-10-19T17:18:36+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -1370,6 +1364,55 @@
                 "yii2"
             ],
             "time": "2017-09-06T06:18:08+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-datetimepicker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-datetimepicker.git",
+                "reference": "36f8327bbac47da7f3a38c94f0546308337aa963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/36f8327bbac47da7f3a38c94f0546308337aa963",
+                "reference": "36f8327bbac47da7f3a38c94f0546308337aa963",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\datetime\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii2 wrapper for the bootstrap datetimepicker plugin (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-datetimepicker",
+            "keywords": [
+                "datetime",
+                "extension",
+                "form",
+                "jquery",
+                "picker",
+                "plugin",
+                "select2",
+                "widget",
+                "yii2"
+            ],
+            "time": "2017-07-18T08:42:00+00:00"
         },
         {
             "name": "mikehaertl/php-shellcommand",

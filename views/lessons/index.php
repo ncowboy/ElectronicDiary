@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use rmrevin\yii\fontawesome\FA;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LessonsSearch */
@@ -10,6 +12,12 @@ use rmrevin\yii\fontawesome\FA;
 
 $this->title = 'Уроки';
 $this->params['breadcrumbs'][] = $this->title;
+
+$subjects = \app\models\Subjects::find()->all();
+$items= ArrayHelper::map($subjects, 'alias', 'alias');
+$groups = \app\models\Groups::find()->all();
+$groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
+
 ?>
 <div class="lessons-index">
 
@@ -19,55 +27,77 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            
-             [
-                 'attribute' => 'datetime',
-                 'format' => ['dateTime', 'php:d/m/Y в H:i']
-             ],
-             'groupCode',
-            'theme',
-            'subjectAlias',
+      <div class="table-responsive">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            ['class' => 'yii\grid\ActionColumn',
-                    'template' => '{update} {delete} {results}',
-                    'header' => 'Действия',  
-                     'buttons' => [
-                        'update' => function ($url,$model) {
+                 [
+                     'attribute' => 'datetime',
+                     'format' => ['dateTime', 'php:d/m/Y в H:i']
+                 ],
+                [
+                      'attribute' =>  'groupCode',
+                      'filter' => $groupItems,
+                      'value' => function ($model) {
+            return Html::a(Html::encode($model->groupCode), Url::to(['groups/view', 'id' => $model->group_id]));
+        },
+                      'format' => 'raw',
+
+                    ],
+
+                [
+                      'attribute' =>  'subjectAlias',
+                      'filter' => $items, 
+
+                    ],
+                 'theme',
+
+                ['class' => 'yii\grid\ActionColumn',
+                        'template' => ' {view} {update} {delete} {results}',
+                        'header' => 'Действия',  
+                         'buttons' => [
+                            'update' => function ($url,$model) {
+                                return Html::a(
+                                FA::icon('pencil')->size(FA::SIZE_LARGE),     
+                                $url,
+                                ['title' => 'Редактировать']
+                                        );
+                            },
+                            'view' => function ($url,$model) {
+                                return Html::a(
+                                FA::icon('eye')->size(FA::SIZE_LARGE),     
+                                $url,
+                                ['title' => 'Просмотр']
+                                        );
+                            },
+                            'delete' => function($url, $model){
+                                return Html::a(
+                               FA::icon('trash')->size(FA::SIZE_LARGE), 
+                               ['delete', 'id' => $model->id],
+                               [
+                                'class' => '',
+                                'title' => 'Удалить',   
+                                'data' => [
+                                'confirm' => 'Вы действительно хотите удалить урок?',
+                                'method' => 'post',
+                                     ],
+                                ]);
+                           },
+
+                            'results' => function ($url,$model) {
                             return Html::a(
-                            FA::icon('pencil')->size(FA::SIZE_LARGE),     
-                            $url,
-                            ['title' => 'Редактировать']
+                            FA::icon('graduation-cap')->size(FA::SIZE_LARGE),     
+                            $url,    
+                            ['title' => 'Оценки']
                                     );
-                        },
-                        'delete' => function($url, $model){
-                            return Html::a(
-                           FA::icon('trash')->size(FA::SIZE_LARGE), 
-                           ['delete', 'id' => $model->id],
-                           [
-                            'class' => '',
-                            'title' => 'Удалить',   
-                            'data' => [
-                            'confirm' => 'Вы действительно хотите удалить филиал?',
-                            'method' => 'post',
-                                 ],
-                            ]);
-                       },
-                               
-                        'results' => function ($url,$model) {
-                        return Html::a(
-                        FA::icon('graduation-cap')->size(FA::SIZE_LARGE),     
-                        $url,    
-                        ['title' => 'Оценки']
-                                );
-                    },      
+                        },      
 
-                    ]],
-        ],
-    ]); ?>
+                        ]],
+            ],
+        ]); ?>
+      </div>      
 </div>

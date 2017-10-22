@@ -49,10 +49,11 @@ class StudentsInLesson extends \yii\db\ActiveRecord
         return [
             'lesson_id' => 'Lesson ID',
             'student_id' => 'Student ID',
-            'attendance' => 'Attendance',
-            'mark_work_at_lesson' => 'Mark Work At Lesson',
-            'mark_homework' => 'Mark Homework',
-            'mark_dictation' => 'Mark Dictation',
+            'userfullName' => 'ФИО',
+            'attendance' => 'Посещаемость',
+            'mark_work_at_lesson' => 'Работа на уроке',
+            'mark_homework' => 'Домашнее задание',
+            'mark_dictation' => 'Диктант',
         ];
     }
 

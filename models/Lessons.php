@@ -53,7 +53,9 @@ class Lessons extends \yii\db\ActiveRecord
             'datetime' => 'Дата и время',
             'theme' => 'Тема',
             'groupCode' => 'Код группы',
+            'group_id' => 'Код группы',
             'subjectAlias' => 'Предмет',
+            'subject_id' => 'Предмет',
         ];
     }
 

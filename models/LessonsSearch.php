@@ -17,12 +17,13 @@ class LessonsSearch extends Lessons
      */
     
     public $subjectAlias;
+    public $groupCode;
     
     public function rules()
     {
         return [
             [['id', 'group_id', 'subject_id'], 'integer'],
-            [['theme', 'subjectAlias'], 'safe'],
+            [['theme', 'subjectAlias', 'groupCode'], 'safe'],
         ];
     }
 
@@ -89,6 +90,10 @@ class LessonsSearch extends Lessons
                 'asc' => ['theme' => SORT_ASC],
                 'desc' => ['theme' => SORT_DESC]
             ],
+            'groupCode' => [
+                'asc' => ['building_id' => SORT_ASC, 'subject_id' => SORT_ASC, 'id' => SORT_ASC],
+                'desc' => ['building_id' => SORT_DESC, 'subject_id' => SORT_DESC, 'id' => SORT_DESC],
+            ],
         ],
             'defaultOrder' => ['datetime' => SORT_ASC]
     ]);
@@ -98,7 +103,7 @@ class LessonsSearch extends Lessons
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
-            $query->joinWith(['subjects']);
+            $query->joinWith(['subjects'])->joinWith(['groups']);
             return $dataProvider;
         }
 
@@ -116,6 +121,7 @@ class LessonsSearch extends Lessons
         $query->joinWith(['subject' => function ($q) {
         $q->where('subjects.alias LIKE "%' . $this->subjectAlias . '%"');
     }]);
+    $query->andWhere('lessons.group_id LIKE "%' . $this->groupCode . '%"');
         return $dataProvider;
     }
 }

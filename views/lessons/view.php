@@ -2,24 +2,25 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Lessons */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
+$this->title = date('d/m/Y в H:i', strtotime($model->datetime));
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lessons-view">
-
+  <div class="col-md-6 col-md-offset-3">  
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить урок?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,12 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'datetime',
+            
+            [
+             'attribute' => 'datetime',
+             'format' => ['dateTime', 'php:d/m/Y в H:i']
+            ],
             'theme',
-            'group_id',
-            'subject_id',
+            [
+               'attribute' =>  'groupCode',
+               'value' => function ($model) {
+            return Html::a(Html::encode($model->groupCode), Url::to(['groups/view', 'id' => $model->group_id]));
+        },
+               'format' => 'raw',
+
+                    ],
+            'subjectAlias',
         ],
     ]) ?>
-
+  </div>
 </div>
