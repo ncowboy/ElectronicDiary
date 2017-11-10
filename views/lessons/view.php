@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     ],
             'subjectAlias',
+            'comment',
         ],
     ]) ?>
   </div>

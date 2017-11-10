@@ -47,11 +47,11 @@ $studentsDataProvider = new ArrayDataProvider([
     </div>
     <div class="panel panel-info">
       <div class="panel-heading">
-          <p class="col-xs-8"><span>Студенты</span>
+          <p class="col-xs-8"><span>Ученики</span>
           <span class="badge"> <?php echo count($model->students)?> </span></p>
             <?php 
              Modal::begin([
-                'header' => '<h3>Выберите одного или несколько студентов</h3>',
+                'header' => '<h3>Выберите одного или несколько учеников</h3>',
                 'toggleButton' => [
                     'tag' => 'a',
                     'class' => 'btn btn-primary btn-sm',
@@ -79,7 +79,7 @@ $studentsDataProvider = new ArrayDataProvider([
                     'groupId' => $model->id
                 ],
                 'summary' => '',
-                'emptyText' => 'В группе нет ни одного студента'
+                'emptyText' => 'В группе нет ни одного ученика'
                 
                 ]); 
             ?>  

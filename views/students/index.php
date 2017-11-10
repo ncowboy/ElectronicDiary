@@ -10,7 +10,7 @@ use yii\bootstrap\Modal;
 /* @var $searchModel app\models\StudentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Студенты';
+$this->title = 'Ученики';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-index">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <p>
-        <?= Html::a('Добавить студента', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить ученика', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([
@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'phone_number',
                 'parents_name',
                 'parents_number',
+                'parents_email:email',
                 'birth:date',
 
                  ['class' => 'yii\grid\ActionColumn',
@@ -64,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => '',
                         'title' => 'Удалить',   
                         'data' => [
-                        'confirm' => 'Вы действительно хотите удалить студента?',
+                        'confirm' => 'Вы действительно хотите удалить ученика?',
                         'method' => 'post',
                              ],
                         ]);

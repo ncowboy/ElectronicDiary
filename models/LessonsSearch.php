@@ -16,14 +16,13 @@ class LessonsSearch extends Lessons
      * @inheritdoc
      */
     
-    public $subjectAlias;
     public $groupCode;
     
     public function rules()
     {
         return [
-            [['id', 'group_id', 'subject_id'], 'integer'],
-            [['theme', 'subjectAlias', 'groupCode'], 'safe'],
+            [['id', 'group_id'], 'integer'],
+            [['theme', 'groupCode'], 'safe'],
         ];
     }
 
@@ -78,10 +77,7 @@ class LessonsSearch extends Lessons
         
         $dataProvider->setSort([
         'attributes' => [
-            'subjectAlias' => [
-                'asc' => ['subjects.alias' => SORT_ASC],
-                'desc' => ['subjects.alias' => SORT_DESC]
-            ],
+            
             'datetime' => [
                 'asc' => ['datetime' => SORT_ASC],
                 'desc' => ['datetime' => SORT_DESC]
@@ -91,8 +87,8 @@ class LessonsSearch extends Lessons
                 'desc' => ['theme' => SORT_DESC]
             ],
             'groupCode' => [
-                'asc' => ['building_id' => SORT_ASC, 'subject_id' => SORT_ASC, 'id' => SORT_ASC],
-                'desc' => ['building_id' => SORT_DESC, 'subject_id' => SORT_DESC, 'id' => SORT_DESC],
+                'asc' => ['id' => SORT_ASC],
+                'desc' => ['id' => SORT_DESC],
             ],
         ],
             'defaultOrder' => ['datetime' => SORT_ASC]
@@ -103,7 +99,7 @@ class LessonsSearch extends Lessons
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
-            $query->joinWith(['subjects'])->joinWith(['groups']);
+            $query->joinWith(['groups'])->joinWith(['subjects']);
             return $dataProvider;
         }
 
@@ -112,16 +108,16 @@ class LessonsSearch extends Lessons
             'id' => $this->id,
             'datetime' => $this->datetime,
             'group_id' => $this->group_id,
-            'subject_id' => $this->subject_id,
         ]);
 
         $query->andFilterWhere(['like', 'datetime', $this->datetime])
             ->andFilterWhere(['like', 'theme', $this->theme]);
         
-        $query->joinWith(['subject' => function ($q) {
-        $q->where('subjects.alias LIKE "%' . $this->subjectAlias . '%"');
-    }]);
+    
     $query->andWhere('lessons.group_id LIKE "%' . $this->groupCode . '%"');
+  // $query->joinWith(['subject' => function ($q) {
+   //     $q->where('subjects.alias LIKE "%' . $this->subjectAlias . '%"');
+  //  }]);
         return $dataProvider;
     }
 }

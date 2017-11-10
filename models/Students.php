@@ -13,6 +13,7 @@ use Yii;
  * @property string $phone_number
  * @property string $parents_name
  * @property string $parents_number
+ * @property string $parents_email
  * @property string $birth
  *
  * @property Users $user
@@ -39,6 +40,7 @@ class Students extends \yii\db\ActiveRecord
             [['birth'], 'safe'],
             [['phone_number', 'parents_number'], 'string', 'max' => 20],
             [['parents_name'], 'string', 'max' => 50],
+            [['parents_email'], 'email', 'message' => 'Некорректный формат email'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -55,6 +57,7 @@ class Students extends \yii\db\ActiveRecord
             'phone_number' => 'Телефон',
             'parents_name' => 'Представитель',
             'parents_number' => 'Телефон представителя',
+            'parents_email' => 'E-mail представителя',
             'birth' => 'Дата рождения',
         ];
     }

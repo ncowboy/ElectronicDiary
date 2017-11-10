@@ -9,9 +9,7 @@ use yii\helpers\ArrayHelper;
 /* @var $model app\models\Lessons */
 /* @var $form yii\widgets\ActiveForm */
 
-$subjects = app\models\Subjects::find()->all();
 $groups = \app\models\Groups::find()->all();
-$subjItems = ArrayHelper::map($subjects, 'id', 'alias');
 $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 ?>
 
@@ -38,10 +36,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
     <?= $form->field($model, 'group_id')->dropDownList($groupItems, [
             'prompt' => 'Выберите группу',
         ]) ?>
-
-    <?= $form->field($model, 'subject_id')->dropDownList($subjItems, [
-            'prompt' => 'Выберите предмет',
-        ])  ?>
+    <?= $form->field($model, 'comment')->textArea(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

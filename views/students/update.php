@@ -7,8 +7,8 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
 
-$this->title = 'Редактирование студента: ' . $model->getUserFullName();
-$this->params['breadcrumbs'][] = ['label' => 'Студенты', 'url' => ['index']];
+$this->title = 'Редактирование ученика: ' . $model->getUserFullName();
+$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -23,6 +23,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
           <?= $form->field($model, 'parents_name')->textInput(['maxlength' => true]) ?>
 
           <?= $form->field($model, 'parents_number')->textInput(['maxlength' => true]) ?>
+    
+          <?= $form->field($model, 'parents_email')->textInput(['maxlength' => true]) ?>
     
           <?= '<label class="control-label">Дата рождения</label>'; ?>
       

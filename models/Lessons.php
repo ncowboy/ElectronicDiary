@@ -11,10 +11,7 @@ use Yii;
  * @property string $datetime
  * @property string $theme
  * @property integer $group_id
- * @property integer $subject_id
- *
  * @property Groups $group
- * @property Subjects $subject
  * @property StudentsInLesson[] $studentsInLessons
  * @property Students[] $students
  */
@@ -35,11 +32,10 @@ class Lessons extends \yii\db\ActiveRecord
     {
         return [
             [['datetime'], 'safe'],
-            [['group_id', 'subject_id'], 'integer'],
-            [['subject_id'], 'required'],
+            [['group_id'], 'integer'],
             [['theme'], 'string', 'max' => 256],
+            [['comment'], 'string', 'max' => 1024],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['group_id' => 'id']],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
         ];
     }
 
@@ -55,7 +51,8 @@ class Lessons extends \yii\db\ActiveRecord
             'groupCode' => 'Код группы',
             'group_id' => 'Код группы',
             'subjectAlias' => 'Предмет',
-            'subject_id' => 'Предмет',
+            'comment' => 'Комментарий',
+            
         ];
     }
 
@@ -81,14 +78,11 @@ class Lessons extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubject()
-    {
-        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
-    }
+    
     
       public function getSubjectAlias()
     {
-        return $this->subject->alias;
+        return $this->group->subjectName;
     }
 
     /**
@@ -105,5 +99,17 @@ class Lessons extends \yii\db\ActiveRecord
     public function getStudents()
     {
         return $this->hasMany(Students::className(), ['id' => 'student_id'])->viaTable('students_in_lesson', ['lesson_id' => 'id']);
+    }
+    
+    public function setStudentsInLessons($lessonId)
+    {
+        $lesson = $this->findOne($lessonId);
+        $students = $lesson->group->students;
+        foreach ($students as $value) {
+            $model = new StudentsInLesson();
+            $model->student_id = $value[id];
+            $model->lesson_id = $lesson->id;
+            $model->save();
+        } 
     }
 }

@@ -8,13 +8,32 @@ use yii\widgets\ActiveForm;
 use app\models\StudentsInLesson;
 
 $this->title = 'Оценки за урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($model->datetime)), 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
+$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/lessons/view', 'id' => $lesson->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 
 ?>
   <div class="table-responsive">
+     <?php      Modal::begin([
+           'header' => '<h3>Выставить оценки</h3>',
+     ]) ;
+   //  echo $this->render('update-results', [
+     //    'lesson_id' => $lesson->id,
+     //    'student_id' => $student->id     
+     //]);
+     echo "<pre>";
+    print_r( $model->student_id );
+     echo "</pre>";
+
+
+
+
+
+     Modal::end();
+             
+             ?>
+     
     <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -47,8 +66,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'updateresults' => function ($url, $model) {
                                 return Html::a(
                                 FA::icon('pencil')->size(FA::SIZE_LARGE),     
-                                $url,   
-                                ['title' => 'Редактировать']
+                                $url,       
+                                ['title' => 'Редактировать',
+                                 'aria-label' => Yii::t('yii', 'View'),
+                                 'data-toggle' => Yii::t('yii', 'modal'),
+                                 'data-target' => Yii::t('yii', '#w0'),   
+                                    ]
 
                                         );
                             },     

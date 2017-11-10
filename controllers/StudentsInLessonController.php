@@ -8,6 +8,9 @@ use app\models\StudentsInLessonSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
+use app\models\Lessons;
+//use yii\helpers\Json;
 
 /**
  * StudentsInLessonController implements the CRUD actions for StudentsInLesson model.
@@ -33,17 +36,46 @@ class StudentsInLessonController extends Controller
      * Lists all StudentsInLesson models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
-        $searchModel = new StudentsInLessonSearch();
+        $searchModel = new StudentsInLessonSearch([
+            'lesson_id' => $id
+        ]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        if (Yii::$app->request->post('hasEditable')) {
+            $modelId = Yii::$app->request->post('editableKey');
+            $model = StudentsInLesson::findOne($modelId);
+            $out = Json::encode(['output'=>'', 'message'=>'' ]);
+            $post = [];
+            $posted = current($_POST['StudentsInLesson']);
+            if ($model->load($posted)) {
+                $model->save();
+            }
+            echo $out;
+            return;
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'lesson_id' => $id
         ]);
     }
-
+    
+    public function actionResults($id) {
+         $dataProvider = new ActiveDataProvider([
+        'query' => StudentsInLesson::find()->where([
+            'lesson_id' => $id
+        ])
+            ]);
+         $lesson = Lessons::findOne($id);
+            return $this->render('results', [
+            'dataProvider' => $dataProvider,
+            'lesson' => $lesson
+         ]);  
+         
+    }
     /**
      * Displays a single StudentsInLesson model.
      * @param integer $lesson_id

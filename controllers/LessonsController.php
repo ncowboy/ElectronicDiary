@@ -87,7 +87,8 @@ class LessonsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            $model->setStudentsInLessons($id);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -127,17 +128,7 @@ class LessonsController extends Controller
     
      public function actionResults($id)        
     {
-        $dataProvider = new ActiveDataProvider([
-        'query' => StudentsInLesson::find()->where([
-            'lesson_id' => $id
-        ])
-            ]);
-        
-         
-         return $this->render('results', [
-             'dataProvider' => $dataProvider,
-             'model' => $this->findModel($id)
-         ]);  
+         return $this->redirect(['/students-in-lesson', 'id' => $id] );    
         }
 
     /**
@@ -155,6 +146,6 @@ class LessonsController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+       
   
 }

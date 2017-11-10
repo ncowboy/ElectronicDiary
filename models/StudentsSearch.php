@@ -22,7 +22,7 @@ class StudentsSearch extends Students
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['phone_number', 'parents_name', 'parents_number', 'birth', 'userName', 'userFullName'], 'safe'],
+            [['phone_number', 'parents_name', 'parents_number', 'parents_email', 'birth', 'userName', 'userFullName'], 'safe'],
         ];
     }
 
@@ -91,6 +91,10 @@ class StudentsSearch extends Students
                 'asc' => [ 'parents_number' => SORT_ASC],
                 'desc' => ['parents_number' => SORT_DESC],
             ],
+            'parents_email' => [
+                'asc' => [ 'parents_email' => SORT_ASC],
+                'desc' => ['parents_email' => SORT_DESC],
+            ],
             
              'birth' => [
                 'asc' => [ 'birth' => SORT_ASC],
@@ -126,7 +130,8 @@ class StudentsSearch extends Students
 
         $query->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'parents_name', $this->parents_name])
-            ->andFilterWhere(['like', 'parents_number', $this->parents_number]);
+            ->andFilterWhere(['like', 'parents_number', $this->parents_number])
+            ->andFilterWhere(['like', 'parents_email', $this->parents_email]);
         
         $query->joinWith(['user' => function ($q) {
         $q->where('users.surname LIKE "%' . $this->userFullName . '%" ' .

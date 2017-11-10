@@ -13,8 +13,6 @@ use yii\helpers\Url;
 $this->title = 'Уроки';
 $this->params['breadcrumbs'][] = $this->title;
 
-$subjects = \app\models\Subjects::find()->all();
-$items= ArrayHelper::map($subjects, 'alias', 'alias');
 $groups = \app\models\Groups::find()->all();
 $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 
@@ -49,12 +47,9 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 
                     ],
 
-                [
-                      'attribute' =>  'subjectAlias',
-                      'filter' => $items, 
-
-                    ],
+                 'subjectAlias', 
                  'theme',
+                 'comment',
 
                 ['class' => 'yii\grid\ActionColumn',
                         'template' => ' {view} {update} {delete} {results}',

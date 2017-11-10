@@ -27,6 +27,8 @@ use kartik\date\DatePicker;
 
         <?= $form->field($student, 'parents_number')->textInput(['maxlength' => true]) ?>
       
+        <?= $form->field($student, 'parents_email')->textInput(['maxlength' => true]) ?>
+      
         <?= '<label class="control-label">Дата рождения</label>'; ?>
       
         <?= DatePicker::widget([
