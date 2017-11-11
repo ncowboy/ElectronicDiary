@@ -1,146 +1,104 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
-
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\StudentsInLessonSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use kartik\grid\GridView;
 
 $lesson = \app\models\Lessons::findOne(['id' => $lesson_id]);
 $this->title = 'Оценки за урок';
 $this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
 $this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/lessons/view', 'id' => $lesson->id]];
 $this->params['breadcrumbs'][] = $this->title;
-
-
 ?>
 <div class="students-in-lesson-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-   <?php     
-    
-   echo "<pre>";
-     //
-       echo "</pre>";
-             ?>
-    <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => ''],
-            'emptyText' => 'В группе нет учеников',
-            'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'], 
-                'userfullName',
-                [
-                  'attribute' => 'attendance',
-                  //'format' => 'boolean',
-                  'value' => function ($model){
-                  $res = null;
-                  if ($model->attendance == 0)
-                  { $res = "Отсутств.";}
-                    else if ($model->attendance == 1) {$res= "Присутств.";}
-                    return $res;
-                  }
-                ],
-                'mark_work_at_lesson',
-                'mark_homework',
-                'mark_dictation',
-                'comment',
-
-               ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{update} ',
-                        'header' => 'Действия',  
-                         'buttons' => [
-                            'update' => function ($url, $model) {
-                                
-                                return Html::a(
-                                'редактировать',        
-                                $url,       
-                                ['title' => 'Редактировать',
-                                 'class' => 'pencil',
-                                 'target' => '_blank'   
-                                 
-                                    ]
-
-                                        );
-                            },     
-                            
-                        ]],
-            ],
-        ]);  ?>*/
     <?php
     
-echo \kartik\grid\GridView::widget([
-    //'moduleId' => 'gridviewKrajee', // change the module identifier to use the respective module's settings
+   echo GridView::widget([
+    'id' => 'kv-grid-demo',
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
-    'pjax'=>true,
- //   'pjaxSettings'=>[
-   //     'neverTimeout'=>true,
-  //  ],
+    'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
+    'containerOptions' => ['style' => 'overflow: auto'], 
+    'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+    'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+    'pjax' => true, // pjax is set to always true for this demo
+    'resizableColumns'=>false,
+    // set your toolbar
+    'toolbar' =>  [
+        '{export}',
+    ],
+    // set export properties
+    'export' => [
+        'fontAwesome' => true,
+        'label' => 'Экспорт',
+        'header' => '',
+        'showConfirmAlert' => false,
+    ],
+    // parameters from the demo form
+    
+    'responsive' => false,
+    'responsiveWrap' => false,
+    'hover' => $hover,
+    'showPageSummary' => $pageSummary,
+    'panel' => [
+        'type' => GridView::TYPE_INFO,
+        'heading' => date('d/m/Y в H:i', strtotime($lesson->datetime)) . '. Группа: ' . $lesson->getGroupCode() . '. Предмет: ' . $lesson->getSubjectAlias() . '. Тема: ' . $lesson->theme,
+        'footer' => FALSE,
+    ],
+    'persistResize' => false,
+    'toggleDataOptions' => ['minCount' => 30],
+    'exportConfig' => [
+            'html' => GridView::HTML,
+            'xls' =>  GridView::EXCEL,
+            'txt' =>  GridView::TEXT,
+            
+            ],
+    'itemLabelSingle' => 'Ученик',
+    'itemLabelPlural' => 'Учеников',
+
       'columns' => [
                 ['class' => 'yii\grid\SerialColumn'], 
-                'userfullName',
                 [
-                  'attribute' => 'attendance',
-                  //'format' => 'boolean',
-                  'value' => function ($model){
-                  $res = null;
-                  if ($model->attendance == 0)
-                  { $res = "Отсутств.";}
-                    else if ($model->attendance == 1) {$res= "Присутств.";}
-                    return $res;
-                  }
-                ],
-                [
-    'class'=>'kartik\grid\EditableColumn',
-    'attribute'=>'mark_work_at_lesson', 
-   // 'readonly'=>function($model, $key, $index, $widget) {
-   //     return (!$model->status); // do not allow editing of inactive records
-   // },
-    'editableOptions'=>[
-        'header'=>'Buy Amount', 
-        'inputType'=>\kartik\editable\Editable::INPUT_TEXT,
-        'options'=>[
-            'pluginOptions'=>['min'=>0, 'max'=>5000]
-        ]
-    ],
-    'hAlign'=>'right', 
+    'attribute'=>'userfullName', 
     'vAlign'=>'middle',
-    'width'=>'7%',
-    'format'=>['decimal', 2],
+    'hAlign'=>'left', 
+    'width'=>'20%',
+   
+],
+     
+        [
+    'class'=>'kartik\grid\BooleanColumn',
+    'attribute'=>'attendance',
+    'trueLabel' => 'Присутств.',
+    'falseLabel' => 'Отсутств.',
+        ],
+         [
+    'class'=>'kartik\grid\EditableColumn',
+    'attribute'=>'mark_work_at_lesson',
+    'editableOptions'=>[
+        'valueIfNull' => 'нет оценки',
+        'showAjaxErrors' => false, 
+        'header'=>'Оценка', 
+        'asPopover' => true,
+        'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
+        'data' => [
+            '1'=> 1, 
+            '2'=> 2,
+            '3'=> 3,
+            '4'=> 4,
+            '5'=> 5
+            ],
+    ],
+   
     'pageSummary'=>true
 ],
                 'mark_homework',
                 'mark_dictation',
                 'comment',
-
-               ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{update} ',
-                        'header' => 'Действия',  
-                         'buttons' => [
-                            'update' => function ($url, $model) {
-                                
-                                return Html::a(
-                                'редактировать',        
-                                $url,       
-                                ['title' => 'Редактировать',
-                                 'class' => 'pencil',
-                                 'target' => '_blank'   
-                                 
-                                    ]
-
-                                        );
-                            },     
-                            
-                        ]],
             ],
-    // other widget settings
+    
 ]);
     ?>
 </div>

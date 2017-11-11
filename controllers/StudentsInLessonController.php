@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use app\models\Lessons;
-//use yii\helpers\Json;
+use yii\helpers\Json;
 
 /**
  * StudentsInLessonController implements the CRUD actions for StudentsInLesson model.
@@ -43,24 +43,35 @@ class StudentsInLessonController extends Controller
         ]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        if (Yii::$app->request->post('hasEditable')) {
-            $modelId = Yii::$app->request->post('editableKey');
-            $model = StudentsInLesson::findOne($modelId);
-            $out = Json::encode(['output'=>'', 'message'=>'' ]);
-            $post = [];
-            $posted = current($_POST['StudentsInLesson']);
-            if ($model->load($posted)) {
-                $model->save();
-            }
-            echo $out;
-            return;
-        }
-
+         if (Yii::$app->request->post('hasEditable')) {
+       
+         $ids = Yii::$app->request->post('editableKey');
+         $ids_parse = Json::decode($ids);
+         $lessonId = $ids_parse['lesson_id'];
+         $studentId = $ids_parse['student_id'];
+         $model = $this->findModel($lessonId, $studentId);
+         $post = [];
+         $out = Json::encode(['output'=>'', 'message'=>'']);
+         $posted = current($_POST['StudentsInLesson']);
+         $post['StudentsInLesson'] = $posted;
+         if($model->load($post)) {
+         $model->attendance = 1;    
+         $model->save();
+        return $this->refresh();
+ 
+         };
+                  echo $out;
+        
+      
+    }
+         
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'lesson_id' => $id
         ]);
+        
     }
     
     public function actionResults($id) {

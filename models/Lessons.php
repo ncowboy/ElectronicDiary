@@ -15,21 +15,19 @@ use Yii;
  * @property StudentsInLesson[] $studentsInLessons
  * @property Students[] $students
  */
-class Lessons extends \yii\db\ActiveRecord
-{
+class Lessons extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'lessons';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['datetime'], 'safe'],
             [['group_id'], 'integer'],
@@ -42,67 +40,56 @@ class Lessons extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            
             'datetime' => 'Дата и время',
             'theme' => 'Тема',
             'groupCode' => 'Код группы',
             'group_id' => 'Код группы',
             'subjectAlias' => 'Предмет',
             'comment' => 'Комментарий',
-            
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroup()
-    {
+    public function getGroup() {
         return $this->hasOne(Groups::className(), ['id' => 'group_id']);
     }
-    
-    public function getGroupCode()
-    {
-        return $this->addNull($this->group->building_id) . "." . $this->addNull($this->group->subject_id) . "-" . $this->group->groupType->type_alias . "-" . $this->addNull($this->group->id) ;
+
+    public function getGroupCode() {
+        return $this->addNull($this->group->building_id) . "." . $this->addNull($this->group->subject_id) . "-" . $this->group->groupType->type_alias . "-" . $this->addNull($this->group->id);
     }
-    
+
     public function addNull($int) {
-       if ($int < 10)
-        $int = '0' . $int;
-       return $int;
+        if ($int < 10)
+            $int = '0' . $int;
+        return $int;
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    
-    
-      public function getSubjectAlias()
-    {
+    public function getSubjectAlias() {
         return $this->group->subjectName;
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudentsInLessons()
-    {
+    public function getStudentsInLessons() {
         return $this->hasMany(StudentsInLesson::className(), ['lesson_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudents()
-    {
+    public function getStudents() {
         return $this->hasMany(Students::className(), ['id' => 'student_id'])->viaTable('students_in_lesson', ['lesson_id' => 'id']);
     }
-    
-    public function setStudentsInLessons($lessonId)
-    {
+
+    public function setStudentsInLessons($lessonId) {
         $lesson = $this->findOne($lessonId);
         $students = $lesson->group->students;
         foreach ($students as $value) {
@@ -110,6 +97,7 @@ class Lessons extends \yii\db\ActiveRecord
             $model->student_id = $value[id];
             $model->lesson_id = $lesson->id;
             $model->save();
-        } 
+        }
     }
+
 }
