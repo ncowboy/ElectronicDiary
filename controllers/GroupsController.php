@@ -73,6 +73,7 @@ class GroupsController extends Controller
                 'model' => $model,
             ]);
         }
+        
     }
 
     /**

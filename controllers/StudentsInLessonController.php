@@ -42,10 +42,9 @@ class StudentsInLessonController extends Controller
             'lesson_id' => $id
         ]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
          if (Yii::$app->request->post('hasEditable')) {
-       
          $ids = Yii::$app->request->post('editableKey');
+         $editableParam = Yii::$app->request->post('editableAttribute');
          $ids_parse = Json::decode($ids);
          $lessonId = $ids_parse['lesson_id'];
          $studentId = $ids_parse['student_id'];
@@ -55,14 +54,22 @@ class StudentsInLessonController extends Controller
          $posted = current($_POST['StudentsInLesson']);
          $post['StudentsInLesson'] = $posted;
          if($model->load($post)) {
-         $model->attendance = 1;    
-         $model->save();
-        return $this->refresh();
- 
+           if ($editableParam === "mark_homework") {
+               $model->save();
+               echo $out;
+               return;
+           }
+            else {
+               $model->attendance = 1;
+               $model->save();
+               return $this->refresh();
+            }
          };
-                  echo $out;
+           echo $editableParam;
+           var_dump ($editableParam !== "mark_homework");         
+           echo $out;
+                
         
-      
     }
          
         

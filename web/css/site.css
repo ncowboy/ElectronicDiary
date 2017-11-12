@@ -77,10 +77,6 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view {
-    white-space: nowrap;
-}
-
 
 .grid-view table a{
     margin-left: 2px;
@@ -132,4 +128,12 @@ background-image: url('img/logo.png');
 }
 .users-index table th:nth-child(10), .students-index table th:nth-child(8) {
     width: 10%;
+}
+
+#kv-grid-marks {
+    margin-top: 20px;
+}
+
+.mark-cell-style {
+   font-size: x-large; 
 }
