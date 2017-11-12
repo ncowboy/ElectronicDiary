@@ -20,7 +20,6 @@ $config = [
             'dateFormat' => 'php:d.m.Y',
             'datetimeFormat' => 'php:d.m.Y H:i:s',
             'defaultTimeZone' => 'Europe/Moscow',
-            'timeZone' => 'GMT+3',
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
             'currencyCode' => 'RUR',
@@ -57,14 +56,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'login' => 'site/login',
+                'users' => 'users/show',
+                //'<controller:\w+>/<id>' => '<controller>/view',
+              
+               
             ],
         ],
-        */
+        
     ],
     'params' => $params,
     'modules' => [

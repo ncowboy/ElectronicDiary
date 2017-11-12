@@ -21,11 +21,7 @@ $itemsGroupTypes= ArrayHelper::map($groupTypes, 'id', 'description');
 <div class="groups-form">
   <div class="col-md-6 col-md-offset-3">  
       
-    <?php 
-    echo "<pre>";
-    echo print_r($model->errors);
-    echo "</pre>";
-    
+    <?php    
     $form = ActiveForm::begin(); ?>
 
      <?= $form->field($model, 'building_id')->dropDownList($itemsBuild, [

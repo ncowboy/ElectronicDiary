@@ -11,7 +11,7 @@ $this->title = 'Курсы по подготовке к ЕГЭ и ОГЭ в Мо
 
         <p class="lead">На сайт учебного центра</p>
 
-        <p><a class="btn btn-lg btn-success" href="index.php?r=site/login">Войти на сайт</a></p>
+        <p><a class="btn btn-lg btn-success" href="login">Войти на сайт</a></p>
     </div>
 
     <div class="body-content">
