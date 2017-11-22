@@ -127,13 +127,13 @@ class GroupsController extends Controller
              }
      } 
      
-                 return $this->redirect('/index.php?r=groups/group-content&id=' . $_REQUEST[2]['groupId']);
+                 return $this->redirect('/groups/group-content?id=' . $_REQUEST[2]['groupId']);
     }
     
     public function actionDeleteStudent($groupId, $studentId)
     {   
        $this->findStudentInGroupModel($groupId, $studentId)->delete();
-       return $this->redirect('/index.php?r=groups/group-content&id=' . $groupId);
+       return $this->redirect('/groups/group-content?id=' . $groupId);
     }
     
     public function actionDelete($id)
