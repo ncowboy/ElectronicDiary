@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\ExcelForm;
 use PHPExcel_Shared_Date;
+use yii\web\ForbiddenHttpException;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -27,6 +28,15 @@ class UsersController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['user_index']
+                    ],
                 ],
             ],
         ];
@@ -63,7 +73,11 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
+                throw new ForbiddenHttpException('Вам запрещено изменять пароль администраторов');
+            }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('changepass', [
@@ -77,10 +91,14 @@ class UsersController extends Controller
     {
         $model = new Users();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-            
-        } else {
+        if ($model->load(Yii::$app->request->post())) {
+            if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
+                throw new ForbiddenHttpException('Вам запрещено добавление администраторов');
+            }
+             $model->save();
+             return $this->redirect(['view', 'id' => $model->id]);
+        }
+        else {
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -97,9 +115,14 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+       if ($model->load(Yii::$app->request->post())) {
+            if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
+                throw new ForbiddenHttpException('Вам запрещено редактирование администраторов');
+            }
+             $model->save();
+             return $this->redirect(['view', 'id' => $model->id]);
+        }
+        else {
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -114,9 +137,14 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1){
+            throw new ForbiddenHttpException('Вам запрещено удаление администраторов');
+        }
+        else {
+        $model->delete();
         return $this->redirect(['show']);
+        }
     }
 
     public function actionUpload(){
@@ -173,4 +201,5 @@ class UsersController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
 }

@@ -15,13 +15,13 @@ class UsersSearch extends Users
     /**
      * @inheritdoc
      */
-    public $userRoleName;
+    public $userRoleAlias;
     
     public function rules()
     {
         return [
             [['id', 'user_role'], 'integer'],
-            [['username', 'password', 'email', 'surname', 'name', 'patronymic', 'userRoleName'], 'safe'],
+            [['username', 'password', 'email', 'surname', 'name', 'patronymic', 'userRoleAlias'], 'safe'],
         ];
     }
 
@@ -75,7 +75,7 @@ class UsersSearch extends Users
         
         $dataProvider->setSort([
         'attributes' => [
-            'userRoleName' => [
+            'userRoleAlias' => [
                 'asc' => ['user_roles.role_alias' => SORT_ASC],
                 'desc' => ['user_roles.role_alias' => SORT_DESC]
             ],
@@ -134,7 +134,7 @@ class UsersSearch extends Users
             ->andFilterWhere(['like', 'patronymic', $this->patronymic]);
         
         $query->joinWith(['userRoles' => function ($q) {
-        $q->where('user_roles.role_alias LIKE "%' . $this->userRoleName . '%"');
+        $q->where('user_roles.role_alias LIKE "%' . $this->userRoleAlias . '%"');
     }]);
 
         return $dataProvider;

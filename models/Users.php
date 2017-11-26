@@ -4,6 +4,7 @@ namespace app\models;
 use app\helpers\Hasher;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use Yii;
 
 
 
@@ -18,7 +19,7 @@ use yii\db\Expression;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property UserRoles $userRole
+ * @property UserRoles $userRoles
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -65,7 +66,7 @@ class Users extends \yii\db\ActiveRecord
             'user_role' => 'Роль',
             'created_at' => 'Добавлено',
             'updated_at' => 'Обновлено',
-            'userRoleName' => 'Роль',
+            'userRoleAlias' => 'Роль',
         ];
     }
         public function behaviors()
@@ -89,8 +90,12 @@ class Users extends \yii\db\ActiveRecord
         return $this->hasOne(UserRoles::className(), ['id_user_role' => 'user_role']);
     }
     
-    public function getUserRoleName(){
+    public function getUserRoleAlias(){
         return $this->userRoles->role_alias;
+    }
+    
+    public function getUserRoleName(){
+        return $this->userRoles->role_name;
     }
     
     public function beforeSave($insert) {
@@ -99,5 +104,18 @@ class Users extends \yii\db\ActiveRecord
         return true;
     }
     
+    public function afterSave($insert, $changedAttributes) {
+         $am = Yii::$app->authManager;
+         $role = $am->getRole($this->userRoles->role_name);
+        if ($insert) {
+           $am->assign($role, $this->id);
+         }
+       else if ($changedAttributes->user_role !== $this->user_role ){
+             $oldUserRole = UserRoles::findOne($changedAttributes->user_role);  
+             $am->revoke($oldUserRole->role_name, $this->id);
+             $am->assign($role, $this->id);
+        }
+        else return;
+    }
     
 } 

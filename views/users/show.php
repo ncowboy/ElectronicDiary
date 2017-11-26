@@ -40,7 +40,7 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
                 'name',
                 'patronymic',
                 [
-                  'attribute' =>  'userRoleName',
+                  'attribute' =>  'userRoleAlias',
                   'filter' => $items, 
 
                 ],
@@ -52,20 +52,32 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
                  'header' => 'Действия',   
                  'buttons' => [
                     'view' => function ($url,$model) {
+                        if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
+                            return null;
+                        else {
                         return Html::a(
                         FA::icon('eye')->size(FA::SIZE_LARGE),     
                         $url,
-                        ['title' => 'Просмотр']
-                                );
+                        ['title' => 'Просмотреть']
+                        );}
+                      
                     },
                     'update' => function ($url,$model) {
-                        return Html::a(
+                        if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
+                            return null;
+                        else {
+                            return Html::a(
                         FA::icon('pencil')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Редактировать']
-                                );
+                        );
+                      }
+                       
                     },
                     'delete' => function($url, $model){
+                        if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
+                            return null; 
+                        else {
                         return Html::a(
                        FA::icon('trash')->size(FA::SIZE_LARGE), 
                        ['delete', 'id' => $model->id],
@@ -76,14 +88,19 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
                         'confirm' => 'Вы действительно хотите удалить пользователя?',
                         'method' => 'post',
                              ],
-                        ]);
+                         ]);
+                         }
                    },
                     'changepass' => function ($url,$model) {
+                      if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
+                            return null; 
+                      else {
                         return Html::a(
                         FA::icon('key')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Сменить пароль']
-                                );
+                       );
+                       }
                     },
 
 

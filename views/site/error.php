@@ -8,6 +8,8 @@
 use yii\helpers\Html;
 
 $this->title = $name;
+
+
 ?>
 <div class="site-error">
 
@@ -18,10 +20,9 @@ $this->title = $name;
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        Данный ответ был возвращен вэб-сервером после обработки вашего запроса .
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        Пожалуйста, свяжитесь с нами, если считаете, что данное сообщение является ошибкой.
     </p>
-
 </div>

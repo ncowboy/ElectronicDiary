@@ -64,10 +64,12 @@ $config = [
                 'login' => 'site/login',
                 'users' => 'users/show',
                 //'<controller:\w+>/<id>' => '<controller>/view',
-              
-               
+                                   
             ],
         ],
+        'authManager' => [
+            'class' => yii\rbac\DbManager::className()
+        ]
         
     ],
     'params' => $params,
