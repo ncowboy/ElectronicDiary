@@ -159,15 +159,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [
             'class'=>'kartik\grid\EditableColumn',
             'attribute'=>'comment',
-            'hAlign'=>'justify', 
+            'hAlign'=>'left', 
             'editableOptions'=>[
-                'format' => 'button',
-                'valueIfNull' => ' ',
+                'valueIfNull' => 'Нет комментария',
+                'asPopover' => false,
+                'inputType' => \kartik\editable\Editable::INPUT_TEXTAREA,
                 'showAjaxErrors' => false, 
-                'header'=>'Комментарий', 
-                'asPopover' => true,
-                'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
-                'inputType'=>\kartik\editable\Editable::INPUT_TEXTAREA,
+                'submitOnEnter' => false,
+                'options' => [
+                    'class'=>'form-control', 
+                    'rows'=>5, 
+                    'style'=>'width:300px', 
+                    'placeholder'=>'Текст комментария...'
+                ]
                      ],
             'pageSummary'=>true
           ],

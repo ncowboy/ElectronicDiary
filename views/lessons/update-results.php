@@ -27,4 +27,4 @@ use yii\widgets\ActiveForm;
         </div>
     <?php ActiveForm::end(); ?>
 
-</div><!-- lessons-update-results -->
+</div>
