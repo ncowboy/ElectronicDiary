@@ -41,16 +41,22 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [ 
-            ['label' => 'Пользователи', 'url' => ['/users/show']],
-            ['label' => 'Учебные группы', 'url' => ['/groups']],
-            ['label' => 'Ученики', 'url' => ['/students']],
-            ['label' => 'Преподаватели', 'url' => ['/teachers']],
-            ['label' => 'Уроки', 'url' => ['/lessons']],
+             Yii::$app->user->can('menu_users') ?
+            ['label' => 'Пользователи', 'url' => ['/users/show']] : (''),
+             Yii::$app->user->can('menu_groups') ?
+            ['label' => 'Учебные группы', 'url' => ['/groups']] : (''),
+             Yii::$app->user->can('menu_students') ?
+            ['label' => 'Ученики', 'url' => ['/students']] : (''),
+             Yii::$app->user->can('menu_teachers') ?
+            ['label' => 'Преподаватели', 'url' => ['/teachers']] : (''),
+             Yii::$app->user->can('menu_lessons') ?
+            ['label' => 'Уроки', 'url' => ['/lessons']] : (''),
+             Yii::$app->user->can('menu_catalog') ?
             ['label' => 'Каталог', 'items' => [
                 ['label' => 'Филиалы', 'url' => ['/buildings']],
                 ['label' => 'Предметы', 'url' => ['/subjects']],
                 ['label' => 'Типы групп', 'url' => ['/group-types']]
-            ]],
+            ]] : (''),
           
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
