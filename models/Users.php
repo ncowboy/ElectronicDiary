@@ -107,15 +107,17 @@ class Users extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes) {
          $am = Yii::$app->authManager;
          $role = $am->getRole($this->userRoles->role_name);
+           // print_r($role);
+         
         if ($insert) {
            $am->assign($role, $this->id);
+   
          }
-       else if ($changedAttributes->user_role !== $this->user_role ){
-             $oldUserRole = UserRoles::findOne($changedAttributes->user_role);  
-             $am->revoke($oldUserRole->role_name, $this->id);
-             $am->assign($role, $this->id);
+           else {
+           $am->revokeAll($this->id);
+           $am->assign($role, $this->id);
+             
         }
-        else return;
     }
     
 } 
