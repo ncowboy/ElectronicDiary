@@ -137,3 +137,9 @@ background-image: url('img/logo.png');
 .mark-cell-style {
    font-size: x-large; 
 }
+
+.personal-label-header {
+    border-bottom: 1px solid #e2e2e2;
+    padding-bottom: 7px;
+    color: #5959af;
+}

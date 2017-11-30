@@ -8,9 +8,13 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Users;
 use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
+ $user = Yii::$app->user->identity;
+ $userRoleName = Users::findOne(['username' => $user->username])->userRoleAlias;
+ $loggedUserLabel = $user->name . ' ' . $user->surname . ' ' . '(' . $userRoleName . ')';
 
 
 AppAsset::register($this);
@@ -31,6 +35,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    
     NavBar::begin([
         'brandLabel' => '',
         'brandUrl' => Yii::$app->homeUrl,
@@ -39,6 +44,7 @@ AppAsset::register($this);
         ],
     ]);
     echo Nav::widget([
+        'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [ 
              Yii::$app->user->can('menu_users') ?
@@ -60,16 +66,16 @@ AppAsset::register($this);
           
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
-                    
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Выход (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
+            ) :        
+       (       
+                ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
+                    '<div class="container-fluid personal-label-header">'.$loggedUserLabel.'</div>',
+                    '<li>' . Html::a('Профиль', 'personal') . '</li>',
+                    '<li>' . Html::a('Выход', 'site/logout', ['data' => [
+                'confirm' => 'Выйти?',
+                'method' => 'post',
+            ],]) . '</li>'
+                  ]]
             )
             
         ],

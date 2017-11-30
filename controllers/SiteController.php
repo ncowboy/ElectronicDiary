@@ -54,8 +54,8 @@ class SiteController extends Controller
         ];
     }
     
-    public function goPersonal($defaultUrl = null) {
-        return Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl($defaultUrl));
+    public function goPersonal() {
+        return $this->redirect('personal');
     }
 
     /**
@@ -82,7 +82,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goPersonal();
         }
         return $this->render('login', [
             'model' => $model,
