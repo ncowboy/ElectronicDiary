@@ -74,6 +74,9 @@ class Students extends \yii\db\ActiveRecord
        return $this->user->username;
     }
     
+    public function getUserRole() {
+       return $this->user->user_role;
+    }
     public function getUserFullName() {
        return $this->user->surname . ' ' . $this->user->name . ' ' . $this->user->patronymic;
     }

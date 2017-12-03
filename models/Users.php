@@ -5,6 +5,8 @@ use app\helpers\Hasher;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use Yii;
+use app\models\Students;
+use app\models\Teachers;
 
 
 
@@ -56,7 +58,7 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Iduser',
+            'id' => 'ID',
             'username' => 'Логин',
             'password' => 'Пароль',
             'email' => 'Email',
@@ -64,6 +66,8 @@ class Users extends \yii\db\ActiveRecord
             'name' => 'Имя',
             'patronymic' => 'Отчество',
             'user_role' => 'Роль',
+            'userRoleAlias' => 'Роль',
+            'userFullName' => 'ФИО',
             'created_at' => 'Добавлено',
             'updated_at' => 'Обновлено',
             'userRoleAlias' => 'Роль',
@@ -98,6 +102,10 @@ class Users extends \yii\db\ActiveRecord
         return $this->userRoles->role_name;
     }
     
+    public function getUserFullName(){
+        return $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
+    }
+    
     public function beforeSave($insert) {
         parent::beforeSave($insert);
         $this->password = Hasher::hash($this->password);
@@ -107,16 +115,36 @@ class Users extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes) {
          $am = Yii::$app->authManager;
          $role = $am->getRole($this->userRoles->role_name);
-           // print_r($role);
          
         if ($insert) {
            $am->assign($role, $this->id);
-   
-         }
-           else {
+                } else {
            $am->revokeAll($this->id);
-           $am->assign($role, $this->id);
-             
+           $am->assign($role, $this->id);  
+        }
+        
+        if (($insert || $changedAttributes['user_role'] == 5) && $this->user_role == 5) {
+            $checkStudent = Students::findOne(['user_id' => $this->id]);
+            if (!$checkStudent) {
+            $student = new Students();
+            $student->user_id = $this->id;
+            $student->phone_number = '0';
+            $student->parents_name = '0';
+            $student->parents_number = '0';
+            $student->parents_email = 'mail@mail.me';
+            $student->birth = null;
+            $student->save();
+            }
+        }
+      
+        if (($insert || $changedAttributes['user_role'] == 4) && $this->user_role == 4) {
+            $checkStudent = Teachers::findOne(['user_id' => $this->id]);
+            if (!$checkStudent) {
+            $teacher = new Teachers();
+            $teacher->user_id = $this->id;
+            $teacher->specialization = NULL;
+            $teacher->save();
+            }
         }
     }
     

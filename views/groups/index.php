@@ -5,7 +5,10 @@ use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
-
+use app\models\Buildings;
+use app\models\Subjects;
+use app\models\Groups;
+use app\models\Teachers;
 
 
 /* @var $this yii\web\View */
@@ -15,13 +18,21 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
 $this->title = 'Группы';
 $this->params['breadcrumbs'][] = $this->title;
 
-$buildings = app\models\Buildings::find()->all();
-$subjects = app\models\Subjects::find()->all();
-$groups = \app\models\Groups::find()->all();
+$buildings = Buildings::find()->all();
+$subjects = Subjects::find()->all();
+
+if(Yii::$app->user->can('groups_crud')) {
+    $groups = Groups::find()->all();
+}else if (Yii::$app->user->can('groups_crud_self')) {
+    $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]);
+    $groups = Groups::findAll(['teacher_id' => $teacher->id]);
+}
+
 
 $buildItems = ArrayHelper::map($buildings, 'alias', 'alias');
 $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
 $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
+
 ?>
 <div class="groups-index">
 

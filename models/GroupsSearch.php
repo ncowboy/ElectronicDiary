@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Groups;
+use app\models\Teachers;
+
 
 /**
  * GroupsSearch represents the model behind the search form about `app\models\Groups`.
@@ -112,6 +114,10 @@ class GroupsSearch extends Groups
     }]);
     $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
     
+    if (\Yii::$app->user->can('groups_crud_self')) {
+        $teacher = Teachers::findOne(['user_id' => \Yii::$app->user->id]);
+        $query->andWhere(['teacher_id' => $teacher->id]);
+    }
         return $dataProvider;
     }
 }

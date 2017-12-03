@@ -17,6 +17,7 @@ class StudentsSearch extends Students
      */
     public $userFullName;
     public $userName;
+    public $useRole;
     
     public function rules()
     {
@@ -55,11 +56,7 @@ class StudentsSearch extends Students
         return;
     }
  
-    /*
-     * Для корректной работы фильтра со связью со
-     * свой же моделью делаем:
-     */
-  //  $attribute = "buildings.$attribute";
+     $attribute = "buildings.$attribute";
  
     if ($partialMatch) {
         $query->andWhere(['like', $attribute, $value]);
@@ -137,7 +134,7 @@ class StudentsSearch extends Students
         $q->where('users.surname LIKE "%' . $this->userFullName . '%" ' .
         'OR users.name LIKE "%' . $this->userFullName . '%"' .
         'OR users.patronymic LIKE "%' . $this->userFullName . '%"'        
-    )->andWhere('users.username LIKE "%' . $this->userName . '%" ');
+    )->andWhere('users.username LIKE "%' . $this->userName . '%" ')->andWhere('users.user_role = 5');
     }]);
 
         return $dataProvider;

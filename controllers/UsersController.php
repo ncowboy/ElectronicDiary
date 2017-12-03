@@ -74,14 +74,15 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
-                throw new ForbiddenHttpException('Вам запрещено изменять пароль администраторов');
-            }
-            $model->save();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('changepass', [
+            
+        } else if(!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
+           throw new ForbiddenHttpException('Вам запрещено изменять пароль администраторов');
+           
+        }else{
+           
+           return $this->render('changepass', [
                 'model' => $model,
             ]);
         }
@@ -116,15 +117,14 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-       if ($model->load(Yii::$app->request->post())) {
-            if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
-                throw new ForbiddenHttpException('Вам запрещено редактирование администраторов');
-            }
-             $model->save();
-             return $this->redirect(['view', 'id' => $model->id]);
-        }
-        else {
-            return $this->render('update', [
+       if ($model->load(Yii::$app->request->post()) && $model->save()) {
+               return $this->redirect(['view', 'id' => $model->id]);
+               
+            } else if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
+                 throw new ForbiddenHttpException('Вам запрещено редактирование администраторов');
+                 
+            } else {
+                 return $this->render('update', [
                 'model' => $model,
             ]);
         }
