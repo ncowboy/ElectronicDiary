@@ -43,6 +43,7 @@ class Users extends \yii\db\ActiveRecord
         return [
             [['username', 'password', 'email'], 'required', 'message' => 'Поле не может быть пустым'],
             [['user_role'], 'integer'],
+            ['username', 'unique', 'targetAttribute' => 'username', 'targetClass' => Users::className(), 'message' => 'Имя пользователя уже существует в базе данных'],  
             [['username', 'name', 'surname', 'patronymic'], 'string', 'max' => 20],
             [['username'], 'match', 'pattern' => '/^[a-zA-Z]\w{2,20}$/i', 'message' => 'Имя пользователя должно быть не короче 3 латинских символов или цифр и начинаться с буквы'],
             [['password'], 'match', 'pattern' => '/[0-9a-zA-Z!@#$%^&*]{6,}/i', 'message' => 'Пароль должен состоять не менее, чем из 6 латинских символов или цифр'],
@@ -78,14 +79,11 @@ class Users extends \yii\db\ActiveRecord
     return [
         [
             'class' => TimestampBehavior::className(),
-           'value' => new Expression('NOW()'),
+            'value' => new Expression('NOW()'),
         ]            
     ];
     }
     
-    
-    
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -106,11 +104,11 @@ class Users extends \yii\db\ActiveRecord
         return $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
     }
     
-    public function beforeSave($insert) {
-        parent::beforeSave($insert);
-        $this->password = Hasher::hash($this->password);
-        return true;
-    }
+ //   public function beforeSave($insert) {
+  //      parent::beforeSave($insert);
+   //     $this->password = Hasher::hash($this->password);
+   //     return true;
+  //  }
     
     public function afterSave($insert, $changedAttributes) {
          $am = Yii::$app->authManager;

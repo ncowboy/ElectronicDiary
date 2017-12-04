@@ -18,7 +18,7 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 
         <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'username', ['enableAjaxValidation' => true])->textInput(['maxlength' => true])?>
 
         <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 

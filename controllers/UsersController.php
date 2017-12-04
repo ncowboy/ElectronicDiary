@@ -11,7 +11,10 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\ExcelForm;
 use PHPExcel_Shared_Date;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 use yii\web\ForbiddenHttpException;
+use app\helpers\Hasher;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -74,8 +77,11 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->password = Hasher::hash($model->password);
+            if ($model->save()){
             return $this->redirect(['view', 'id' => $model->id]);
+            }
             
         } else if(!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
            throw new ForbiddenHttpException('Вам запрещено изменять пароль администраторов');
@@ -88,15 +94,19 @@ class UsersController extends Controller
         }
     }
     
-    
     public function actionCreate()
     {
         $model = new Users();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post())) {
             if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
                 throw new ForbiddenHttpException('Вам запрещено добавление администраторов');
             }
+             $model->password = Hasher::hash($model->password);
              $model->save();
              return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -148,7 +158,7 @@ class UsersController extends Controller
         }
     }
 
-    public function actionUpload(){
+   /* public function actionUpload(){
         $model = new ExcelForm;
     
     if($model->load(Yii::$app->request->post())){
@@ -192,7 +202,7 @@ class UsersController extends Controller
         return $this->render('upload',['model'=>$model]);
     }
 }
-
+*/
     
     protected function findModel($id)
     {
@@ -204,3 +214,4 @@ class UsersController extends Controller
     }
     
 }
+    
