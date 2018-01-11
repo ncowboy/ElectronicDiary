@@ -20,25 +20,25 @@ class m180110_141923_lessons extends Migration
             'id' => 5,
             'datetime' => '2018-01-19 14:50:00',
             'theme' => 'testтема',
-            'group_id' => 2,
+            'group_id' => 7,
         ]);
         $this->insert('lessons', [
             'id' => 6,
             'datetime' => '2017-10-28 14:50:00',
             'theme' => 'Поэзия серебряного века',
-            'group_id' => 3,
+            'group_id' => 5,
         ]);
         $this->insert('lessons', [
             'id' => 7,
             'datetime' => '2017-10-20 13:05:00',
             'theme' => 'testтема',
-            'group_id' => 4,
+            'group_id' => 3,
         ]);
         $this->insert('lessons', [
             'id' => 15,
             'datetime' => '2017-10-24 20:00:00',
             'theme' => 'testтема11111',
-            'group_id' => 5,
+            'group_id' => 10,
             'comment' => 'drthrhtrh'
         ]);
     }

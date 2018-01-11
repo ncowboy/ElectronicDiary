@@ -17,24 +17,7 @@ class m180110_142954_srudents extends Migration
             'birth' => $this->date()->null(),
         ]);
         
-        $this->insert('students', [
-            'id' => 1,
-            'user_id' => 4,
-            'phone_number' => '+7 (903) 588-42-07',
-            'parents_name' => 'Мария Ивановна Петрова',
-            'parents_number' => '+7-111-11-11',
-            'parents_email' => 'mail@mail.me',
-            'birth' => '1983-12-07',
-        ]);
-        $this->insert('students', [
-            'id' => 2,
-            'user_id' => 5,
-            'phone_number' => '+7(903) 155-15-20',
-            'parents_name' => 'Денисова Анна Евгеньевна',
-            'parents_number' => '+7(905)125-20-55',
-            'parents_email' => '',
-            'birth' => '1983-11-09',
-        ]);
+       
         $this->insert('students', [
             'id' => 19,
             'user_id' => 24,
@@ -43,15 +26,6 @@ class m180110_142954_srudents extends Migration
             'parents_number' => '87686545656',
             'parents_email' => '',
             'birth' => '1998-10-09',
-        ]);
-         $this->insert('students', [
-            'id' => 20,
-            'user_id' => 25,
-            'phone_number' => '89034567890',
-            'parents_name' => 'Папа',
-            'parents_number' => '89045678929',
-            'parents_email' => '',
-            'birth' => '1997-10-16',
         ]);
           $this->insert('students', [
             'id' => 21,  
