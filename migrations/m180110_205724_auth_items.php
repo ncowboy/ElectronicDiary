@@ -48,7 +48,7 @@ class m180110_205724_auth_items extends Migration
             'type' => 2,
         ]);
             $this->insert('auth_item', [
-            'name' => 'studet',
+            'name' => 'student',
             'type' => 1,
         ]);
             $this->insert('auth_item', [

@@ -16,10 +16,12 @@ class m180111_113604_teachers extends Migration
         ]);
         
         $this->insert('teachers', [
+           'id' => 1, 
            'user_id' => 22,
            'specialization' => 'Информатика' 
         ]);
         $this->insert('teachers', [
+           'id' => 2,  
            'user_id' => 23,
            'specialization' => 'Программирование' 
         ]);
