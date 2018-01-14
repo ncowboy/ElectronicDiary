@@ -8,6 +8,7 @@ use app\models\GroupsSearch;
 use app\models\StudentsInGroup;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -61,9 +62,17 @@ class GroupsController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+       
+        if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+           throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
+           
+        }else{
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
+        }
     }
 
     /**

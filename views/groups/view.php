@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 $this->title = 'Группа: ' . $model->getGroupCode();
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+     
 ?>
 <div class="groups-view">
 
