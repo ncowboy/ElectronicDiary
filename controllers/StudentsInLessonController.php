@@ -65,8 +65,7 @@ class StudentsInLessonController extends Controller
          if($model->load($post)) {
            if ($editableParam === "mark_homework") {
                $model->save();
-               echo $out;
-               return;
+               return $this->refresh() ;
            }
             else {
                $model->attendance = 1;

@@ -24,7 +24,10 @@ $studentsDataProvider = new ArrayDataProvider([
       </div>
          <div class="panel-body">  
             <span> <?php echo $model->teacherName; ?></span>
-                <?php $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
+                <?php 
+                if (Yii::$app->user->can('set_teacher')) {
+                $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
+                }
              
             Modal::begin([
                 'header' => '<h3>Выберите преподавателя</h3>',
