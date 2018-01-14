@@ -5,6 +5,7 @@ use yii\widgets\ListView;
 use yii\data\ArrayDataProvider;
 use yii\bootstrap\Modal;
 use rmrevin\yii\fontawesome\FA;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -17,8 +18,8 @@ $studentsDataProvider = new ArrayDataProvider([
 'allModels' => $model->students,
 ]);
 ?>
-<div class="col-md-6 col-md-offset-3 group-content"> 
-    <div class="panel panel-info">
+<div class="group-content"> 
+    <div class="panel panel-info" >
       <div class="panel-heading">   
           Преподаватель
       </div>
@@ -48,48 +49,70 @@ $studentsDataProvider = new ArrayDataProvider([
           
          </div>  
     </div>
-    <div class="panel panel-info">
-      <div class="panel-heading">
-          <p class="col-xs-8"><span>Ученики</span>
-          <span class="badge"> <?php echo count($model->students)?> </span></p>
-            <?php 
-             Modal::begin([
-                'header' => '<h3>Выберите одного или несколько учеников</h3>',
-                'toggleButton' => [
-                    'tag' => 'a',
-                    'class' => 'btn btn-primary btn-sm',
-                    'style' => 'cursor: pointer;',
-                    'label' => 'Добавить в группу',
-                ]
-            ]);
-            
-            echo $this->render('students-list', [
-                'groupId' => $model->id
-            ]);
-            
-             Modal::end();
-             ?>
-             
-      </div>  
-      <div class="panel-body">  
+    
+    <?php 
+       $searchModel = new \app\models\StudentsInGroup;
+       $dataProvider = new \yii\data\ActiveDataProvider([
+          'query' => $searchModel->find()->where(['group_id' => $model->id]) 
+       ]);
+       echo GridView::widget([
+           'id' => 'kv-grid-students',
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
+            'containerOptions' => ['style' => 'overflow: auto'], 
+            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+            'pjax' => true, // pjax is set to always true for this demo
+            'resizableColumns'=>false,
+            // set your toolbar
+            'toolbar' =>  [
+                '{export}',
+            ],
+            // set export properties
+            'export' => [
+                'fontAwesome' => true,
+                'label' => 'Экспорт',
+                'header' => '',
+                'showConfirmAlert' => false,
+            ],
+            // parameters from the demo form
 
-          <table class="table table-hover"> 
-            <?php 
-              echo ListView::widget([
-                'dataProvider' => $studentsDataProvider,
-                'itemView' => 'students-in-group',
-                'viewParams' => [
-                    'groupId' => $model->id
-                ],
-                'summary' => '',
-                'emptyText' => 'В группе нет ни одного ученика'
-                
-                ]); 
-            ?>  
-          </table>
-       
-       
-     </div>     
+            'responsive' => false,
+            'responsiveWrap' => false,
+            'hover' => $hover,
+            'showPageSummary' => $pageSummary,
+            'panel' => [
+                'type' => GridView::TYPE_PRIMARY,
+                'heading' => 'Студенты группы: ' . $model->groupCode,
+               'footer' => FALSE,
+            ],
+               'persistResize' => false,
+               'toggleDataOptions' => ['minCount' => 20],
+               'exportConfig' => [
+                        'html' => GridView::HTML,
+                        'xls' =>  GridView::EXCEL,
+                        'txt' =>  GridView::TEXT,
+                      ],
+           'columns' => [
+               [ 'class'=>'kartik\grid\SerialColumn',
+            'contentOptions'=>['class'=>'kartik-sheet-style'],
+          ],
+              
+              [
+            'attribute'=>'studentFullName', 
+            'vAlign'=>'middle',
+            'hAlign'=>'left', 
+           
+          ],
+           
+          
+          ],
+           
+       ]);
+    
+    ?>
+    
     </div> 
     
     

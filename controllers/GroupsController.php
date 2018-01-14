@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use app\models\StudentsInGroupSearch;
 
 /**
  * GroupsController implements the CRUD actions for Groups model.
@@ -163,8 +164,9 @@ class GroupsController extends Controller
     
      public function actionGroupContent($id)
     {
+        $model = $this->findModel($id);
         return $this->render('group-content', [
-            'model' => $this->findModel($id),
+            'model' => $model
         ]);
     }
 
