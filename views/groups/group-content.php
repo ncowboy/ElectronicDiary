@@ -56,9 +56,8 @@ $studentsDataProvider = new ArrayDataProvider([
           'query' => $searchModel->find()->where(['group_id' => $model->id]) 
        ]);
        echo GridView::widget([
-           'id' => 'kv-grid-students',
+            'id' => 'kv-grid-students',
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
             'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
             'containerOptions' => ['style' => 'overflow: auto'], 
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -67,8 +66,12 @@ $studentsDataProvider = new ArrayDataProvider([
             'resizableColumns'=>false,
             // set your toolbar
             'toolbar' =>  [
+                ['content' => 
+            Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#myModal'])
+        ],
                 '{export}',
             ],
+           
             // set export properties
             'export' => [
                 'fontAwesome' => true,
@@ -81,11 +84,14 @@ $studentsDataProvider = new ArrayDataProvider([
             'responsive' => false,
             'responsiveWrap' => false,
             'hover' => $hover,
-            'showPageSummary' => $pageSummary,
             'panel' => [
                 'type' => GridView::TYPE_PRIMARY,
                 'heading' => 'Студенты группы: ' . $model->groupCode,
-               'footer' => FALSE,
+                'after' => Html::button('Удалить выбранные', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-danger']),
+                'afterOptions' => [
+                  'align' => 'right'  
+                ],
+                'footer' => false,
             ],
                'persistResize' => false,
                'toggleDataOptions' => ['minCount' => 20],
@@ -102,18 +108,38 @@ $studentsDataProvider = new ArrayDataProvider([
               [
             'attribute'=>'studentFullName', 
             'vAlign'=>'middle',
-            'hAlign'=>'left', 
-           
+            'hAlign'=>'left',
           ],
-           
-          
+               [
+                'class' => 'kartik\grid\CheckboxColumn',
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+],        
           ],
            
        ]);
     
     ?>
     
-    </div> 
+    </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <?php 
+            echo $this->render('students-list', [
+                'groupId' => $model->id
+            ]);
+       ?>
+      </div>
+    </div>
+  </div>
+</div>
     
     
     
