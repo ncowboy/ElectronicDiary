@@ -37,10 +37,13 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 <div class="groups-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить группу', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php 
+        if(Yii::$app->user->can('groups_crud')) {
+        echo Html::a('Добавить группу', ['create'], ['class' => 'btn btn-success']);
+        }
+        ?>
     </p>
       <div class="table-responsive"> 
         <?= GridView::widget([
@@ -82,6 +85,9 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                                 );
                     },
                     'delete' => function($url, $model){
+                        if (!\Yii::$app->user->can('groups_crud'))
+                            return null; 
+                        else {
                         return Html::a(
                        FA::icon('trash')->size(FA::SIZE_LARGE), 
                        ['delete', 'id' => $model->id],
@@ -93,6 +99,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                         'method' => 'post',
                              ],
                         ]);
+                      }
                    },
                       'group-content' => function ($url,$model) {
                         return Html::a(

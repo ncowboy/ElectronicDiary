@@ -5,12 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Groups;
 use app\models\GroupsSearch;
-use app\models\StudentsInGroup;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-use app\models\StudentsInGroupSearch;
+use app\models\StudentsInGroup;
 
 /**
  * GroupsController implements the CRUD actions for Groups model.
@@ -64,12 +63,9 @@ class GroupsController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-       
         if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
            throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
-           
         }else{
-        
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -83,16 +79,18 @@ class GroupsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Groups();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(!Yii::$app->user->can('groups_crud')){
+            throw new ForbiddenHttpException('Вам запрещено создавать группы');
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-        
+            $model = new Groups();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }  
     }
 
     /**
@@ -104,7 +102,10 @@ class GroupsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+           throw new ForbiddenHttpException('Вам запрещено редактировать группы, не закрепленные за вами');
+           
+        }else{
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -113,7 +114,7 @@ class GroupsController extends Controller
             ]);
         }
     }
-    
+    }
     public function actionTeachersList()
     {
         return $this->render('teacher-list');
@@ -126,15 +127,29 @@ class GroupsController extends Controller
           $model->save();
           return $this->redirect('/groups/group-content?id=' . $group_id);
     }
-
-    public function actionStudentsList($groupId)
+    
+    public function actionDelete($id)
     {
-        return $this->render('students-list', [
-            'groupId' => $groupId
-        ]);
+        if(!Yii::$app->user->can('groups_crud')){
+            throw new ForbiddenHttpException('Вам запрещено удалять группы');
+        } else {
+        $this->findModel($id)->delete();
+        return $this->redirect(['index']);
+      }
     }
     
-     public function actionAddStudents()
+     public function actionGroupContent($id)
+    {
+        $model = $this->findModel($id);
+        if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+           throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
+        }else{
+        return $this->render('group-content', [
+            'model' => $model
+        ]);
+      }  
+    }
+    public function actionAddStudents()
     {
          if(isset($_REQUEST['selection']))
     {             
@@ -147,27 +162,6 @@ class GroupsController extends Controller
      } 
      
                  return $this->redirect('/groups/group-content?id=' . $_REQUEST[2]['groupId']);
-    }
-    
-    public function actionDeleteStudent($groupId, $studentId)
-    {   
-       $this->findStudentInGroupModel($groupId, $studentId)->delete();
-       return $this->redirect('/groups/group-content?id=' . $groupId);
-    }
-    
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-    
-     public function actionGroupContent($id)
-    {
-        $model = $this->findModel($id);
-        return $this->render('group-content', [
-            'model' => $model
-        ]);
     }
 
     /**
@@ -186,15 +180,4 @@ class GroupsController extends Controller
         }
     }
     
-    protected function findStudentInGroupModel($groupId, $studentId)
-    {
-        if (($model = StudentsInGroup::findOne([
-                 'group_id' => $groupId,
-          'student_id' => $studentId
-        ])) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }

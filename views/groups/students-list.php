@@ -17,7 +17,6 @@ $query = Students::find()->where('id > 0');
      'groupId' => $groupId
  ]]);
 
-
  echo GridView::widget([
      
         'dataProvider' => $dataProvider,
