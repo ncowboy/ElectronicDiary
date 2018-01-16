@@ -111,6 +111,18 @@ class StudentsInGroupController extends Controller
 
         return $this->redirect(['index']);
     }
+    
+    public function actionMultipledelete()
+    {
+        if (\Yii::$app->request->post()) {
+            $response = Yii::$app->request->post();
+            foreach($response['students'] as $key => $value){      
+                $this->findModel($response['group'], $response['students'][$key])->delete();
+            };
+        }
+        $this->redirect(['/groups/group-content?id=' . $response['group']]);
+    }
+    
 
     /**
      * Finds the StudentsInGroup model based on its primary key value.
