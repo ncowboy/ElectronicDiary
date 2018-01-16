@@ -137,3 +137,8 @@ background-image: url('img/logo.png');
 .mark-cell-style {
    font-size: x-large; 
 }
+
+.group-content .col-md-6{
+    padding-left: 0px;
+    padding-right: 0px;
+}

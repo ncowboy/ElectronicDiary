@@ -143,3 +143,12 @@ background-image: url('img/logo.png');
     padding-bottom: 7px;
     color: #5959af;
 }
+
+
+.group-content .panel,
+.group-content .col-md-12
+{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
