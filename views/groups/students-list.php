@@ -4,9 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\Students;
-use rmrevin\yii\fontawesome\FA;
-use yii\bootstrap\Modal;
-use yii\helpers\Url;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Groups */
@@ -38,11 +36,6 @@ $query = Students::find()->where('id > 0');
              'class' => 'btn btn-primary'
          ]);    
     echo Html::endForm();
-       
 
-
-
-//<button onclick="var keys = $('#w0').yiiGridView('getSelectedRows'); alert(keys)">Добавить</button>
-?>
 
 

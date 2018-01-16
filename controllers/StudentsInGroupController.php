@@ -121,6 +121,7 @@ class StudentsInGroupController extends Controller
             };
         }
         $this->redirect(['/groups/group-content?id=' . $response['group']]);
+        
     }
     
 
