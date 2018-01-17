@@ -8,11 +8,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет'];
 
 <div class="users-view row">  
       <div class="col-md-4">
-          <p class="container-fluid bg-info"><?= Html::encode($model->userFullName) ?></p>
-            <ul>
+          <p><h4><?= Html::encode($model->userFullName) ?></h4></p>
+          <ul class="nav">
               <li><?= Html::a('Профиль', ['/personal'])?></li>  
               <?php 
-              if (Yii::$app->user->identity->user_role == 4) {
+              if (Yii ::$app->user->identity->user_role == 4) {
                 echo Html::tag('li', Html::a('Мои группы', ['groups']));
               }
               ?>
