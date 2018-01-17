@@ -70,7 +70,7 @@ AppAsset::register($this);
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
                     '<div class="container-fluid personal-label-header">'.$loggedUserLabel.'</div>',
-                    '<li>' . Html::a('Профиль', 'personal') . '</li>',
+                    '<li>' . Html::a('Профиль', '/personal') . '</li>',
                     '<li>' . Html::a('Выход', '/site/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',

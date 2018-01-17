@@ -29,4 +29,13 @@ class PersonalController extends Controller {
       }
       
     } 
+    
+    public function actionGroups(){
+      if(Yii::$app->user->identity->user_role == 4) {
+        $model = Teachers::findOne(Yii::$app->user->id);
+        return $this->render('groups', [
+          'model' => $model
+        ]);
+      }
+    }
 }
