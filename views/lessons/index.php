@@ -23,7 +23,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if(Yii::$app->user->can('all')){echo Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']);} ?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([

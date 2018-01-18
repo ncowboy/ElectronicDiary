@@ -8,8 +8,10 @@ use app\models\LessonsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
+use yii\web\ForbiddenHttpException;
 use app\models\StudentsInLesson;
+use app\models\Teachers;
+use app\models\Groups;
 
 /**
  * LessonsController implements the CRUD actions for Lessons model.
@@ -62,9 +64,16 @@ class LessonsController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    if($this->isAllowedTeacher($id) || \Yii::$app->user->can('all')) {
+      return $this->render('view', [
+            'model' => $this->findModel($id)
         ]);
+     }
+     else {
+       throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+     }
+      
+     
     }
 
     /**
@@ -155,6 +164,17 @@ class LessonsController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    protected function isAllowedTeacher($id) {
+     $lesson = $this->findModel($id);
+     $group = Groups::findOne(['id' => $lesson->group_id]);
+     $teacher = Teachers::findOne(['id' => $group->teacher_id]);
+     if(\Yii::$app->user->id === $teacher->user_id){
+       return TRUE; 
+     }else{
+       return FALSE;
+     }
     }
        
   
