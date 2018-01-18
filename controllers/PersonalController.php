@@ -4,7 +4,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\Users;
-use app\models\Teachers;
+use app\models\GroupsSearch;
 use app\models\Students;
 
 
@@ -29,4 +29,15 @@ class PersonalController extends Controller {
       }
       
     } 
+    
+    public function actionMyGroups(){
+      if(Yii::$app->user->identity->user_role == 4) {
+        $searchModel = new GroupsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('my-groups', [
+          'searchModel' => $searchModel,
+          'dataProvider' => $dataProvider
+        ]);
+      }
+    }
 }

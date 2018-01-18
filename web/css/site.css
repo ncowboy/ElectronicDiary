@@ -151,4 +151,33 @@ background-image: url('img/logo.png');
     padding-left: 0px;
     padding-right: 0px;
 }
+.users-view-header{
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 5px 15px;
+    
+}
+
+.users-view-menu li{
+    list-style: none;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content:space-between; 
+}
+
+.users-view-menu li::after{
+    content: '\27A4';
+    color: #777;
+}
+
+
+.users-view-menu a {
+    display: block;
+    border-bottom: 1px dotted #337ab7;
+    width: 100%;
+}
+
+.users-view thead {
+    font-weight: 600;
+}
 

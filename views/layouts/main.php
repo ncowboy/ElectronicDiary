@@ -69,8 +69,7 @@ AppAsset::register($this);
             ) :        
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
-                    '<div class="container-fluid personal-label-header">'.$loggedUserLabel.'</div>',
-                    '<li>' . Html::a('Профиль', 'personal') . '</li>',
+                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/personal')).'</div>',
                     '<li>' . Html::a('Выход', '/site/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',

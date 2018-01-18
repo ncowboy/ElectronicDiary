@@ -19,6 +19,8 @@ class GroupsController extends Controller
     /**
      * @inheritdoc
      */
+
+    
     public function behaviors()
     {
         return [
@@ -63,7 +65,8 @@ class GroupsController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+        $user = Yii::$app->user;
+        if (!($user->can('all') || $user->can('groups_crud_self') && $model->teachers->user->id == $user->id))  {
            throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
         }else{
         return $this->render('view', [
@@ -79,7 +82,7 @@ class GroupsController extends Controller
      */
     public function actionCreate()
     {
-        if(!Yii::$app->user->can('groups_crud')){
+        if(!(Yii::$app->user->can('all') || Yii::$app->user->can('groups_crud'))){
             throw new ForbiddenHttpException('Вам запрещено создавать группы');
         } else {
             $model = new Groups();
@@ -102,7 +105,8 @@ class GroupsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+        $user = Yii::$app->user;
+        if(!($user->can('all') || \Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
            throw new ForbiddenHttpException('Вам запрещено редактировать группы, не закрепленные за вами');
            
         }else{
@@ -130,7 +134,7 @@ class GroupsController extends Controller
     
     public function actionDelete($id)
     {
-        if(!Yii::$app->user->can('groups_crud')){
+        if(!(Yii::$app->user->can('all') || Yii::$app->user->can('groups_crud'))){
             throw new ForbiddenHttpException('Вам запрещено удалять группы');
         } else {
         $this->findModel($id)->delete();
@@ -141,7 +145,8 @@ class GroupsController extends Controller
      public function actionGroupContent($id)
     {
         $model = $this->findModel($id);
-        if(!(\Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+        $user = Yii::$app->user;
+        if(!($user->can('all') || \Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
            throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
         }else{
         return $this->render('group-content', [
