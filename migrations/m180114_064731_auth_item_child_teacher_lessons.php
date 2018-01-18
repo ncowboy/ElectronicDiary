@@ -20,6 +20,7 @@ class m180114_064731_auth_item_child_teacher_lessons extends Migration
             'parent' => 'teacher',
             'child' => 'menu_students'
         ]);
+         
     }
 
     /**
