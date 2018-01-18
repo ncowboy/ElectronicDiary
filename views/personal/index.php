@@ -1,6 +1,7 @@
 <?php
 use yii\widgets\DetailView;
 $this->beginContent('@app/views/layouts/personal.php');?>
+<h4>Профиль</h4>
 <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
