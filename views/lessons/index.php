@@ -70,6 +70,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                                         );
                             },
                             'delete' => function($url, $model){
+                              if(Yii::$app->user->can('all')) {
                                 return Html::a(
                                FA::icon('trash')->size(FA::SIZE_LARGE), 
                                ['delete', 'id' => $model->id],
@@ -81,6 +82,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                                 'method' => 'post',
                                      ],
                                 ]);
+                              }else{return null;}  
                            },
 
                             'results' => function ($url,$model) {

@@ -5,6 +5,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\Users;
 use app\models\GroupsSearch;
+use app\models\LessonsSearch;
 use app\models\Students;
 
 
@@ -35,6 +36,17 @@ class PersonalController extends Controller {
         $searchModel = new GroupsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('my-groups', [
+          'searchModel' => $searchModel,
+          'dataProvider' => $dataProvider
+        ]);
+      }
+    }
+    
+    public function actionMyLessons(){
+      if(Yii::$app->user->identity->user_role == 4) {
+        $searchModel = new LessonsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('my-lessons', [
           'searchModel' => $searchModel,
           'dataProvider' => $dataProvider
         ]);

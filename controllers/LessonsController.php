@@ -84,15 +84,18 @@ class LessonsController extends Controller
     public function actionCreate()
     {
         $model = new Lessons();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setStudentsInLessons($model->id);
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+          if (\Yii::$app->user->can('all')) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $model->setStudentsInLessons($model->id);
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+          } else {
+                throw new ForbiddenHttpException('Вам запрещено создавать уроки');
+              } 
     }
 
     /**
@@ -104,33 +107,19 @@ class LessonsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setStudentsInLessons($id);
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }   
-    
-    public function actionUpdateresults($lesson_id, $student_id)
-    {
-        $model = StudentsInLesson::findOne([
-            'lesson_id' => $lesson_id,
-            'student_id' => $student_id
-        ]);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['lessons/results', 'id' => $lesson_id]);
-        } else {
-            return $this->render('update-results', [
-                'model' => $model,
-           ]);
-        }
-        
-      }
+          if($this->isAllowedTeacher($id) || \Yii::$app->user->can('all')) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $model->setStudentsInLessons($id);
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            } 
+          } else {
+            throw new \yii\web\ForbiddenHttpException('Запрещено редактировать уроки групп, не закрепленных за вами');
+              } 
+    }
 
     /**
      * Deletes an existing Lessons model.
@@ -140,9 +129,12 @@ class LessonsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+      if(\Yii::$app->user->can('all')) {  
+      $this->findModel($id)->delete();
         return $this->redirect(['index']);
+     }else{
+       throw new ForbiddenHttpException('Вам запрещено удалять уроки');
+     }
     }
     
      public function actionResults($id)        
@@ -170,11 +162,8 @@ class LessonsController extends Controller
      $lesson = $this->findModel($id);
      $group = Groups::findOne(['id' => $lesson->group_id]);
      $teacher = Teachers::findOne(['id' => $group->teacher_id]);
-     if(\Yii::$app->user->id === $teacher->user_id){
-       return TRUE; 
-     }else{
-       return FALSE;
-     }
+     return \Yii::$app->user->id === $teacher->user_id; 
+     
     }
        
   

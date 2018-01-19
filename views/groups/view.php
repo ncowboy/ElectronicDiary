@@ -17,13 +17,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-6 col-md-offset-3">   
         <p>
             <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+            <?= Yii::$app->user->can('all') ? Html::a('Удалить', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Вы действительно хотите удалить группу?',
                     'method' => 'post',
                     ],
-               ]) ?>
+               ]) : ''?>
             <?= Html::a('К списку групп', ['/groups'], ['class'=>'btn btn-warning']) ?>
         </p>
 
