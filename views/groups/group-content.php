@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'emptyText' => 'В группе нет учеников',
             'toolbar' =>  [
                 ['content' => 
-                     Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#myModal'])
+                     Html::button('<i class="glyphicon glyphicon-plus"></i> Добавить', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Добавить студентов'), 'class' => 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#myModal'])
                 ],
                 '{export}',
             ],
@@ -99,7 +99,9 @@ $this->params['breadcrumbs'][] = $this->title;
                  'attribute'=>'studentFullName', 
                  'vAlign'=>'middle',
                  'hAlign'=>'left',
-                ],
+                ], 
+                'studentPhone',
+                'studentEmail:email',
                 [
                  'class' => 'kartik\grid\CheckboxColumn',
                  'headerOptions' => ['class' => 'kartik-sheet-style'],
@@ -114,12 +116,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
       <div class="modal-body">
        <?php 
             echo $this->render('students-list', [

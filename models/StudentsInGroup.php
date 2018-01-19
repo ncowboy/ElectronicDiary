@@ -46,7 +46,9 @@ class StudentsInGroup extends \yii\db\ActiveRecord
         return [
             'student_id' => 'Student ID',
             'group_id' => 'Group ID',
-            'studentFullName' => 'ФИО'
+            'studentFullName' => 'ФИО',
+            'studentPhone' => 'Телефон',
+            'studentEmail' => 'Email'
         ];
     }
 
@@ -69,6 +71,16 @@ class StudentsInGroup extends \yii\db\ActiveRecord
     public function getStudentFullName()
     {
         return $this->student->user->userFullName;
+    }
+    
+    public function getStudentPhone()
+    {
+        return $this->student->phone_number;
+    }
+    
+    public function getStudentEmail()
+    {
+        return $this->student->user->email;
     }
     
     public function getStudentGroupsList(){
