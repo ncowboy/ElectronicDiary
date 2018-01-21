@@ -93,16 +93,21 @@ class Students extends \yii\db\ActiveRecord
     }
     
      public function getGroupsAsString() {
-       if ($this->groups) {  
-        $string = ""; 
-        foreach ($this->groups as $value) {
-         $string = $string . $value->groupCode . ", " . PHP_EOL;   
+        if(Yii::$app->user->can('groups_crud_self')) {
+           $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]); 
+           $groups = Groups::findAll(['teacher_id' => $teacher->id]);
+           $this->groups = $groups;
         }
-        return $string;
-       } else {
-           return "Не зачислен в группу";
-       }
-       
+            if ($this->groups) {  
+             $string = ""; 
+             foreach ($this->groups as $value) {
+              $string = $string . $value->groupCode . ", " . PHP_EOL;   
+             }
+             return $string;
+            } else {
+                return "Не зачислен в группу";
+            }
+
     }
   
 }

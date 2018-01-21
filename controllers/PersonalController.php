@@ -7,6 +7,7 @@ use app\models\Users;
 use app\models\GroupsSearch;
 use app\models\LessonsSearch;
 use app\models\Students;
+use app\models\StudentsSearch;
 
 
 class PersonalController extends Controller {
@@ -47,6 +48,16 @@ class PersonalController extends Controller {
         $searchModel = new LessonsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('my-lessons', [
+          'searchModel' => $searchModel,
+          'dataProvider' => $dataProvider
+        ]);
+      }
+    }
+    public function actionMyStudents(){
+      if(Yii::$app->user->identity->user_role == 4) {
+        $searchModel = new StudentsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('my-students', [
           'searchModel' => $searchModel,
           'dataProvider' => $dataProvider
         ]);
