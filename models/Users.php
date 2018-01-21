@@ -116,12 +116,15 @@ class Users extends \yii\db\ActiveRecord
          
         if ($insert) {
            $am->assign($role, $this->id);
+           $user = Users::findOne(['id' => $this->id]);
+           $user->password = Hasher::hash($this->password);
+           $user->save();
                 } else {
            $am->revokeAll($this->id);
-           $am->assign($role, $this->id);  
+           $am->assign($role, $this->id);
         }
         
-        if (($insert || $changedAttributes['user_role'] == 5) && $this->user_role == 5) {
+        if (($insert || $changedAttributes['user_role']) && $this->user_role == 5) {
             $checkStudent = Students::findOne(['user_id' => $this->id]);
             if (!$checkStudent) {
             $student = new Students();
@@ -135,9 +138,9 @@ class Users extends \yii\db\ActiveRecord
             }
         }
       
-        if (($insert || $changedAttributes['user_role'] == 4) && $this->user_role == 4) {
-            $checkStudent = Teachers::findOne(['user_id' => $this->id]);
-            if (!$checkStudent) {
+        if (($insert || $changedAttributes['user_role']) && $this->user_role == 4) {
+            $checkTeacher = Teachers::findOne(['user_id' => $this->id]);
+            if (!$checkTeacher) {
             $teacher = new Teachers();
             $teacher->user_id = $this->id;
             $teacher->specialization = NULL;

@@ -8,9 +8,6 @@ use app\models\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-use app\models\ExcelForm;
-use PHPExcel_Shared_Date;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use yii\web\ForbiddenHttpException;
@@ -102,12 +99,11 @@ class UsersController extends Controller
             return ActiveForm::validate($model);
         }
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
                 throw new ForbiddenHttpException('Вам запрещено добавление администраторов');
             }
-             $model->password = Hasher::hash($model->password);
-             $model->save();
+             
              return $this->redirect(['view', 'id' => $model->id]);
         }
         else {
