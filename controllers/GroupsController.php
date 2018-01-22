@@ -66,7 +66,7 @@ class GroupsController extends Controller
     {
         $model = $this->findModel($id);
         $user = Yii::$app->user;
-        if (!($user->can('all') || $user->can('groups_crud_self') && $model->teachers->user->id == $user->id))  {
+        if (!($user->can('all') || $user->can('view_all') || $user->can('groups_crud_self') && $model->teachers->user->id == $user->id))  {
            throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
         }else{
         return $this->render('view', [
@@ -146,7 +146,7 @@ class GroupsController extends Controller
     {
         $model = $this->findModel($id);
         $user = Yii::$app->user;
-        if(!($user->can('all') || \Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
+        if(!($user->can('all') || $user->can('view_all') || \Yii::$app->user->can('groups_crud_self') && $model->teachers->user->id == \Yii::$app->user->id)) {
            throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
         }else{
         return $this->render('group-content', [

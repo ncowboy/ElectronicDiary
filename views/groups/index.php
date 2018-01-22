@@ -26,12 +26,13 @@ if(Yii::$app->user->can('groups_crud')) {
 }else if (Yii::$app->user->can('groups_crud_self')) {
     $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]);
     $groups = Groups::findAll(['teacher_id' => $teacher->id]);
+    $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 }
 
 
 $buildItems = ArrayHelper::map($buildings, 'alias', 'alias');
 $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
-$groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
+
 
 ?>
 <div class="groups-index">
