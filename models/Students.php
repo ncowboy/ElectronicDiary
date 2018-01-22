@@ -92,26 +92,26 @@ class Students extends \yii\db\ActiveRecord
                 ->viaTable('students_in_group', ['student_id' => 'id']);
     }
     
-     public function getGroupsAsString() {
-        if(Yii::$app->user->can('groups_crud_self')) {
-           $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]); 
-           $groups = Groups::findAll(['teacher_id' => $teacher->id]);
-           return $this->toString($groups);
-        }else{
-          return $this->toString($this->groups);
-        }
+    public function getGroupsOfTeacher() {
+      if(Yii::$app->user->identity->user_role == 4) {
+       $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]); 
+       return $this->hasMany(Groups::className(), ['id' => 'group_id'])
+                ->viaTable('students_in_group', ['student_id' => 'id'])->where([
+                  'teacher_id' => $teacher->id 
+                ]);
+      }
     }
     
-      public function toString($arr) {
-               if ($arr) {  
+     public function getGroupsOfTeacherAsString() {
+         if ($this->groupsOfTeacher) {  
                 $string = ""; 
-                foreach ($arr as $value) {
+                foreach ($this->groupsOfTeacher as $value) {
                  $string = $string . $value->groupCode . ", " . PHP_EOL;   
                 }
                 return $string;
                 } else {
                     return "Не зачислен в группу";
                 }
-            }
+    }
   
 }

@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
-use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentsSearch */
@@ -15,13 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?=Html::encode($this->title)?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
 
     ?>
 
     <p>
-        <?= Html::a('Добавить ученика', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Yii::$app->user->can('all') ? Html::a('Добавить ученика', ['create'], ['class' => 'btn btn-success']) : '' ?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([
@@ -38,10 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'parents_number',
                 'parents_email:email',
                 'birth:date',
-
                  ['class' => 'yii\grid\ActionColumn',
                  'template' => '{view} {update} {delete} {show-groups}',
-                 'header' => 'Действия',   
+                 'header' => 'Действия',
+                 'visible' => Yii::$app->user->can('all'),  
                  'buttons' => [
                     'view' => function ($url,$model) {
                         return Html::a(

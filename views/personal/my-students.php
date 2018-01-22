@@ -5,7 +5,7 @@ $this->beginContent('@app/views/layouts/personal.php');
 
 ?>
 
-<h4>Мои Ученики</h4>
+<h4>Мои ученики</h4>
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
