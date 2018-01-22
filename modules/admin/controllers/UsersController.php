@@ -30,16 +30,6 @@ class UsersController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['user_index']
-                    ],
-                ],
-            ],
-            
         ];
     }
 
@@ -47,12 +37,12 @@ class UsersController extends Controller
      * Lists all Users models.
      * @return mixed
      */
-    public function actionShow()
+    public function actionIndex()
     {
         $searchModel = new UsersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('show', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -80,10 +70,7 @@ class UsersController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
             }
             
-        } else if(!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
-           throw new ForbiddenHttpException('Вам запрещено изменять пароль администраторов');
-           
-        }else{
+        } else{
            
            return $this->render('changepass', [
                 'model' => $model,

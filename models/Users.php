@@ -113,6 +113,9 @@ class Users extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes) {
          $am = Yii::$app->authManager;
          $role = $am->getRole($this->userRoles->role_name);
+         echo "<pre>";
+           print_r($changedAttributes);
+           echo "</pre>";
          
         if ($insert) {
            $am->assign($role, $this->id);
@@ -147,6 +150,13 @@ class Users extends \yii\db\ActiveRecord
             $teacher->save();
             }
         }
+        
+        if ($changedAttributes['password']) { 
+          $user = Users::findOne(['id' => $this->id]);
+          $user->password = Hasher::hash($this->password);
+          $user->save();
+            }
+        
     }
     
 } 

@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Пользователи';
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/admin/users']];
 $roles = \app\models\UserRoles::find()->all();
 $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
 

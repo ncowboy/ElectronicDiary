@@ -47,7 +47,7 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Пользователи', 'url' => ['/admin/users/show']],
+            ['label' => 'Пользователи', 'url' => ['/admin/users']],
             ['label' => 'Учебные группы', 'url' => ['/admin/groups']],
             ['label' => 'Ученики', 'url' => ['/admin/students']],
             ['label' => 'Преподаватели', 'url' => ['/admin/teachers']],

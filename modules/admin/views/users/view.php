@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Users */
 
 $this->title = 'Пользователь: ' . $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['show']];
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/admin/users']];
 $this->params['breadcrumbs'][] = ['label' => 'Просмотр пользователя: ' . $model->username];
 ?>
         <div class="users-view">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Просмотр пользова�
                         'method' => 'post',
                     ],
                 ]) ?>
-                 <?= Html::a('К списку пользователей', ['/users/show'], ['class'=>'btn btn-warning']) ?>
+                 <?= Html::a('К списку пользователей', ['/admin/users'], ['class'=>'btn btn-warning']) ?>
             </p>
 
             <?= DetailView::widget([
