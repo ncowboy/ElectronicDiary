@@ -150,10 +150,13 @@ class StudentsSearch extends Students
         }
         
         $studentIds = [];
-        foreach ($studentsInGroups as $key => $value) {
-            array_push($studentIds, $value[0]['student_id']);
+        foreach ($studentsInGroups as $value) {
+          foreach ($value as $subValue){
+            array_push($studentIds, $subValue['student_id']);
+          }
         }
-        $query->having(['id' => $studentIds]);
+        $studentIdsUnique = array_unique($studentIds);
+        $query->having(['id' => $studentIdsUnique]);
      }
         return $dataProvider;
     }

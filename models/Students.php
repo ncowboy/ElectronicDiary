@@ -96,18 +96,22 @@ class Students extends \yii\db\ActiveRecord
         if(Yii::$app->user->can('groups_crud_self')) {
            $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]); 
            $groups = Groups::findAll(['teacher_id' => $teacher->id]);
-           $this->groups = $groups;
+           return $this->toString($groups);
+        }else{
+          return $this->toString($this->groups);
         }
-            if ($this->groups) {  
-             $string = ""; 
-             foreach ($this->groups as $value) {
-              $string = $string . $value->groupCode . ", " . PHP_EOL;   
-             }
-             return $string;
-            } else {
-                return "Не зачислен в группу";
-            }
-
     }
+    
+      public function toString($arr) {
+               if ($arr) {  
+                $string = ""; 
+                foreach ($arr as $value) {
+                 $string = $string . $value->groupCode . ", " . PHP_EOL;   
+                }
+                return $string;
+                } else {
+                    return "Не зачислен в группу";
+                }
+            }
   
 }

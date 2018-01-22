@@ -5,8 +5,8 @@ use yii\helpers\Html;
 ?>
 
 <tr>
-  <td><?=$model->userFullName?></td>
+    <td><?= Html::a(Html::encode($model->userFullName), Url::to(['/students', 'id' => $model->id]))?></td>
   <td><?=$model->phone_number;?></td>
-  <td><?=$model->user->email;?></td>
+  <td><?=Html::mailto(Html::encode($model->user->email));?></td>
   <td><?=$model->groupsAsString;?></td>
 </tr>
