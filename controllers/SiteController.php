@@ -8,7 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
+use app\models\Users;
 
 class SiteController extends Controller
 {
@@ -53,10 +53,6 @@ class SiteController extends Controller
             ],
         ];
     }
-    
-    public function goPersonal() {
-        return $this->redirect('personal');
-    }
 
     /**
      * Displays homepage.
@@ -66,12 +62,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
          if (!Yii::$app->user->isGuest) {
-             return $this->redirect('personal');
+          $user = Users::findOne(['id' => \Yii::$app->user->id]);
+             return $this->redirect($user->userRoleName . '/personal');
          }else{
              return $this->render('index');
          }
         }
-        
 
     /**
      * Login action.
@@ -86,7 +82,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goPersonal();
+          switch (\Yii::$app->user->identity->user_role){
+            case 1: $this->redirect('admin');  
+          }
         }
         return $this->render('login', [
             'model' => $model,
@@ -104,32 +102,5 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+    
 }
