@@ -135,29 +135,6 @@ class StudentsSearch extends Students
         'OR users.patronymic LIKE "%' . $this->userFullName . '%"'        
     )->andWhere('users.username LIKE "%' . $this->userName . '%" ')->andWhere('users.user_role = 5');
     }]);
-        
-     if (\Yii::$app->user->can('students_self')) {
-        $teacher = Teachers::findOne(['user_id' => \Yii::$app->user->id]);
-        $groups = Groups::findAll(['teacher_id' => $teacher->id]);
-        $ids = [];
-        foreach ($groups as $value) {
-            array_push($ids, $value['id']);  
-        }
-        $studentsInGroups = [];
-        foreach ($ids as $value) {
-           $model = StudentsInGroup::findAll(['group_id' => $value]); 
-           array_push($studentsInGroups, $model); 
-        }
-        
-        $studentIds = [];
-        foreach ($studentsInGroups as $value) {
-          foreach ($value as $subValue){
-            array_push($studentIds, $subValue['student_id']);
-          }
-        }
-        $studentIdsUnique = array_unique($studentIds);
-        $query->having(['id' => $studentIdsUnique]);
-     }
         return $dataProvider;
     }
 }

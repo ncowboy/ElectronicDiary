@@ -103,19 +103,10 @@ class Users extends \yii\db\ActiveRecord
     public function getUserFullName(){
         return $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
     }
-    
- //   public function beforeSave($insert) {
-  //      parent::beforeSave($insert);
-   //     $this->password = Hasher::hash($this->password);
-   //     return true;
-  //  }
-    
+ 
     public function afterSave($insert, $changedAttributes) {
          $am = Yii::$app->authManager;
          $role = $am->getRole($this->userRoles->role_name);
-         echo "<pre>";
-           print_r($changedAttributes);
-           echo "</pre>";
          
         if ($insert) {
            $am->assign($role, $this->id);
@@ -127,7 +118,7 @@ class Users extends \yii\db\ActiveRecord
            $am->assign($role, $this->id);
         }
         
-        if (($insert || $changedAttributes['user_role']) && $this->user_role == 5) {
+        if (($changedAttributes['user_role']) && $this->user_role == 5) {
             $checkStudent = Students::findOne(['user_id' => $this->id]);
             if (!$checkStudent) {
             $student = new Students();
@@ -141,7 +132,7 @@ class Users extends \yii\db\ActiveRecord
             }
         }
       
-        if (($insert || $changedAttributes['user_role']) && $this->user_role == 4) {
+        if (($changedAttributes['user_role']) && $this->user_role == 4) {
             $checkTeacher = Teachers::findOne(['user_id' => $this->id]);
             if (!$checkTeacher) {
             $teacher = new Teachers();
@@ -150,13 +141,6 @@ class Users extends \yii\db\ActiveRecord
             $teacher->save();
             }
         }
-        
-        if ($changedAttributes['password']) { 
-          $user = Users::findOne(['id' => $this->id]);
-          $user->password = Hasher::hash($this->password);
-          $user->save();
-            }
-        
     }
     
 } 

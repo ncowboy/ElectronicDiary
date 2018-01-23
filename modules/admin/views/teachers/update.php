@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Teachers */
 
 $this->title = 'Редактирование преподавателя: ' . $model->userFullname;
-$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['/teachers']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

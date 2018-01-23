@@ -9,12 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет'];
 <div class="users-view row">  
       <div class="users-view-menu col-md-3">
           <p class="users-view-header"><?= Html::encode($model->userFullName) ?></p>
-          <ul class="users-view-menu">
-              <li><?= Html::a('Профиль', ['/personal'])?></li>  
-              <?= Yii::$app->user->identity->user_role == 4 ? Html::tag('li', Html::a('Мои группы', ['my-groups'])) : '';?>
-              <?= Yii::$app->user->identity->user_role == 4 ? Html::tag('li', Html::a('Мои уроки', ['my-lessons'])) : '';?>
-              <?= Yii::$app->user->identity->user_role == 4 ? Html::tag('li', Html::a('Мои студенты', ['my-students'])) : '';?>
-            </ul>
+          <p>Роль: <?= Html::encode($model->userRoleAlias) ?></p>
       </div> 
       <div class="col-md-9">   
         <?= $content ?>  

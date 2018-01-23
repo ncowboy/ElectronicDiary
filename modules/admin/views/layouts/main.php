@@ -10,7 +10,6 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Users;
 use yii\helpers\Url;
-use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
  $user = Yii::$app->user->identity;
  $userRoleName = Users::findOne(['username' => $user->username])->userRoleAlias;
@@ -47,24 +46,24 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Пользователи', 'url' => ['/admin/users']],
-            ['label' => 'Учебные группы', 'url' => ['/admin/groups']],
-            ['label' => 'Ученики', 'url' => ['/admin/students']],
-            ['label' => 'Преподаватели', 'url' => ['/admin/teachers']],
-            ['label' => 'Уроки', 'url' => ['/admin/lessons']] ,
+            ['label' => 'Пользователи', 'url' => ['/users']],
+            ['label' => 'Учебные группы', 'url' => ['/groups']],
+            ['label' => 'Ученики', 'url' => ['/students']],
+            ['label' => 'Преподаватели', 'url' => ['/teachers']],
+            ['label' => 'Уроки', 'url' => ['/lessons']] ,
             ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => ['/admin/buildings']],
-                ['label' => 'Предметы', 'url' => ['/admin/subjects']],
-                ['label' => 'Типы групп', 'url' => ['/admin/group-types']]
+                ['label' => 'Филиалы', 'url' => ['/buildings']],
+                ['label' => 'Предметы', 'url' => ['/subjects']],
+                ['label' => 'Типы групп', 'url' => ['/group-types']]
             ]],
           
             Yii::$app->user->isGuest ? (
-                ['label' => 'Вход', 'url' => ['/site/login']]
+                ['label' => 'Вход', 'url' => ['/login']]
             ) :        
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
-                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/personal')).'</div>',
-                    '<li>' . Html::a('Выход', '/site/logout', ['data' => [
+                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/admin')).'</div>',
+                    '<li>' . Html::a('Выход', '/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',
             ],]) . '</li>'

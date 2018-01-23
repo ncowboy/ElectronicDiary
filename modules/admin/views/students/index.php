@@ -13,14 +13,10 @@ $this->title = 'Ученики';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-index">
-
     <h1><?=Html::encode($this->title)?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
-
-    ?>
-
+    <?php // echo $this->render('_search', ['model' => $searchModel]);?>
     <p>
-        <?= Yii::$app->user->can('all') ? Html::a('Добавить ученика', ['create'], ['class' => 'btn btn-success']) : '' ?>
+        <?=Html::a('Добавить ученика', ['create'], ['class' => 'btn btn-success'])?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([
@@ -42,14 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
                  'header' => 'Действия',
                  'visible' => Yii::$app->user->can('all'),  
                  'buttons' => [
-                    'view' => function ($url,$model) {
+                    'view' => function ($url) {
                         return Html::a(
                         FA::icon('eye')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Просмотр']
                                 );
                     },
-                    'update' => function ($url,$model) {
+                    'update' => function ($url) {
                         return Html::a(
                         FA::icon('pencil')->size(FA::SIZE_LARGE),     
                         $url,

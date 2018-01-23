@@ -10,7 +10,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use yii\web\ForbiddenHttpException;
 use app\helpers\Hasher;
 
 /**
@@ -87,10 +86,6 @@ class UsersController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
-                throw new ForbiddenHttpException('Вам запрещено добавление администраторов');
-            }
-             
              return $this->redirect(['view', 'id' => $model->id]);
         }
         else {
@@ -113,9 +108,6 @@ class UsersController extends Controller
        if ($model->load(Yii::$app->request->post()) && $model->save()) {
                return $this->redirect(['view', 'id' => $model->id]);
                
-            } else if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1) {
-                 throw new ForbiddenHttpException('Вам запрещено редактирование администраторов');
-                 
             } else {
                  return $this->render('update', [
                 'model' => $model,
@@ -132,60 +124,10 @@ class UsersController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if (!\Yii::$app->user->can('users_admin_crud') && $model->user_role == 1){
-            throw new ForbiddenHttpException('Вам запрещено удаление администраторов');
-        }
-        else {
         $model->delete();
-        return $this->redirect(['show']);
-        }
+        return $this->redirect(['/admin/users']);
+        
     }
-
-   /* public function actionUpload(){
-        $model = new ExcelForm;
-    
-    if($model->load(Yii::$app->request->post())){
-        $file = UploadedFile::getInstance($model,'file');
-        $filename = 'Data.'.$file->extension;
-        $upload = $file->saveAs('uploads/'.$filename);
-        if($upload){
-            define('FILE_PATH','uploads/');
-            $xls_file = FILE_PATH . $filename;
-            $objPHPExcel = \PHPExcel_IOFactory::load($xls_file);
-            $objPHPExcel->setActiveSheetIndex(0);
-            $aSheet = $objPHPExcel->getActiveSheet();
-            $users = [];
-            foreach($aSheet->getRowIterator() as $row){
-              $cellIterator = $row->getCellIterator();
-              $user = [];
-              foreach($cellIterator as $cell){
-                  $val = $cell->getCalculatedValue();
-              if(PHPExcel_Shared_Date::isDateTime($cell)) {    
-                array_push($user, date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($val)));
-              }
-              else {
-              array_push($user, $val);
-              }
-            }
-            array_push($users, $user);
-            }
-            foreach($users as $user){
-               $modelnew = new Students();
-               $modelnew->name = $user[0];
-               $modelnew->email = $user[1];
-               $modelnew->phone_number = $user[2];
-               $modelnew->parents_number = $user[3];
-               $modelnew->birth = $user[4];
-               $modelnew->save(); 
-            }
-            unlink('uploads/'.$filename);
-            return $this->redirect(['index']);
-        }
-    }else{
-        return $this->render('upload',['model'=>$model]);
-    }
-}
-*/
     
     protected function findModel($id)
     {

@@ -10,7 +10,7 @@ use app\assets\GroupContentAsset;
 
 GroupContentAsset::register($this);
 $this->title = $model->groupCode;
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-content"> 
@@ -20,10 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
       <div class="panel-body">  
         <span> <?php echo $model->teacherName; ?></span>
-          <?php 
-            if (Yii::$app->user->can('set_teacher')) {
-              $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
-            }
+          <?php
+            $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
+            
             Modal::begin([
                 'header' => '<h3>Выберите преподавателя</h3>',
                 'toggleButton' => [
@@ -60,7 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'emptyText' => 'В группе нет учеников',
             'toolbar' =>  [
                 ['content' => 
-                     Html::button('<i class="glyphicon glyphicon-plus"></i> Добавить', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Добавить студентов'), 'class' => 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#myModal'])
+                     Html::button('<i class="glyphicon glyphicon-plus"></i> Добавить', [
+                       'type' => 'button', 
+                       'title' => Yii::t('kvgrid', 'Добавить студентов'), 
+                       'class' => 'btn btn-success', 
+                       'data-toggle' => 'modal', 
+                       'data-target' => '#myModal'])
                 ],
                 '{export}',
             ],
@@ -76,7 +80,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'panel' => [
                 'type' => GridView::TYPE_INFO,
                 'heading' => 'Студенты группы: ' . $model->groupCode,
-                'after' => Html::button('Удалить выбранные', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn-delete btn btn-danger']),
+                'after' => Html::button('Удалить выбранные', [
+                  'type' => 'button', 
+                  'title' => Yii::t('kvgrid', 'Удалить'), 
+                  'class' => 'btn-delete btn btn-danger'
+                ]),
                 'afterOptions' => [
                   'align' => 'right'  
                 ],
@@ -107,10 +115,8 @@ $this->params['breadcrumbs'][] = $this->title;
                  'headerOptions' => ['class' => 'kartik-sheet-style'],
                 ],        
                ],
-           
        ]);
-    
-    ?>
+       ?>
   </div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

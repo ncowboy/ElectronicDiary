@@ -101,7 +101,6 @@ class Students extends \yii\db\ActiveRecord
                 ]);
       }
     }
-    
      public function getGroupsOfTeacherAsString() {
          if ($this->groupsOfTeacher) {  
                 $string = ""; 

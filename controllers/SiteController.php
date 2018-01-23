@@ -63,7 +63,7 @@ class SiteController extends Controller
     {
          if (!Yii::$app->user->isGuest) {
           $user = Users::findOne(['id' => \Yii::$app->user->id]);
-             return $this->redirect($user->userRoleName . '/personal');
+             return $this->redirect($user->userRoleName);
          }else{
              return $this->render('index');
          }

@@ -39,6 +39,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect('personal');
+        return $this->redirect('/admin');
     }
 }

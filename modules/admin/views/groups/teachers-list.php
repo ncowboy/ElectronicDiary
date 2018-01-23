@@ -4,8 +4,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\Teachers;
-use rmrevin\yii\fontawesome\FA;
-use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */

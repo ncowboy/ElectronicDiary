@@ -115,16 +115,6 @@ class LessonsSearch extends Lessons
         
     
     $query->andWhere('lessons.group_id LIKE "%' . $this->groupCode . '%"');
-    
-    if (\Yii::$app->user->can('lessons_crud_self')) {
-        $teacher = Teachers::findOne(['user_id' => \Yii::$app->user->id]);
-        $groups = Groups::findAll(['teacher_id' => $teacher->id]);
-        $ids = [];       
-        foreach ($groups as $value) {
-          array_push($ids, $value['id']);
-       }
-        $query->having(['group_id' => $ids]);
-     }
         return $dataProvider;
     }
 }

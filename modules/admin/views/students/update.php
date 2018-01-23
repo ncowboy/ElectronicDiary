@@ -8,7 +8,7 @@ use kartik\date\DatePicker;
 /* @var $model app\models\Students */
 
 $this->title = 'Редактирование ученика: ' . $model->getUserFullName();
-$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['students']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

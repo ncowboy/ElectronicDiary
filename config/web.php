@@ -2,7 +2,7 @@
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
-
+$urlConfig = require(__DIR__ . '/urlConfig.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -60,12 +60,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-                'login' => 'site/login',
-                'users' => 'users/show',
-                //'<controller:\w+>/<id>' => '<controller>/view',
-                                   
-            ],
+            'rules' => $urlConfig,
         ],
         'authManager' => [
             'class' => yii\rbac\DbManager::className()

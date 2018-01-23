@@ -9,7 +9,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
-use app\models\StudentsInLesson;
 use app\models\Teachers;
 use app\models\Groups;
 
@@ -28,15 +27,6 @@ class LessonsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                ],
-            ],
-              'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['menu_lessons']
-                    ],
                 ],
             ],
         ];
@@ -139,7 +129,7 @@ class LessonsController extends Controller
     
      public function actionResults($id)        
     {
-         return $this->redirect(['/students-in-lesson', 'id' => $id] );    
+         return $this->redirect(['/admin/students-in-lesson', 'id' => $id] );    
         }
 
     /**

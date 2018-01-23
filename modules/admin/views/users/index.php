@@ -6,24 +6,18 @@ use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
 use yii\helpers\ArrayHelper;
 
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Пользователи';
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/admin/users']];
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/users']];
 $roles = \app\models\UserRoles::find()->all();
 $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
-
-
-
 ?>
-      <div class="users-index">
-
+<div class="users-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -51,34 +45,22 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
                  'template' => '{view} {update} {delete} {changepass}',
                  'header' => 'Действия',   
                  'buttons' => [
-                    'view' => function ($url,$model) {
-                        if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
-                            return null;
-                        else {
+                    'view' => function ($url) {
                         return Html::a(
                         FA::icon('eye')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Просмотреть']
-                        );}
-                      
-                    },
-                    'update' => function ($url,$model) {
-                        if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
-                            return null;
-                        else {
-                            return Html::a(
+                        );
+                       },
+                    'update' => function ($url) {
+                        return Html::a(
                         FA::icon('pencil')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Редактировать']
                         );
-                      }
-                       
-                    },
+                       },
                     'delete' => function($url, $model){
-                        if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
-                            return null; 
-                        else {
-                        return Html::a(
+                       return Html::a(
                        FA::icon('trash')->size(FA::SIZE_LARGE), 
                        ['delete', 'id' => $model->id],
                        [
@@ -89,31 +71,20 @@ $items= ArrayHelper::map($roles, 'role_alias', 'role_alias');
                         'method' => 'post',
                              ],
                          ]);
-                         }
-                   },
-                    'changepass' => function ($url,$model) {
-                      if (!\Yii::$app->user->can('users_admin_crud')&& $model->user_role == 1)
-                            return null; 
-                      else {
+                        },
+                    'changepass' => function ($url) {
                         return Html::a(
                         FA::icon('key')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Сменить пароль']
                        );
-                       }
-                    },
-
-
-
-
+                      },
                 ],   
               ],
             ],
-
         ]);
         ?>
-     </div>     
-    
+      </div>     
 </div>   
      
 

@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 
 
 $this->title = $model->userFullName;
-$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['/students']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-view">
@@ -32,17 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
                         'userName',
-                        'groupsAsString',
                         'phone_number',
                         'parents_name',
                         'parents_number',
                         'parents_email',
                         'birth',
                     ],
-
-
                 ]);
-
                     ?>
         </div>    
 </div>

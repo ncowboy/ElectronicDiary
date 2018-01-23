@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Students */
 
 $this->title = 'Добавить ученика';
-$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['/students']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="students-create">
