@@ -83,7 +83,8 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
           switch (\Yii::$app->user->identity->user_role){
-            case 1: $this->redirect('admin');  
+            case 1: $this->redirect('admin');
+            case 2: $this->redirect('super');  
           }
         }
         return $this->render('login', [

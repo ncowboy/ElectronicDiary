@@ -16,7 +16,6 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
  $userRoleName = Users::findOne(['username' => $user->username])->userRoleAlias;
  $loggedUserLabel = $user->name . ' ' . $user->surname . ' ' . '(' . $userRoleName . ')';
 
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

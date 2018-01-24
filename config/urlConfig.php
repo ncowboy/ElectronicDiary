@@ -7,7 +7,7 @@
 return [
   'login' => 'site/login',
   'admin' => 'admin/personal',
-  // admin/users
+  /*// admin/users
   'users' => 'admin/users',
   'users/update' => 'admin/users/update',
   'users/view' => 'admin/users/view',
@@ -68,5 +68,8 @@ return [
   'group-types/delete' => 'admin/group-types/delete',
   'group-types/view' => 'admin/group-types/view',
   'group-types/create' => 'admin/group-types/create',
+   * 
+   * */
+   
  ];
 
