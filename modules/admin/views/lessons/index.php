@@ -23,7 +23,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php if(Yii::$app->user->can('all')){echo Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']);} ?>
+        <?= Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']); ?>
     </p>
       <div class="table-responsive">
         <?= GridView::widget([
@@ -41,16 +41,16 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                       'attribute' =>  'groupCode',
                       'filter' => $groupItems,
                       'value' => function ($model) {
-            return Html::a(Html::encode($model->groupCode), Url::to(['groups/view', 'id' => $model->group_id]));
-        },
+                        return Html::a(Html::encode($model->groupCode), Url::to([
+                          'groups/view', 'id' => $model->group_id
+                            ])
+                         );
+                        },
                       'format' => 'raw',
-
                     ],
-
                  'subjectAlias', 
                  'theme',
                  'comment',
-
                 ['class' => 'yii\grid\ActionColumn',
                         'template' => ' {view} {update} {delete} {results}',
                         'header' => 'Действия',  
@@ -70,8 +70,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                                         );
                             },
                             'delete' => function($url, $model){
-                              if(Yii::$app->user->can('all')) {
-                                return Html::a(
+                               return Html::a(
                                FA::icon('trash')->size(FA::SIZE_LARGE), 
                                ['delete', 'id' => $model->id],
                                [
@@ -82,7 +81,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                                 'method' => 'post',
                                      ],
                                 ]);
-                              }else{return null;}  
+                               
                            },
 
                             'results' => function ($url,$model) {
@@ -91,8 +90,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                             $url,    
                             ['title' => 'Оценки']
                                     );
-                        },      
-
+                        },
                         ]],
             ],
         ]); ?>

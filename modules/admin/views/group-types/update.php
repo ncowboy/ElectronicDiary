@@ -5,17 +5,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GroupTypes */
 
-$this->title = 'Update Group Types: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Group Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактирование типа группы: ' . $model->type_alias;
+$this->params['breadcrumbs'][] = ['label' => 'Типы групп', 'url' => ['/group-types']];
+$this->params['breadcrumbs'][] = $model->type_alias;
 ?>
 <div class="group-types-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+      <div class="col-md-6 col-md-offset-3"> 
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+      </div>    
 
 </div>

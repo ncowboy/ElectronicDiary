@@ -41,8 +41,8 @@ class Subjects extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'alias' => 'Alias',
+            'name' => 'Имя на сервере',
+            'alias' => 'Название',
         ];
     }
 

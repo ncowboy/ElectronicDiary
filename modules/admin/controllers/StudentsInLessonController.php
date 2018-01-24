@@ -3,10 +3,9 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\StudentsInLesson;
 use app\models\StudentsInLessonSearch;
+use app\models\StudentsInLesson;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Groups;
 use app\models\Teachers;
@@ -76,23 +75,19 @@ class StudentsInLessonController extends Controller
             }
          };
     }
-        if($this->isAllowedTeacher($id) || \Yii::$app->user->can('all')){
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'lesson_id' => $id
         ]);
-        }else{
-          throw new ForbiddenHttpException('Запрещено редактировать оценки групп, не закрепленных за вами');
-        }
     }
     
-  
-     protected function isAllowedTeacher($lesson_id) {
-     $lesson = Lessons::findOne(['id' => $lesson_id]);  
-     $group = Groups::findOne(['id' => $lesson->group_id]);
-     $teacher = Teachers::findOne(['id' => $group->teacher_id]);
-     return \Yii::$app->user->id === $teacher->user_id; 
-     
+    protected function findModel($lesson_id, $student_id)
+    {
+        if (($model = StudentsInLesson::findOne(['lesson_id' => $lesson_id, 'student_id' => $student_id])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

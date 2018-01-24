@@ -23,7 +23,6 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
             'attribute' => 'datetime',
             'options' => ['placeholder' => 'Выберите дату...'],
             'language' => 'ru',
-            'disabled' => !Yii::$app->user->can('all'),
             'type' => DateTimePicker::TYPE_INPUT,
             'pluginOptions' => [
                 'autoclose' => true,
@@ -34,12 +33,14 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 
     <?= $form->field($model, 'group_id')->dropDownList($groupItems, [
             'prompt' => 'Выберите группу',
-            'disabled' => !Yii::$app->user->can('all'),
         ]) ?>
     <?= $form->field($model, 'comment')->textArea(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', [
+          'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
+          ]) ?>
+       <?= Html::a('Отменить', ['/lessons'], ['class'=>'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

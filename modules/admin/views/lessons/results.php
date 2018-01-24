@@ -1,18 +1,12 @@
 <?php
-use yii\widgets\ListView;
 use yii\grid\GridView;
 use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
-use yii\widgets\ActiveForm;
-use app\models\StudentsInLesson;
 
 $this->title = 'Оценки за урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
 $this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($model->datetime)), 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
-
-
 ?>
   <div class="table-responsive">
     <?= GridView::widget([
@@ -26,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'userfullName',
                 [
                   'attribute' => 'attendance',
-                  //'format' => 'boolean',
                   'value' => function ($model){
                   $res = null;
                   if ($model->attendance == 0)
@@ -39,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'mark_homework',
                 'mark_dictation',
                 'comment',
-
                 ['class' => 'yii\grid\ActionColumn',
                         'template' => '{updateresults} ',
                         'header' => 'Действия',  

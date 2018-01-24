@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $model app\models\Lessons */
 
 $this->title = date('d/m/Y в H:i', strtotime($model->datetime));
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lessons-view">
@@ -16,19 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Yii::$app->user->can('all') ? Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?=Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы действительно хотите удалить урок?',
                 'method' => 'post',
             ],
-        ]) : '' ?>
+        ]) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            
             [
              'attribute' => 'datetime',
              'format' => ['dateTime', 'php:d/m/Y в H:i']

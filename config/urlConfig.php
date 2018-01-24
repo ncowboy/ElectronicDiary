@@ -46,7 +46,7 @@ return [
   'lessons/results' => 'admin/lessons/results',
   
   // admin/students-in-lesson
-  'lesson-results' => 'admin/students-in-lesson',
+    'students-in-lesson' => 'admin/students-in-lesson',
   
   // admin/buildings
   'buildings' => 'admin/buildings',
