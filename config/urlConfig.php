@@ -1,14 +1,19 @@
 <?php
 
+
+
  /**
   * Url router rules
  */
 
+
 return [
   'login' => 'site/login',
   'admin' => 'admin/personal',
-  /*// admin/users
-  'users' => 'admin/users',
+  'super' => 'super/personal',
+  
+  //users
+  'users' => $role . '/users',
   'users/update' => 'admin/users/update',
   'users/view' => 'admin/users/view',
   'users/delete' => 'admin/users/delete',
@@ -16,7 +21,7 @@ return [
   'users/create' => 'admin/users/create',
   
    // admin/groups
-  'groups' => 'admin/groups',
+  'groups' =>  $role . '/groups',
   'groups/update' => 'admin/groups/update',
   'groups/delete' => 'admin/groups/delete',
   'groups/view' => 'admin/groups/view',
@@ -68,8 +73,69 @@ return [
   'group-types/delete' => 'admin/group-types/delete',
   'group-types/view' => 'admin/group-types/view',
   'group-types/create' => 'admin/group-types/create',
-   * 
-   * */
+  
+  //super/users
+  'users' => 'super/users',
+  'users/update' => 'super/users/update',
+  'users/view' => 'super/users/view',
+  'users/delete' => 'super/users/delete',
+  'users/changepass' => 'super/users/changepass',
+  'users/create' => 'super/users/create',
+  
+   // super/groups
+  'groups' => 'super/groups',
+  'groups/update' => 'super/groups/update',
+  'groups/delete' => 'super/groups/delete',
+  'groups/view' => 'super/groups/view',
+  'groups/create' => 'super/groups/create',
+  'group-content' => 'super/groups/group-content',
+  
+  // super/students
+  'students' => 'super/students',
+  'students/update' => 'super/students/update',
+  'students/delete' => 'super/students/delete',
+  'students/view' => 'super/students/view',
+  'students/create' => 'super/students/create',
+  
+  // super/teachers
+  'teachers' => 'super/teachers',
+  'teachers/update' => 'super/teachers/update',
+  'teachers/delete' => 'super/teachers/delete',
+  'teachers/view' => 'super/teachers/view',
+  'teachers/create' => 'super/teachers/create',
+  
+  // super/lessons
+  'lessons' => 'super/lessons',
+  'lessons/update' => 'super/lessons/update',
+  'lessons/delete' => 'super/lessons/delete',
+  'lessons/view' => 'super/lessons/view',
+  'lessons/create' => 'super/lessons/create',
+  'lessons/results' => 'super/lessons/results',
+  
+  // super/students-in-lesson
+    'students-in-lesson' => 'super/students-in-lesson',
+  
+  // super/buildings
+  'buildings' => 'super/buildings',
+  'buildings/update' => 'super/buildings/update',
+  'buildings/delete' => 'super/buildings/delete',
+  'buildings/view' => 'super/buildings/view',
+  'buildings/create' => 'super/buildings/create',
+  
+  // super/subjects
+  'subjects' => 'super/subjects',
+  'subjects/update' => 'super/subjects/update',
+  'subjects/delete' => 'super/subjects/delete',
+  'subjects/view' => 'super/subjects/view',
+  'subjects/create' => 'super/subjects/create',
+  
+  // super/group-types
+  'group-types' => 'super/group-types',
+  'group-types/update' => 'super/group-types/update',
+  'group-types/delete' => 'super/group-types/delete',
+  'group-types/view' => 'super/group-types/view',
+  'group-types/create' => 'super/group-types/create',
+
    
  ];
 

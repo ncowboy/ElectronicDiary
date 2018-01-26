@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\modules\super\controllers;
 
 use Yii;
 use app\models\GroupTypes;
@@ -24,6 +24,15 @@ class GroupTypesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+             'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['super_module']
+                    ],
                 ],
             ],
         ];

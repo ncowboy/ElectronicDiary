@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\modules\super\controllers;
 
 use Yii;
 use app\models\Groups;
@@ -29,6 +29,15 @@ class GroupsController extends Controller
             'delete' => ['POST'],
             ],
           ],
+          'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['super_module']
+                    ],
+                ],
+            ],
       ];
     }
 

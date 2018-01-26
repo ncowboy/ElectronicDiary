@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\modules\super\controllers;
 
 use Yii;
 use app\models\StudentsInLessonSearch;
@@ -30,12 +30,12 @@ class StudentsInLessonController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-              'access' => [
+            'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['menu_lessons']
+                        'roles' => ['super_module']
                     ],
                 ],
             ],

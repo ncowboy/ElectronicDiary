@@ -72,6 +72,9 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
+        'super' => [
+              'class' => 'app\modules\super\Module',
+          ],
         'gridview' =>  [
         'class' => '\kartik\grid\Module'
     ],

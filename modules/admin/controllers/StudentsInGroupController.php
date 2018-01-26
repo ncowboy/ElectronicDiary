@@ -26,6 +26,15 @@ class StudentsInGroupController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+              'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin_module']
+                    ],
+                ],
+            ],
         ];
     }
 

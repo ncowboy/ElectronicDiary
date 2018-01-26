@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\modules\super\controllers;
 
 use Yii;
 use app\models\Users;
@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use app\helpers\Hasher;
+use yii\web\ForbiddenHttpException;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -27,6 +28,15 @@ class UsersController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['super_module']
+                    ],
                 ],
             ],
         ];
@@ -62,30 +72,35 @@ class UsersController extends Controller
    public function actionChangepass($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->password = Hasher::hash($model->password);
-            if ($model->save()){
-            return $this->redirect(['view', 'id' => $model->id]);
-            }
-            
-        } else{
-           
-           return $this->render('changepass', [
-                'model' => $model,
-            ]);
-        }
+        if($model->user_role == 1) {
+          throw new ForbiddenHttpException('Вы не можете изменять пароль администратора');
+        } else {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->password = Hasher::hash($model->password);
+                if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+              }
+                } else{
+                   return $this->render('changepass', [
+                        'model' => $model,
+                    ]);
+                 }
+         }
     }
     
     public function actionCreate()
     {
-        $model = new Users();
+            $model = new Users();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if ( $model->user_role == 1) {
+                throw new ForbiddenHttpException('Вам запрещено добавление администраторов');
+            }else{
+              $model->save(); 
+            }
              return $this->redirect(['view', 'id' => $model->id]);
         }
         else {
@@ -105,9 +120,13 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-       if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       if ($model->load(Yii::$app->request->post())) {
+         if($model->user_role == 1) {
+           throw new ForbiddenHttpException('Вам запрещено назначение администраторов');
+         }else{
+            $model->save();
+         }
                return $this->redirect(['view', 'id' => $model->id]);
-               
             } else {
                  return $this->render('update', [
                 'model' => $model,
@@ -124,8 +143,12 @@ class UsersController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->delete();
-        return $this->redirect(['/admin/users']);
+        if ($model->user_role !== 1) {
+          $model->delete();
+        }else{
+           throw new ForbiddenHttpException('Вам запрещено удалять администраторов');
+           }
+        return $this->redirect(['/users']);
         
     }
     

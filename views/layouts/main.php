@@ -13,8 +13,9 @@ use yii\helpers\Url;
 use rmrevin\yii\fontawesome\FA;
 rmrevin\yii\fontawesome\AssetBundle::register($this);
  $user = Yii::$app->user->identity;
- $userRoleName = Users::findOne(['username' => $user->username])->userRoleAlias;
- $loggedUserLabel = $user->name . ' ' . $user->surname . ' ' . '(' . $userRoleName . ')';
+ $userRoleName = Users::findOne(['username' => $user->username])->userRoleName;
+ $userRoleAlias = Users::findOne(['username' => $user->username])->userRoleAlias;
+ $loggedUserLabel = $user->name . ' ' . $user->surname . ' ' . '(' . $userRoleAlias . ')';
 
 AppAsset::register($this);
 ?>
@@ -47,7 +48,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [ 
              Yii::$app->user->can('menu_users') ?
-            ['label' => 'Пользователи', 'url' => ['/users/show']] : (''),
+            ['label' => 'Пользователи', 'url' => ['/users']] : (''),
              Yii::$app->user->can('menu_groups') ?
             ['label' => 'Учебные группы', 'url' => ['/groups']] : (''),
              Yii::$app->user->can('menu_students') ?
@@ -68,7 +69,7 @@ AppAsset::register($this);
             ) :        
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
-                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/personal')).'</div>',
+                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/' . $userRoleName)).'</div>',
                     '<li>' . Html::a('Выход', '/site/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',

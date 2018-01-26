@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\modules\super\controllers;
 
 use Yii;
 use app\models\Teachers;
@@ -27,6 +27,15 @@ class TeachersController extends Controller
                   'delete' => ['POST'],
               ],
           ],
+          'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['super_module']
+                    ],
+                ],
+            ],
         ];
     }
 

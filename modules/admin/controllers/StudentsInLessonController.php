@@ -30,12 +30,12 @@ class StudentsInLessonController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-              'access' => [
+            'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['menu_lessons']
+                        'roles' => ['admin_module']
                     ],
                 ],
             ],

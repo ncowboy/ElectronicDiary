@@ -60,14 +60,9 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
-         if (!Yii::$app->user->isGuest) {
-          $user = Users::findOne(['id' => \Yii::$app->user->id]);
-             return $this->redirect($user->userRoleName);
-         }else{
-             return $this->render('index');
-         }
-        }
+    {  
+      return $this->render('index');   
+    }
 
     /**
      * Login action.
@@ -84,8 +79,12 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
           switch (\Yii::$app->user->identity->user_role){
             case 1: $this->redirect('admin');
-            case 2: $this->redirect('super');  
+              break;
+            case 2: $this->redirect('super');
+              break;
+
           }
+         // return $this->goHome();
         }
         return $this->render('login', [
             'model' => $model,
