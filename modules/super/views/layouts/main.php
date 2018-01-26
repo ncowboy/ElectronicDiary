@@ -45,15 +45,15 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Пользователи', 'url' => ['/users']],
-            ['label' => 'Учебные группы', 'url' => ['/groups']],
-            ['label' => 'Ученики', 'url' => ['/students']],
-            ['label' => 'Преподаватели', 'url' => ['/teachers']],
-            ['label' => 'Уроки', 'url' => ['/lessons']] ,
+            ['label' => 'Пользователи', 'url' => ['/super/users']],
+            ['label' => 'Учебные группы', 'url' => ['/super/groups']],
+            ['label' => 'Ученики', 'url' => ['/super/students']],
+            ['label' => 'Преподаватели', 'url' => ['/super/teachers']],
+            ['label' => 'Уроки', 'url' => ['/super/lessons']] ,
             ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => ['/buildings']],
-                ['label' => 'Предметы', 'url' => ['/subjects']],
-                ['label' => 'Типы групп', 'url' => ['/group-types']]
+                ['label' => 'Филиалы', 'url' => ['/super/buildings']],
+                ['label' => 'Предметы', 'url' => ['/super/subjects']],
+                ['label' => 'Типы групп', 'url' => ['/super/group-types']]
             ]],
           
             Yii::$app->user->isGuest ? (

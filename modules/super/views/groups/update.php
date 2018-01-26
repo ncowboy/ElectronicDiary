@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Groups */
 
 $this->title = 'Редактирование группы: ' . $model->getGroupCode();
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups']];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/super/groups']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="groups-update">

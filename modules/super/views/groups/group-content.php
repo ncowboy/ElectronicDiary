@@ -10,7 +10,7 @@ use app\assets\GroupContentAsset;
 
 GroupContentAsset::register($this);
 $this->title = $model->groupCode;
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups']];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/super/groups']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-content"> 
