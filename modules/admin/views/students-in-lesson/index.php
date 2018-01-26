@@ -5,15 +5,15 @@ use kartik\grid\GridView;
 
 $lesson = \app\models\Lessons::findOne(['id' => $lesson_id]);
 $this->title = 'Оценки за урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
-$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/lessons/view', 'id' => $lesson->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/admin/lessons']];
+$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/admin/lessons/view', 'id' => $lesson->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="students-in-lesson-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::a('К списку уроков', ['/lessons'], ['class'=>'btn btn-warning']) ?>
+    <?= Html::a('К списку уроков', ['/admin/lessons'], ['class'=>'btn btn-warning']) ?>
     <?php
     
    echo GridView::widget([
@@ -95,11 +95,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 1, 
-                    '2'=> 2,
+                    '1'=> 5, 
+                    '2'=> 4,
                     '3'=> 3,
-                    '4'=> 4,
-                    '5'=> 5
+                    '4'=> 2
                     ],
                      ],
             'pageSummary'=>true
@@ -121,11 +120,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 1, 
-                    '2'=> 2,
+                    '1'=> 5, 
+                    '2'=> 4,
                     '3'=> 3,
-                    '4'=> 4,
-                    '5'=> 5
+                    '4'=> 2
                     ],
                      ],
             'pageSummary'=>true
@@ -147,11 +145,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 1, 
-                    '2'=> 2,
+                    '1'=> 5, 
+                    '2'=> 4,
                     '3'=> 3,
-                    '4'=> 4,
-                    '5'=> 5
+                    '4'=> 2
                     ],
                      ],
             'pageSummary'=>true

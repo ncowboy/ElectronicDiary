@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 /* @var $model app\models\Users */
 
 $this->title = 'Редактирование пользователя: ' . $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/users']];
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/admin/users']];
 $this->params['breadcrumbs'][] = ['label' => 'Редактирование пользователя: ' . $model->username];
 ?>
 <?php 
@@ -35,7 +35,7 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
              ])?>
       <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Отменить', ['/users'], ['class'=>'btn btn-danger']) ?>
+        <?= Html::a('Отменить', ['/admin/users'], ['class'=>'btn btn-danger']) ?>
       </div>
     <?php ActiveForm::end(); ?>
   </div>

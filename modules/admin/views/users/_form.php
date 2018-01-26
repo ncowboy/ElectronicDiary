@@ -36,7 +36,7 @@ $items= ArrayHelper::map($roles, 'id_user_role', 'role_alias');
 
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            <?= Html::a('Отменить', ['/users'], ['class'=>'btn btn-danger']) ?>
+            <?= Html::a('Отменить', ['/admin/users'], ['class'=>'btn btn-danger']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

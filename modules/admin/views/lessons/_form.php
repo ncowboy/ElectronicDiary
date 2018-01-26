@@ -40,7 +40,7 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', [
           'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
           ]) ?>
-       <?= Html::a('Отменить', ['/lessons'], ['class'=>'btn btn-danger']) ?>
+       <?= Html::a('Отменить', ['/admin/lessons'], ['class'=>'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

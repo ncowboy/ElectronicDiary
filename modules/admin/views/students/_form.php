@@ -50,7 +50,7 @@ use kartik\date\DatePicker;
         <div class="form-group">
             <?= Html::submitButton($student->isNewRecord ? 'Добавить' : 'Обновить', [
               'class' => $student->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-             <?= Html::a('Отменить', ['/students'], ['class'=>'btn btn-danger']) ?>
+             <?= Html::a('Отменить', ['/admin/students'], ['class'=>'btn btn-danger']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

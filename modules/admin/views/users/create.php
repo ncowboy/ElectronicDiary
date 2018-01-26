@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 $this->title = 'Добавить пользователя';
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/users']];
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/admin/users']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 

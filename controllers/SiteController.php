@@ -61,7 +61,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {  
-      return $this->render('index');   
+      if (!Yii::$app->user->isGuest) {
+        $user = Users::findOne(['id' => Yii::$app->user->identity->id]);  
+        return $this->redirect('/' . $user->userRoleName . '/personal'); 
+      }else{
+          return $this->render('index');
+      }
+      
     }
 
     /**
@@ -69,26 +75,20 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
+    public function actionLogin()   {
        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-          switch (\Yii::$app->user->identity->user_role){
-            case 1: $this->redirect('admin');
-              break;
-            case 2: $this->redirect('super');
-              break;
-
-          }
-         // return $this->goHome();
-        }
-        return $this->render('login', [
+            $user = Users::findOne(['id' => Yii::$app->user->identity->id]);
+        return $this->redirect($user->userRoleName . '/personal'); 
+          }else{
+            return $this->render('login', [
             'model' => $model,
         ]);
+      }
     }
 
     /**

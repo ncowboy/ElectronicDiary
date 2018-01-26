@@ -48,20 +48,20 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [ 
              Yii::$app->user->can('menu_users') ?
-            ['label' => 'Пользователи', 'url' => ['/users']] : (''),
+            ['label' => 'Пользователи', 'url' => [$userRoleName . '/users']] : (''),
              Yii::$app->user->can('menu_groups') ?
-            ['label' => 'Учебные группы', 'url' => ['/groups']] : (''),
+            ['label' => 'Учебные группы', 'url' => [$userRoleName . '/groups']] : (''),
              Yii::$app->user->can('menu_students') ?
-            ['label' => 'Ученики', 'url' => ['/students']] : (''),
+            ['label' => 'Ученики', 'url' => [$userRoleName . '/students']] : (''),
              Yii::$app->user->can('menu_teachers') ?
-            ['label' => 'Преподаватели', 'url' => ['/teachers']] : (''),
+            ['label' => 'Преподаватели', 'url' => [$userRoleName . '/teachers']] : (''),
              Yii::$app->user->can('menu_lessons') ?
-            ['label' => 'Уроки', 'url' => ['/lessons']] : (''),
+            ['label' => 'Уроки', 'url' => [$userRoleName . '/lessons']] : (''),
              Yii::$app->user->can('menu_catalog') ?
             ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => ['/buildings']],
-                ['label' => 'Предметы', 'url' => ['/subjects']],
-                ['label' => 'Типы групп', 'url' => ['/group-types']]
+                ['label' => 'Филиалы', 'url' => [$userRoleName . '/buildings']],
+                ['label' => 'Предметы', 'url' => [$userRoleName . '/subjects']],
+                ['label' => 'Типы групп', 'url' => [$userRoleName . '/group-types']]
             ]] : (''),
           
             Yii::$app->user->isGuest ? (
@@ -69,7 +69,7 @@ AppAsset::register($this);
             ) :        
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
-                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/' . $userRoleName)).'</div>',
+                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/' . $userRoleName . '/personal')).'</div>',
                     '<li>' . Html::a('Выход', '/site/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',

@@ -117,7 +117,7 @@ class LessonsController extends Controller
     
      public function actionResults($id)        
     {
-         return $this->redirect(['/students-in-lesson', 'id' => $id] );    
+         return $this->redirect(['/admin/students-in-lesson', 'id' => $id] );    
         }
 
     /**

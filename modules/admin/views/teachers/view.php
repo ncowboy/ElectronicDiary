@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Teachers */
 
 $this->title = $model->userFullName;
-$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['/teachers']];
+$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['/admin/teachers']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="teachers-view">
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'method' => 'post',
                     ],
                 ]) ?>
-                 <?= Html::a('К списку преподавателей', ['/teachers'], ['class'=>'btn btn-warning']) ?>
+                 <?= Html::a('К списку преподавателей', ['/admin/teachers'], ['class'=>'btn btn-warning']) ?>
             </p>
 
             <?= DetailView::widget([

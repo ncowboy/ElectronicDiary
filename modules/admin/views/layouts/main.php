@@ -45,15 +45,15 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Пользователи', 'url' => ['/users']],
-            ['label' => 'Учебные группы', 'url' => ['/groups']],
-            ['label' => 'Ученики', 'url' => ['/students']],
-            ['label' => 'Преподаватели', 'url' => ['/teachers']],
-            ['label' => 'Уроки', 'url' => ['/lessons']] ,
+            ['label' => 'Пользователи', 'url' => ['/admin/users']],
+            ['label' => 'Учебные группы', 'url' => ['/admin/groups']],
+            ['label' => 'Ученики', 'url' => ['/admin/students']],
+            ['label' => 'Преподаватели', 'url' => ['/admin/teachers']],
+            ['label' => 'Уроки', 'url' => ['/admin/lessons']] ,
             ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => ['/buildings']],
-                ['label' => 'Предметы', 'url' => ['/subjects']],
-                ['label' => 'Типы групп', 'url' => ['/group-types']]
+                ['label' => 'Филиалы', 'url' => ['/admin/buildings']],
+                ['label' => 'Предметы', 'url' => ['/admin/subjects']],
+                ['label' => 'Типы групп', 'url' => ['/admin/group-types']]
             ]],
           
             Yii::$app->user->isGuest ? (
@@ -61,7 +61,7 @@ AppAsset::register($this);
             ) :        
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
-                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/admin')).'</div>',
+                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/admin/personal')).'</div>',
                     '<li>' . Html::a('Выход', '/site/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',

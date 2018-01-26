@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Groups */
 
 $this->title = 'Группа: ' . $model->getGroupCode();
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups']];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="groups-view">
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                     ],
                ])?>
-      <?= Html::a('К списку групп', ['/groups'], ['class'=>'btn btn-warning']) ?>
+      <?= Html::a('К списку групп', ['/admin/groups'], ['class'=>'btn btn-warning']) ?>
     </p>
    <?= DetailView::widget([
     'model' => $model,
