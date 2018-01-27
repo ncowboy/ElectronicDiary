@@ -129,7 +129,7 @@ class StudentsInGroupController extends Controller
                 $this->findModel($response['group'], $response['students'][$key])->delete();
             };
         }
-        $this->redirect(['/groups/group-content?id=' . $response['group']]);
+        $this->redirect(['/admin/groups/group-content?id=' . $response['group']]);
         
     }
     

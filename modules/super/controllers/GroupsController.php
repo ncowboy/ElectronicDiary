@@ -113,7 +113,7 @@ class GroupsController extends Controller
           $model = $this->findModel($group_id);
           $model->teacher_id = $teacher_id;
           $model->save();
-          return $this->redirect('/super/group-content?id=' . $group_id);
+          return $this->redirect('/super/groups/group-content?id=' . $group_id);
     }
     
     public function actionDelete($id)
@@ -141,7 +141,7 @@ class GroupsController extends Controller
         $model->save();
       }
     }
-        return $this->redirect('/super/group-content?id=' . $_REQUEST[2]['groupId']);
+        return $this->redirect('/super/groups/group-content?id=' . $_REQUEST[2]['groupId']);
     }
 
     /**
