@@ -43,9 +43,9 @@ class GroupTypes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type_code' => 'Type Code',
-            'type_alias' => 'Type Alias',
-            'description' => 'Description',
+            'type_code' => 'Код',
+            'type_alias' => 'Буквенное обозначение',
+            'description' => 'Описание',
         ];
     }
 

@@ -114,10 +114,7 @@ class GroupsSearch extends Groups
     }]);
     $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
     
-    if (\Yii::$app->user->can('groups_crud_self')) {
-        $teacher = Teachers::findOne(['user_id' => \Yii::$app->user->id]);
-        $query->andWhere(['teacher_id' => $teacher->id]);
-    }
+  
         return $dataProvider;
     }
 }

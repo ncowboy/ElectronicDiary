@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Students;
 
 /**
  * StudentsSearch represents the model behind the search form about `app\models\Students`.
@@ -136,7 +135,6 @@ class StudentsSearch extends Students
         'OR users.patronymic LIKE "%' . $this->userFullName . '%"'        
     )->andWhere('users.username LIKE "%' . $this->userName . '%" ')->andWhere('users.user_role = 5');
     }]);
-
         return $dataProvider;
     }
 }

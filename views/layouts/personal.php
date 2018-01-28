@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет'];
               <li><?= Html::a('Профиль', ['/personal'])?></li>  
               <?= Yii::$app->user->identity->user_role == 4 ? Html::tag('li', Html::a('Мои группы', ['my-groups'])) : '';?>
               <?= Yii::$app->user->identity->user_role == 4 ? Html::tag('li', Html::a('Мои уроки', ['my-lessons'])) : '';?>
+              <?= Yii::$app->user->identity->user_role == 4 ? Html::tag('li', Html::a('Мои студенты', ['my-students'])) : '';?>
             </ul>
       </div> 
       <div class="col-md-9">   

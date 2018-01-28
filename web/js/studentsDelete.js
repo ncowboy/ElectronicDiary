@@ -1,7 +1,7 @@
-    $(function(){
-        $('.btn-delete').on('click', function(){
+        $(function(){
+        $('.btn-delete').on('click', function(){ 
             var keys = $('#kv-grid-students').yiiGridView('getSelectedRows');
-            console.log(keys);
+            var moduleName = window.location.pathname.split('/')[1];
             var data = {
                 group: null,
                 students: []
@@ -14,7 +14,7 @@
                     data['students'].push(item['student_id']);
                     data.group = item['group_id'];
                 });
-                $.post("/students-in-group/multipledelete", data, function(){
+                $.post("/" + moduleName + "/students-in-group/multipledelete", data, function(){
                     console.log('Success');
                 }) 
             }

@@ -1,6 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\helpers\Html;
+
 
 $this->title = 'Курсы по подготовке к ЕГЭ и ОГЭ в Москве - Merlin';
 ?>
@@ -11,7 +13,7 @@ $this->title = 'Курсы по подготовке к ЕГЭ и ОГЭ в Мо
 
         <p class="lead">На сайт учебного центра</p>
 
-        <p><a class="btn btn-lg btn-success" href="login">Войти на сайт</a></p>
+        <p><?= Yii::$app->user->isGuest ? Html::a('Войти на сайт', '/login', ['class' => 'btn btn-lg btn-success']) : ''?></p>
     </div>
 
     <div class="body-content">
