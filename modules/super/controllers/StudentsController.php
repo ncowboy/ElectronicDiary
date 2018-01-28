@@ -135,7 +135,7 @@ class StudentsController extends Controller
         if (($model = Students::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Запрошенная страница не существует');
         }
     }
 }

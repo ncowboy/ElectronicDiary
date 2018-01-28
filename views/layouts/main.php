@@ -46,23 +46,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [ 
-             Yii::$app->user->can('menu_users') ?
-            ['label' => 'Пользователи', 'url' => [$userRoleName . '/users']] : (''),
-             Yii::$app->user->can('menu_groups') ?
-            ['label' => 'Учебные группы', 'url' => [$userRoleName . '/groups']] : (''),
-             Yii::$app->user->can('menu_students') ?
-            ['label' => 'Ученики', 'url' => [$userRoleName . '/students']] : (''),
-             Yii::$app->user->can('menu_teachers') ?
-            ['label' => 'Преподаватели', 'url' => [$userRoleName . '/teachers']] : (''),
-             Yii::$app->user->can('menu_lessons') ?
-            ['label' => 'Уроки', 'url' => [$userRoleName . '/lessons']] : (''),
-             Yii::$app->user->can('menu_catalog') ?
-            ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => [$userRoleName . '/buildings']],
-                ['label' => 'Предметы', 'url' => [$userRoleName . '/subjects']],
-                ['label' => 'Типы групп', 'url' => [$userRoleName . '/group-types']]
-            ]] : (''),
+        'items' => [
           
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
