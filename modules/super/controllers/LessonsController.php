@@ -117,7 +117,7 @@ class LessonsController extends Controller
     
      public function actionResults($id)        
     {
-         return $this->redirect(['/students-in-lesson', 'id' => $id] );    
+         return $this->redirect(['/super/students-in-lesson', 'id' => $id] );    
         }
 
     /**
@@ -132,7 +132,7 @@ class LessonsController extends Controller
         if (($model = Lessons::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Запрошенная страница не существует');
         }
     }
 }

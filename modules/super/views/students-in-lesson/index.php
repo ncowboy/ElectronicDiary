@@ -5,8 +5,8 @@ use kartik\grid\GridView;
 
 $lesson = \app\models\Lessons::findOne(['id' => $lesson_id]);
 $this->title = 'Оценки за урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
-$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/lessons/view', 'id' => $lesson->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/super/lessons']];
+$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/super/lessons/view', 'id' => $lesson->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

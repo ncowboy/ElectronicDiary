@@ -7,11 +7,7 @@ use app\models\StudentsInLessonSearch;
 use app\models\StudentsInLesson;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\Groups;
-use app\models\Teachers;
-use app\models\Lessons;
 use yii\helpers\Json;
-use yii\web\ForbiddenHttpException;
 
 /**
  * StudentsInLessonController implements the CRUD actions for StudentsInLesson model.
@@ -87,7 +83,7 @@ class StudentsInLessonController extends Controller
         if (($model = StudentsInLesson::findOne(['lesson_id' => $lesson_id, 'student_id' => $student_id])) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Запрошенная страница не существует');
         }
     }
 }

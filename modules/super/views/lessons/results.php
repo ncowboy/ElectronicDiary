@@ -4,8 +4,8 @@ use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 
 $this->title = 'Оценки за урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
-$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($model->datetime)), 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/super/lessons']];
+$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($model->datetime)), 'url' => ['/super/lesons/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
   <div class="table-responsive">

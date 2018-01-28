@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Teachers */
 
 $this->title = 'Редактирование преподавателя: ' . $model->userFullname;
-$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['/teachers']];
+$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['/super/teachers']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
          <div class="form-group">
                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-               <?= Html::a('Отменить', ['/teachers'], ['class'=>'btn btn-danger']) ?>
+               <?= Html::a('Отменить', ['/super/teachers'], ['class'=>'btn btn-danger']) ?>
          </div>
           <?php ActiveForm::end(); ?>     
    </div>  
