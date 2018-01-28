@@ -4,6 +4,7 @@ namespace app\modules\super\controllers;
 
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use app\models\MyAccessControl;
 
 
 
@@ -22,11 +23,11 @@ class DefaultController extends Controller
                 ],
             ],
             'access' => [
-                'class' => \yii\filters\AccessControl::className(),
+                'class' => MyAccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['super_module']
+                        'roles' => ['super_module'],
                     ],
                 ],
             ],
@@ -39,6 +40,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect('/super');
+        return $this->redirect('/super/personal');
     }
 }

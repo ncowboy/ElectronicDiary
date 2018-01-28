@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Buildings */
 
 $this->title = 'Добавить филиал';
-$this->params['breadcrumbs'][] = ['label' => 'Филиалы', 'url' => ['/admin/buildings']];
+$this->params['breadcrumbs'][] = ['label' => 'Филиалы', 'url' => ['/super/buildings']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="buildings-create">

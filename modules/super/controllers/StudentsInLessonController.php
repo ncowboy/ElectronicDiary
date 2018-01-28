@@ -7,11 +7,7 @@ use app\models\StudentsInLessonSearch;
 use app\models\StudentsInLesson;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\Groups;
-use app\models\Teachers;
-use app\models\Lessons;
 use yii\helpers\Json;
-use yii\web\ForbiddenHttpException;
 
 /**
  * StudentsInLessonController implements the CRUD actions for StudentsInLesson model.

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\GroupTypes */
 
 $this->title = 'Редактирование типа группы: ' . $model->type_alias;
-$this->params['breadcrumbs'][] = ['label' => 'Типы групп', 'url' => ['/admin/group-types']];
+$this->params['breadcrumbs'][] = ['label' => 'Типы групп', 'url' => ['/super/group-types']];
 $this->params['breadcrumbs'][] = $model->type_alias;
 ?>
 <div class="group-types-update">

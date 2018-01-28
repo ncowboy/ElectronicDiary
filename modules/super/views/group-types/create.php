@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\GroupTypes */
 
 $this->title = 'Добавить тип группы';
-$this->params['breadcrumbs'][] = ['label' => 'Типы групп', 'url' => ['/admin/group-types']];
+$this->params['breadcrumbs'][] = ['label' => 'Типы групп', 'url' => ['/super/group-types']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-types-create">

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Subjects */
 
 $this->title = 'Редактирование предмета: ' . $model->alias;
-$this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['/admin/subjects']];
+$this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['/super/subjects']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subjects-update">

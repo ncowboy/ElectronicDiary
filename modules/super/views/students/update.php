@@ -8,7 +8,7 @@ use kartik\date\DatePicker;
 /* @var $model app\models\Students */
 
 $this->title = 'Редактирование ученика: ' . $model->getUserFullName();
-$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['students']];
+$this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['/super/students']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
            <div class="form-group">
                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Отменить', ['/students'], ['class'=>'btn btn-danger']) ?>
+                <?= Html::a('Отменить', ['/super/students'], ['class'=>'btn btn-danger']) ?>
            </div>
 
            <?php ActiveForm::end(); ?>

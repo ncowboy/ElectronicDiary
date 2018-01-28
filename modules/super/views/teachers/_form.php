@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton($teacher->isNewRecord ? 'Добавить ' : 'Сохранить', ['class' => $teacher->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?= Html::a('Отменить', ['/teachers'], ['class'=>'btn btn-danger']) ?>
+        <?= Html::a('Отменить', ['/super/teachers'], ['class'=>'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

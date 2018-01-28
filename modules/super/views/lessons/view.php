@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $model app\models\Lessons */
 
 $this->title = date('d/m/Y в H:i', strtotime($model->datetime));
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/lessons']];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/super/lessons']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lessons-view">
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                'attribute' =>  'groupCode',
                'value' => function ($model) {
-            return Html::a(Html::encode($model->groupCode), Url::to(['groups/view', 'id' => $model->group_id]));
+            return Html::a(Html::encode($model->groupCode), Url::to(['/super/groups/view', 'id' => $model->group_id]));
         },
                'format' => 'raw',
 
