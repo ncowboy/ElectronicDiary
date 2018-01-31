@@ -33,7 +33,7 @@ class Groups extends \yii\db\ActiveRecord
     {
         return [
             [['building_id', 'subject_id', 'group_type_id'], 'required'],
-            [['building_id', 'subject_id', 'group_type_id'], 'integer'],
+            [['building_id', 'subject_id', 'group_type_id', 'curator_userid'], 'integer'],
             [['building_id'], 'exist', 'skipOnError' => true, 'targetClass' => Buildings::className(), 'targetAttribute' => ['building_id' => 'id']],
             [['group_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => GroupTypes::className(), 'targetAttribute' => ['group_type_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
