@@ -130,6 +130,12 @@ class Groups extends \yii\db\ActiveRecord
         return $this->teachers->userFullName;
     }
     
+    public function getCuratorFullname()
+    {
+      $curator = Users::findOne(['id' => $this->curator_userid]);
+      return $curator->userFullName;
+     }
+    
     
 }
       

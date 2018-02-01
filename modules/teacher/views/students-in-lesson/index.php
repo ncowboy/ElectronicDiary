@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'id' => 'kv-grid-marks',
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
+    'krajeeDialogSettings' => [ 'useNative'=>true ],
     'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
     'containerOptions' => ['style' => 'overflow: auto'], 
     'headerRowOptions' => ['class' => 'kartik-sheet-style'],

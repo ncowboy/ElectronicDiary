@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
 use kartik\grid\GridView;
 use app\assets\GroupContentAsset;
 
@@ -14,33 +13,22 @@ $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/curator
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-content"> 
-  <div class="panel panel-info col-md-6" >
-    <div class="panel-heading">   
-          Преподаватель
+    <div class="panel panel-info col-md-4" >
+      <div class="panel-heading">   
+            Преподаватель
+      </div>
+        <div class="panel-body">  
+          <span> <?php echo $model->teacherName; ?></span>
+        </div>  
     </div>
-      <div class="panel-body">  
-        <span> <?php echo $model->teacherName; ?></span>
-          <?php
-            $model->teacher_id == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
-            
-            Modal::begin([
-                'header' => '<h3>Выберите преподавателя</h3>',
-                'toggleButton' => [
-                    'tag' => 'a',
-                    'class' => 'dropdown-toggle',
-                    'style' => 'cursor: pointer;',
-                    'label' => $label,
-                ]
-            ]);
- 
-            echo $this->render('teachers-list', [
-                'group_id' => $model->id
-            ]);
-            Modal::end();
-             ?>
-          
-      </div>  
-  </div>
+    <div class="panel panel-info col-md-4 col-md-offset-1" >
+      <div class="panel-heading">   
+            Куратор
+      </div>
+        <div class="panel-body">  
+          <span> <?php echo $model->curatorFullName; ?></span>
+        </div>  
+    </div>
   <div class="col-md-12">  
     <?php 
        $searchModel = new \app\models\StudentsInGroup;
@@ -50,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
        echo GridView::widget([
             'id' => 'kv-grid-students',
             'dataProvider' => $dataProvider,
+            'krajeeDialogSettings' => [ 'useNative'=>true ],
             'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
             'containerOptions' => ['style' => 'overflow: auto'], 
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -80,11 +69,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'panel' => [
                 'type' => GridView::TYPE_INFO,
                 'heading' => 'Студенты группы: ' . $model->groupCode,
-                'after' => Html::button('Удалить выбранные', [
-                  'type' => 'button', 
-                  'title' => Yii::t('kvgrid', 'Удалить'), 
-                  'class' => 'btn-delete btn btn-danger'
-                ]),
                 'afterOptions' => [
                   'align' => 'right'  
                 ],
@@ -109,11 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  'hAlign'=>'left',
                 ], 
                 'studentPhone',
-                'studentEmail:email',
-                [
-                 'class' => 'kartik\grid\CheckboxColumn',
-                 'headerOptions' => ['class' => 'kartik-sheet-style'],
-                ],        
+                'studentEmail:email',      
                ],
        ]);
        ?>

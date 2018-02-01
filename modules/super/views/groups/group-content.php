@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/super/g
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-content"> 
-  <div class="panel panel-info col-md-6" >
+  <div class="panel panel-info col-md-4" >
     <div class="panel-heading">   
           Преподаватель
     </div>
@@ -41,6 +41,32 @@ $this->params['breadcrumbs'][] = $this->title;
           
       </div>  
   </div>
+  <div class="panel panel-info col-md-4 col-md-offset-1" >
+      <div class="panel-heading">   
+            Куратор
+      </div>
+        <div class="panel-body">  
+          <span> <?php echo $model->curatorFullName; ?></span>
+          <?php
+            $model->curator_userid == 0 ? $label = 'Назначить' : $label = 'Изменить'; 
+            
+            Modal::begin([
+                'header' => '<h3>Выберите куратора</h3>',
+                'toggleButton' => [
+                    'tag' => 'a',
+                    'class' => 'dropdown-toggle',
+                    'style' => 'cursor: pointer;',
+                    'label' => $label,
+                ]
+            ]);
+ 
+            echo $this->render('curators-list', [
+                'group_id' => $model->id
+            ]);
+            Modal::end();
+             ?>
+        </div>  
+  </div>    
   <div class="col-md-12">  
     <?php 
        $searchModel = new \app\models\StudentsInGroup;
@@ -49,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
        ]);
        echo GridView::widget([
             'id' => 'kv-grid-students',
+            'krajeeDialogSettings' => [ 'useNative'=>true ],
             'dataProvider' => $dataProvider,
             'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
             'containerOptions' => ['style' => 'overflow: auto'], 

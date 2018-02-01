@@ -46,11 +46,11 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
 
         [
           'class' => 'yii\grid\ActionColumn',
-          'template' => '{view} {update} {delete} {group-content}',
+          'template' => '{view} {update} {group-content}',
           'header' => 'Действия',   
           'buttons' => [
             'view' => function ($url) { 
-                        Html::a(
+                        return Html::a(
                         FA::icon('eye')->size(FA::SIZE_LARGE),     
                         $url,
                         ['title' => 'Просмотр']);
@@ -63,19 +63,7 @@ $SubjItems = ArrayHelper::map($subjects, 'alias', 'alias');
                         ['title' => 'Редактировать']
                                 ) : '';
                     },
-            'delete' => function($url, $model){
-                        return Html::a(
-                        FA::icon('trash')->size(FA::SIZE_LARGE), 
-                        ['delete', 'id' => $model->id],
-                        [
-                          'class' => '',
-                          'title' => 'Удалить',   
-                          'data' => [
-                          'confirm' => 'Вы действительно хотите удалить группу?',
-                          'method' => 'post',
-                             ],
-                        ]);
-                   },
+        
             'group-content' => function ($url) {
                         return Html::a(
                         FA::icon('users')->size(FA::SIZE_LARGE),     

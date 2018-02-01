@@ -81,29 +81,13 @@ class GroupsController extends Controller
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        } else if ($model->curator_userid == Yii::$app->user->identity->id){
             return $this->render('update', [
                 'model' => $model,
             ]);
-        }
-    }
-    public function actionTeachersList()
-    {
-        return $this->render('teacher-list');
-    }
-    
-    public function actionTeacherSet($group_id, $teacher_id)
-    {
-          $model = $this->findModel($group_id);
-          $model->teacher_id = $teacher_id;
-          $model->save();
-          return $this->redirect('/curator/groups/group-content?id=' . $group_id);
-    }
-    
-    public function actionDelete($id)
-    {
-      $this->findModel($id)->delete();
-      return $this->redirect(['/groups']);
+         }else{
+           throw new \yii\web\ForbiddenHttpException('Вам запрещено редактировать данную группу');
+         } 
     }
     
      public function actionGroupContent($id)

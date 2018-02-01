@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
-use app\models\Teachers;
 use yii\helpers\Url;
+use app\models\Users;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Groups */
 
-$query = Teachers::find()->where('id > 0');
+$query = Users::find()->where('user_role = 3');
  $dataProvider = new ActiveDataProvider([
      'query' => $query
  ]);
@@ -23,7 +23,7 @@ $query = Teachers::find()->where('id > 0');
             [
                 'attribute' => 'userFullName',
                 'value' => function($model) use ($group_id) {
-                 return Html::a(Html::encode($model->userFullName), Url::to(['teacher-set', 'group_id' => $group_id, 'teacher_id' => $model->id]));
+                 return Html::a(Html::encode($model->userFullName), Url::to(['curator-set', 'group_id' => $group_id, 'curator_id' => $model->id]));
                 },
                 'format' => 'raw',
 
