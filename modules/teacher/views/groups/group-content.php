@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
        echo GridView::widget([
             'id' => 'kv-grid-students',
             'dataProvider' => $dataProvider,
+            'krajeeDialogSettings' => [ 'useNative'=>true ],
             'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
             'containerOptions' => ['style' => 'overflow: auto'], 
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
