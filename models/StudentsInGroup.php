@@ -59,6 +59,11 @@ class StudentsInGroup extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Groups::className(), ['id' => 'group_id']);
     }
+    
+    public function getGroupCode()
+    {
+        return $this->group->getGroupCode();
+    }
 
     /**
      * @return \yii\db\ActiveQuery

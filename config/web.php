@@ -79,9 +79,12 @@ $config = [
         'teacher' => [
             'class' => 'app\modules\teacher\Module',
         ],
-       'curator' => [
-            'class' => 'app\modules\curator\Module',
+        'curator' => [
+             'class' => 'app\modules\curator\Module',
         ],
+        'student' => [
+              'class' => 'app\modules\student\Module',
+          ],
         'gridview' =>  [
         'class' => '\kartik\grid\Module'
     ],
