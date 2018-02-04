@@ -4,13 +4,19 @@ use yii\data\ActiveDataProvider;
 use app\models\StudentsInLesson;
 use app\models\Lessons;
 
-$lesson = Lessons::findOne(['group_id' => $model->group_id]);
+$lessons = Lessons::findAll(['group_id' => $model->group_id]);
+$lessonIds = [];   
+
+
+      foreach ($lessons as $value) {
+        array_push($lessonIds, $value['id']);
+     }
 $dataProvider = new ActiveDataProvider([
-  'query' => StudentsInLesson::find()->where(['student_id' => $model->student_id, 'lesson_id' => $lesson->id]) 
+  'query' => StudentsInLesson::find()->where(['student_id' => $model->student_id])->having(['lesson_id' => $lessonIds])
 ]);
 ?>
 
-<h5>Группа <?=$model->groupCode ?></h5>
+<h4>Группа <?=$model->groupCode ?>; Предмет: <?=$model->group->subjectName?>; Преподаватель: <?=$model->group->teacherName?></h4>
 <table class="table table-striped table-bordered table-responsive">
   <thead>
     <tr>
