@@ -76,7 +76,7 @@ class LessonsController extends Controller
         $model = new Lessons();
           if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->setStudentsInLessons($model->id);
-              return $this->redirect(['/lessons']);
+              return $this->redirect(['/admin/lessons']);
             } else {
               return $this->render('create', [
                 'model' => $model,

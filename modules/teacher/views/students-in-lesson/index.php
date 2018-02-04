@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'id' => 'kv-grid-marks',
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
+    'krajeeDialogSettings' => [ 'useNative'=>true ],
     'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
     'containerOptions' => ['style' => 'overflow: auto'], 
     'headerRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -94,12 +95,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'asPopover' => true,
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                'data' => [
-                    '1'=> 1, 
-                    '2'=> 2,
-                    '3'=> 3,
+               'data' => [
+                    '5'=> 5, 
                     '4'=> 4,
-                    '5'=> 5
+                    '3'=> 3,
+                    '2'=> 2
                     ],
                      ],
             'pageSummary'=>true
@@ -121,11 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 1, 
-                    '2'=> 2,
-                    '3'=> 3,
+                    '5'=> 5, 
                     '4'=> 4,
-                    '5'=> 5
+                    '3'=> 3,
+                    '2'=> 2
                     ],
                      ],
             'pageSummary'=>true
@@ -147,11 +146,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 1, 
-                    '2'=> 2,
-                    '3'=> 3,
+                    '5'=> 5, 
                     '4'=> 4,
-                    '5'=> 5
+                    '3'=> 3,
+                    '2'=> 2
                     ],
                      ],
             'pageSummary'=>true

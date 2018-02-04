@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\super\controllers;
+namespace app\modules\curator\controllers;
 
 use Yii;
 use app\models\Lessons;
@@ -27,12 +27,12 @@ class LessonsController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-           'access' => [
+              'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['super_module']
+                        'roles' => ['curator_module']
                     ],
                 ],
             ],
@@ -66,42 +66,6 @@ class LessonsController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Lessons model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Lessons();
-          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setStudentsInLessons($model->id);
-              return $this->redirect(['/super/lessons']);
-            } else {
-              return $this->render('create', [
-                'model' => $model,
-            ]);
-        } 
-    }
-
-    /**
-     * Updates an existing Lessons model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setStudentsInLessons($id);
-            return $this->redirect(['view', 'id' => $model->id]);
-          } else {
-            return $this->render('update', [
-              'model' => $model,
-            ]);
-        }
-    }
 
     /**
      * Deletes an existing Lessons model.
@@ -109,15 +73,10 @@ class LessonsController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-      $this->findModel($id)->delete();
-        return $this->redirect(['index']);
-    }
     
      public function actionResults($id)        
     {
-         return $this->redirect(['/super/students-in-lesson', 'id' => $id] );    
+         return $this->redirect(['/curator/students-in-lesson', 'id' => $id] );    
         }
 
     /**

@@ -84,4 +84,9 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     {
         return $this->student->userFullName;
     }
+    
+    public function getGroupCode()
+    {
+        return $this->lesson->group->groupCode;
+    }
 }

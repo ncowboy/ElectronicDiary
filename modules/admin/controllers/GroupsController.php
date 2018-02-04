@@ -116,6 +116,14 @@ class GroupsController extends Controller
           return $this->redirect('/admin/groups/group-content?id=' . $group_id);
     }
     
+    public function actionCuratorSet($group_id, $curator_id)
+    {
+          $model = $this->findModel($group_id);
+          $model->curator_userid = $curator_id;
+          $model->save();
+          return $this->redirect('/admin/groups/group-content?id=' . $group_id);
+    }
+    
     public function actionDelete($id)
     {
       $this->findModel($id)->delete();

@@ -5,15 +5,15 @@ use kartik\grid\GridView;
 
 $lesson = \app\models\Lessons::findOne(['id' => $lesson_id]);
 $this->title = 'Оценки за урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/admin/lessons']];
-$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/admin/lessons/view', 'id' => $lesson->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/curator/lessons']];
+$this->params['breadcrumbs'][] = ['label' => date('d/m/Y в H:i', strtotime($lesson->datetime)), 'url' => ['/curator/lessons/view', 'id' => $lesson->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="students-in-lesson-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::a('К списку уроков', ['/admin/lessons'], ['class'=>'btn btn-warning']) ?>
+    <?= Html::a('К списку уроков', ['/curator/lessons'], ['class'=>'btn btn-warning']) ?>
     <?php
     
    echo GridView::widget([
@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'krajeeDialogSettings' => [ 'useNative'=>true ],
+    'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => 'б/о'],
     'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
     'containerOptions' => ['style' => 'overflow: auto'], 
     'headerRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -80,97 +81,35 @@ $this->params['breadcrumbs'][] = $this->title;
             'vAlign'=>'middle', 
           ],
           [
-            'class'=>'kartik\grid\EditableColumn',
             'attribute'=>'mark_work_at_lesson',
             'contentOptions' => [
                 'class'=>'mark-cell-style'
             ],
             'hAlign'=>'center',
-            'vAlign'=>'middle', 
-            'editableOptions'=>[
-                'format' => 'button',
-                'valueIfNull' => 'б/о',
-                'showAjaxErrors' => false, 
-                'header'=>'Оценка', 
-                'asPopover' => true,
-                'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
-                'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                'data' => [
-                    '5'=> 5, 
-                    '4'=> 4,
-                    '3'=> 3,
-                    '2'=> 2
-                    ],
-                     ],
+            'vAlign'=>'middle',
             'pageSummary'=>true
           ],
           [
-            'class'=>'kartik\grid\EditableColumn',
             'attribute'=>'mark_homework',
             'contentOptions' => [
                 'class'=>'mark-cell-style'
             ],
             'hAlign'=>'center',
-            'vAlign'=>'middle', 
-            'editableOptions'=>[
-                'format' => 'button',
-                'valueIfNull' => 'б/о',
-                'showAjaxErrors' => false, 
-                'header'=>'Оценка', 
-                'asPopover' => true,
-                'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
-                'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                'data' => [
-                    '5'=> 5, 
-                    '4'=> 4,
-                    '3'=> 3,
-                    '2'=> 2
-                    ],
-                     ],
+            'vAlign'=>'middle',
             'pageSummary'=>true
           ],
           [
-            'class'=>'kartik\grid\EditableColumn',
             'attribute'=>'mark_dictation',
             'contentOptions' => [
                 'class'=>'mark-cell-style'
             ],
             'hAlign'=>'center',
-            'vAlign'=>'middle', 
-            'editableOptions'=>[
-                'format' => 'button',
-                'valueIfNull' => 'б/о',
-                'showAjaxErrors' => false, 
-                'header'=>'Оценка', 
-                'asPopover' => true,
-                'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
-                'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                'data' => [
-                    '5'=> 5, 
-                    '4'=> 4,
-                    '3'=> 3,
-                    '2'=> 2
-                    ],
-                     ],
+            'vAlign'=>'middle',
             'pageSummary'=>true
           ],
             [
-            'class'=>'kartik\grid\EditableColumn',
             'attribute'=>'comment',
-            'hAlign'=>'left', 
-            'editableOptions'=>[
-                'valueIfNull' => 'Нет комментария',
-                'asPopover' => false,
-                'inputType' => \kartik\editable\Editable::INPUT_TEXTAREA,
-                'showAjaxErrors' => false, 
-                'submitOnEnter' => false,
-                'options' => [
-                    'class'=>'form-control', 
-                    'rows'=>5, 
-                    'style'=>'width:300px', 
-                    'placeholder'=>'Текст комментария...'
-                ]
-                     ],
+            'hAlign'=>'left',
             'pageSummary'=>true
           ],
    

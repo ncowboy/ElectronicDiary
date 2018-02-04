@@ -33,6 +33,7 @@ class Lessons extends \yii\db\ActiveRecord {
             [['group_id'], 'integer'],
             [['theme'], 'string', 'max' => 256],
             [['comment'], 'string', 'max' => 1024],
+            [['comment'], 'default', 'value' => NULL],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['group_id' => 'id']],
         ];
     }
