@@ -58,7 +58,10 @@ class StudentsInLesson extends \yii\db\ActiveRecord
             'mark_work_at_lesson' => 'Работа на уроке',
             'mark_homework' => 'Домашнее задание',
             'mark_dictation' => 'Диктант',
-            'comment' => 'Комменатрий'
+            'comment' => 'Комменатрий',
+            'marksGroupedString' => 'Урок',
+            'dateTime' => 'Дата и время',
+            'theme' => 'Тема'
         ];
     }
 
@@ -69,6 +72,19 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Lessons::className(), ['id' => 'lesson_id']);
     }
+    public function getDateTime()
+    {
+        return $this->lesson->datetime;
+    }
+    
+     public function getTheme()
+    {
+        return $this->lesson->theme;
+    }
+    
+     public function getMarksGroupedString(){
+       return 'Группа: ' . $this->groupCode . '; преподаватель: ' . $this->lesson->group->teacherName;
+     }
     
     
 
@@ -83,5 +99,10 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     public function getUserFullName()
     {
         return $this->student->userFullName;
+    }
+    
+    public function getGroupCode()
+    {
+        return $this->lesson->group->groupCode;
     }
 }

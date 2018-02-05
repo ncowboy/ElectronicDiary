@@ -135,7 +135,9 @@ background-image: url('img/logo.png');
 }
 
 .mark-cell-style {
-   font-size: x-large; 
+   font-size: x-large;
+   text-align: center;
+   vertical-align: middle;
 }
 
 .personal-label-header {

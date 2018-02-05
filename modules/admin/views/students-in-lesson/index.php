@@ -96,10 +96,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 5, 
-                    '2'=> 4,
+                    '5'=> 5, 
+                    '4'=> 4,
                     '3'=> 3,
-                    '4'=> 2
+                    '2'=> 2
                     ],
                      ],
             'pageSummary'=>true
@@ -121,10 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 5, 
-                    '2'=> 4,
+                    '5'=> 5, 
+                    '4'=> 4,
                     '3'=> 3,
-                    '4'=> 2
+                    '2'=> 2
                     ],
                      ],
             'pageSummary'=>true
@@ -146,10 +146,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'preHeader' =>'<i class="glyphicon glyphicon-edit"></i>   ',
                 'inputType'=>\kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                 'data' => [
-                    '1'=> 5, 
-                    '2'=> 4,
+                    '5'=> 5, 
+                    '4'=> 4,
                     '3'=> 3,
-                    '4'=> 2
+                    '2'=> 2
                     ],
                      ],
             'pageSummary'=>true

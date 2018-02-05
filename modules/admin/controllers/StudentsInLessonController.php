@@ -64,7 +64,7 @@ class StudentsInLessonController extends Controller
          $posted = current($_POST['StudentsInLesson']);
          $post['StudentsInLesson'] = $posted;
          if($model->load($post)) {
-           if ($editableParam === "mark_homework") {
+           if ($editableParam === "mark_homework" || $editableParam === "comment") {
                $model->save();
                return $this->refresh() ;
            }
