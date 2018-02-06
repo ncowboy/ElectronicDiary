@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\Users;
+use app\models\MailerForm;
 
 class SiteController extends Controller
 {
@@ -103,4 +104,5 @@ class SiteController extends Controller
         return $this->goHome();
     }
     
+  
 }

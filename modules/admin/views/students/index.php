@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'parents_email:email',
                 'birth:date',
                  ['class' => 'yii\grid\ActionColumn',
-                 'template' => '{view} {update} {delete} {show-groups}',
+                 'template' => '{view} {update} {delete} {sendreport}',
                  'header' => 'Действия',
                  'visible' => Yii::$app->user->can('all'),  
                  'buttons' => [
@@ -65,6 +65,20 @@ $this->params['breadcrumbs'][] = $this->title;
                              ],
                         ]);
                    },
+                       'sendreport' => function ($url, $model) {
+                        return $model->parents_email !== '' ? Html::a(
+                        FA::icon('envelope')->size(FA::SIZE_LARGE),     
+                        $url,
+                        [
+                          'title' => 'Отправить отчет',
+                          'data' => [
+                            'confirm' => 'Отправить отчет об успеваемости?',
+                            'method' => 'post',
+                            'onsuccess' => 'Отчет отправлен'
+                             ],
+                          ]
+                                ) : '';
+                    },
                  
                 ],   
               ],
