@@ -147,8 +147,6 @@ class StudentsController extends Controller
       $model->id = $id;
       $model->email = $student->parents_email;
       $model->fullName = $student->userFullName;
-      
-    
       if ($model->sendEmail()) {         
       return $this->redirect('/admin/students');
         }else {

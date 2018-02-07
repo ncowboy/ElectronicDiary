@@ -96,6 +96,15 @@ class StudentsInLesson extends \yii\db\ActiveRecord
         return $this->hasOne(Students::className(), ['id' => 'student_id']);
     }
     
+     public function getAttendanceString()
+    {
+       if($this->attendance == 1) {
+         return 'присутств.';
+       } else {
+         return 'отсутств.';
+       }
+    }
+    
     public function getUserFullName()
     {
         return $this->student->userFullName;

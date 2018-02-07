@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\Users;
 use app\models\MailerForm;
+use app\models\Students;
 
 class SiteController extends Controller
 {
@@ -103,6 +104,23 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    
+    public function actionSendStudentReports() {
+      $students = Students::find()->all();
+      foreach ($students as $value) {
+        $student = Students::findOne(['id' => $value->id]);
+        $email = new MailerForm();
+        $email->createFile();
+        $email->id = $student->id;
+        $email->email = $student->parents_email;
+        $email->fullName = $student->userFullName;
+        $email->sendEmail();
+        }
+        
+        return $this->redirect('/site/index');
+       }
+      
+    
     
   
 }
