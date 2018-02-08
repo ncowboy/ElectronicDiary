@@ -34,6 +34,10 @@ class Lessons extends \yii\db\ActiveRecord {
             [['theme'], 'string', 'max' => 256],
             [['comment'], 'string', 'max' => 1024],
             [['comment'], 'default', 'value' => NULL],
+            [['hw_text'], 'string', 'max' => 3060],
+            [['hw_text'], 'default', 'value' => NULL],
+            [['hw_file'], 'string', 'max' => 255],
+            [['hw_file'], 'default', 'value' => NULL],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['group_id' => 'id']],
         ];
     }
@@ -49,6 +53,7 @@ class Lessons extends \yii\db\ActiveRecord {
             'group_id' => 'Код группы',
             'subjectAlias' => 'Предмет',
             'comment' => 'Комментарий',
+            'homework' => 'Домашнее задание'
         ];
     }
 

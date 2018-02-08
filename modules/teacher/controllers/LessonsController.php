@@ -101,7 +101,18 @@ class LessonsController extends Controller
         }else{
             throw new ForbiddenHttpException('Вам запрещено просматривать оценки студентов из групп, не закрепленных за вами');
         }
-     }    
+     }
+     
+     public function actionAddHomework($id) {
+       $model = $this->findModel($id);
+       if($this->isAllowedTeacher($id)){
+         return $this->render('add-homework', [
+           'model' => $model
+         ]);
+       }else{
+         throw new ForbiddenHttpException('Данная группа не закреплена за Вами');
+       } 
+     }
 
     /**
      * Finds the Lessons model based on its primary key value.
