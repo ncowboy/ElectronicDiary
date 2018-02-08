@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use yii\helpers\ArrayHelper;
 
@@ -23,7 +22,26 @@ class MailerForm extends Model
         ];
     }
     
-    public function createFile() {
+    
+    public function sendEmail()
+    {
+      $student = Students::findOne(['id' => $this->id]);
+      if ($this->validate() && $this->createFile()) {
+            Yii::$app->mailer->compose()
+                ->setTo($this->email)->setFrom('merlin.ege@gmail.com')
+                ->setSubject('Отчет об успеваемости студента: ' . $this->fullName)
+                ->attach('uploads/reportStudentId' . $student->id . '.xlsx')
+                ->setHtmlBody('<p>Отчет об успеваемости студента находится во вложении</p>'
+                    . '<p>Данное письмо автоматическое, пожалуйста, не отвечайте на него.</p>'
+                    . '<p>С уважением, <br>учебный центр Merlin.</p>')
+                ->send();
+            return true;
+      }else{
+        return false;
+      }   
+    }
+    
+    protected function createFile() {
       
       $spreadsheet = new Spreadsheet();
       $spreadsheet->setActiveSheetIndex(0);
@@ -38,6 +56,7 @@ class MailerForm extends Model
             ->setCellValue('G1', 'ДЗ')
             ->setCellValue('H1', 'Д')
             ->setCellValue('I1', 'Комментарий');
+       
        $sheet->getStyle('A1:I1')->getAlignment()
            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
        $sheet->getStyle('A1:I1')->getFont()->setBold(\PhpOffice\PhpSpreadsheet\Shared\Font::ARIAL_BOLD);
@@ -51,7 +70,8 @@ class MailerForm extends Model
        $sheet->getStyle('D1:D500')->getAlignment()->setWrapText(true);
        $sheet->getStyle('I1:I500')->getAlignment()->setWrapText(true);
        $sheet->setAutoFilter('A1:I1');
-       
+       $sheet->getStyle('A2:A500')->getNumberFormat()
+       ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDDSLASH);
       
        $sheet->getStyle('E1:H500')->getAlignment()
            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -63,7 +83,7 @@ class MailerForm extends Model
       });
            foreach ($inLesson as $key => $value) {
              
-        $sheet->setCellValueByColumnAndRow(1, $key+2, $value->lesson->datetime)
+        $sheet->setCellValueByColumnAndRow(1, $key+2, date('d.m.Y H:i',strtotime($value->lesson->datetime)))
         ->setCellValueByColumnAndRow(2, $key+2, $value->groupCode)
          ->setCellValueByColumnAndRow(3, $key+2, $value->lesson->group->subjectName)
          ->setCellValueByColumnAndRow(4, $key+2, $value->lesson->theme)
@@ -73,6 +93,7 @@ class MailerForm extends Model
         ->setCellValueByColumnAndRow(8, $key+2, $value->mark_dictation)
         ->setCellValueByColumnAndRow(9, $key+2, $value->comment);
        }
+  
        $sheet->getStyle('A1:I' . (string)(count($inLesson)+1))->getBorders()->getAllBorders()
          ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
        
@@ -84,28 +105,12 @@ class MailerForm extends Model
       
       $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
       $file = 'uploads/reportStudentId' . $student->id . '.xlsx';
-      var_dump($student);
       $writer->save($file);
       
       return true;
   
     }
     
-    public function sendEmail()
-    {
-      $student = Students::findOne(['id' => $this->id]);
-      if ($this->validate()) {
-            Yii::$app->mailer->compose()
-                ->setTo($this->email)->setFrom('merlin.ege@gmail.com')
-                ->setSubject('Отчет об успеваемости студента: ' . $this->fullName)
-                ->setTextBody('какие-то данные')
-                ->attach('uploads/reportStudentId' . $student->id . '.xlsx')
-                ->send();
-            return true;
-      }else{
-        return false;
-      }   
-    }
     
     
 }

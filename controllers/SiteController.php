@@ -108,15 +108,15 @@ class SiteController extends Controller
     public function actionSendStudentReports() {
       $students = Students::find()->all();
       foreach ($students as $value) {
-        $student = Students::findOne(['id' => $value->id]);
         $email = new MailerForm();
-        $email->createFile();
-        $email->id = $student->id;
-        $email->email = $student->parents_email;
-        $email->fullName = $student->userFullName;
+        $email->setAttributes([
+        'id' => $value->id,
+        'email' => $value->parents_email,
+        'fullName' => $value->userFullName
+        ]);
         $email->sendEmail();
-        }
         
+        }
         return $this->redirect('/site/index');
        }
       
