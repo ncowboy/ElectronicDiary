@@ -107,7 +107,8 @@ class SiteController extends Controller
     
     public function actionSendStudentReports() {
       $students = Students::find()->all();
-      foreach ($students as $value) {
+      if(isset($students)) {
+        foreach ($students as $value) {
         $email = new MailerForm();
         $email->setAttributes([
         'id' => $value->id,
@@ -117,6 +118,7 @@ class SiteController extends Controller
         $email->sendEmail();
         
         }
+      }
         return $this->redirect('/site/index');
        }
       
