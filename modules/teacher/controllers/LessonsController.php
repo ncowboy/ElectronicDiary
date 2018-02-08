@@ -11,6 +11,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+
+
 
 
 /**
@@ -105,13 +108,23 @@ class LessonsController extends Controller
      
      public function actionAddHomework($id) {
        $model = $this->findModel($id);
-       if($this->isAllowedTeacher($id)){
+      
+           if (Yii::$app->request->isPost) {
+            $model->hw_file = UploadedFile::getInstances($model, 'hw_file');
+            if ($model->hw_file && $model->validate()) {
+              foreach ($model->hw_file as $value) {
+                $value->saveAs('uploads/' . $value->baseName . '.' . $value->extension);
+              } 
+            $model->hw_file = implode(',', $model->hw_file);
+            $model->save();
+              
+            }
+        
+                  }
          return $this->render('add-homework', [
-           'model' => $model
+           'model' => $model,
          ]);
-       }else{
-         throw new ForbiddenHttpException('Данная группа не закреплена за Вами');
-       } 
+   
      }
 
     /**

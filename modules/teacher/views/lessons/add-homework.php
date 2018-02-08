@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-
 use yii\widgets\ActiveForm;
 
 
@@ -14,17 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="lessons-upload-homework">
   <div class="col-md-6 col-md-offset-3">  
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php $form = ActiveForm::begin();?>
-    <?= $form->field($model, 'hw_text')->textarea(['maxlength' => true]); ?>
-    <?= $form->field($model, 'hw_file')->fileInput(); ?>
-    
-  <div class="form-group">
-        <?= Html::submitButton('Добавить', [
-          'class' => 'btn btn-success'
-          ]) ?>
-       <?= Html::a('Отменить', ['/teacher/lessons'], ['class'=>'btn btn-danger']) ?>
-    </div>
-
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
+    <?= $form->field($model, 'hw_file[]')->fileInput(['multiple' => true]); ?>
+    <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']); ?>
     <?php ActiveForm::end(); ?>
   </div>
 </div>

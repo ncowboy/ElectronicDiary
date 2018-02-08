@@ -36,8 +36,7 @@ class Lessons extends \yii\db\ActiveRecord {
             [['comment'], 'default', 'value' => NULL],
             [['hw_text'], 'string', 'max' => 3060],
             [['hw_text'], 'default', 'value' => NULL],
-            [['hw_file'], 'string', 'max' => 255],
-            [['hw_file'], 'default', 'value' => NULL],
+            [['hw_file'], 'file', 'maxFiles' => 10],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['group_id' => 'id']],
         ];
     }

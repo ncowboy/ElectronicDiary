@@ -12,6 +12,7 @@ use app\models\Users;
 use app\models\MailerForm;
 use app\models\Students;
 
+
 class SiteController extends Controller
 {
     /**
@@ -121,8 +122,4 @@ class SiteController extends Controller
       }
         return $this->redirect('/site/index');
        }
-      
-    
-    
-  
 }
