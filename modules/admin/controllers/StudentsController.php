@@ -9,6 +9,7 @@ use app\models\StudentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\MailerForm;
 
 /**
  * StudentsController implements the CRUD actions for Students model.
@@ -25,6 +26,7 @@ class StudentsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'sendreport ' => ['POST'],
                 ],
             ],
               'access' => [
@@ -136,5 +138,19 @@ class StudentsController extends Controller
         } else {
             throw new NotFoundHttpException('Запрошенная страница не существует');
         }
+    }
+    
+     public function actionSendreport($id)
+    {
+      $student = Students::findOne(['id' => $id]); 
+      $model = new MailerForm();
+      $model->id = $id;
+      $model->email = $student->parents_email;
+      $model->fullName = $student->userFullName;
+      if ($model->sendEmail()) {         
+      return $this->redirect('/admin/students');
+        }else {
+         throw new NotFoundHttpException('Что-то пошло не так');
+       }
     }
 }

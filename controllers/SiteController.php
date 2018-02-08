@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\Users;
+use app\models\MailerForm;
+use app\models\Students;
 
 class SiteController extends Controller
 {
@@ -103,4 +105,24 @@ class SiteController extends Controller
         return $this->goHome();
     }
     
+    public function actionSendStudentReports() {
+      $students = Students::find()->all();
+      if(isset($students)) {
+        foreach ($students as $value) {
+        $email = new MailerForm();
+        $email->setAttributes([
+        'id' => $value->id,
+        'email' => $value->parents_email,
+        'fullName' => $value->userFullName
+        ]);
+        $email->sendEmail();
+        
+        }
+      }
+        return $this->redirect('/site/index');
+       }
+      
+    
+    
+  
 }

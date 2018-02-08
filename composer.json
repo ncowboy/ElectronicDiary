@@ -30,7 +30,9 @@
         "kartik-v/yii2-widget-colorinput": "*",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
-        "kartik-v/yii2-export": "*"
+        "kartik-v/yii2-export": "*",
+        "swiftmailer/swiftmailer": "5.x-dev",
+        "phpoffice/phpspreadsheet": "~1.1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
