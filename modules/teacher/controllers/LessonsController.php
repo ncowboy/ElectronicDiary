@@ -16,6 +16,7 @@ use yii\web\UploadedFile;
 
 
 
+
 /**
  * LessonsController implements the CRUD actions for Lessons model.
  */
@@ -108,7 +109,6 @@ class LessonsController extends Controller
      
      public function actionAddHomework($id) {
        $model = $this->findModel($id);
-      
            if (Yii::$app->request->isPost) {
             $model->hw_file = UploadedFile::getInstances($model, 'hw_file');
             if ($model->hw_file && $model->validate()) {
@@ -119,8 +119,8 @@ class LessonsController extends Controller
             $model->save();
               
             }
-        
-                  }
+            
+          }
          return $this->render('add-homework', [
            'model' => $model,
          ]);
