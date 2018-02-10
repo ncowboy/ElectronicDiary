@@ -108,23 +108,32 @@ class LessonsController extends Controller
      }
      
      public function actionAddHomework($id) {
-       $model = $this->findModel($id);
-           if (Yii::$app->request->isPost) {
-            $model->hw_file = UploadedFile::getInstances($model, 'hw_file');
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+           $model->hw_file = UploadedFile::getInstances($model, 'hw_file');
             if ($model->hw_file && $model->validate()) {
               foreach ($model->hw_file as $value) {
                 $value->saveAs('uploads/' . $value->baseName . '.' . $value->extension);
               } 
             $model->hw_file = implode(',', $model->hw_file);
+            }
             $model->save();
+            return $this->refresh();
+        }else{
+            return $this->render('add-homework', [
+           'model' => $model,
+         ]);
+            
+        }
+            
+            
+         /*               
               
             }
             
           }
-         return $this->render('add-homework', [
-           'model' => $model,
-         ]);
-   
+         
+   */
      }
 
     /**

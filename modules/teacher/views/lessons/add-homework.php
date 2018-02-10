@@ -11,11 +11,15 @@ $this->title = 'Домашнее задание к уроку: ' . date('d/m/Y �
 $this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/teacher/lessons']];
 $this->params['breadcrumbs'][] = $this->title;
 
+
 ?>
 <div class="lessons-upload-homework">
-  <div class="col-md-6 col-md-offset-3">  
+  <div class="col-md-8 col-md-offset-2">  
     <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
+    <?= $form->field($model, 'hw_text')->textarea([
+        'rows' => '20'
+    ])->label(''); ?>
     <?= $form->field($model, 'hw_file[]')->fileInput(['multiple' => true])->widget(FileInput::className(), [
       'language' => 'ru',
       'options' => [
@@ -30,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
           'browseIcon' => '<i class="fa fa-lg fa-folder-open"></i> ',
           'browseLabel' => 'Добавить файлы'
     ]
-    ]);?> 
+    ])->label('');?> 
     <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']); ?>
     <?php ActiveForm::end(); ?>
   </div>
