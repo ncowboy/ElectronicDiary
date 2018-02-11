@@ -4,11 +4,14 @@ use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\FileHelper;
+use rmrevin\yii\fontawesome\FA;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Lessons */
-
-$files = FileHelper::findFiles('uploads/hw/lesson' . $model->id);
+$dir = 'uploads/hw/lesson' . $model->id;
+if(is_dir($dir)) {
+$files = FileHelper::findFiles($dir);
+}
 
 ?>
 <div class="lessons-update-homework">
@@ -46,9 +49,22 @@ $files = FileHelper::findFiles('uploads/hw/lesson' . $model->id);
     <?php 
     if (isset($files)){
         foreach ($files as $value) {
-            echo "<p> ". Html::a(basename($value), '/'. $value, [
+            echo "<p>"
+            . Html::a(basename($value), '/'. $value, [
                 'target' => '_blank'
-            ]) . "</p>";
+            ])
+            . ' ' . Html::a(FA::icon('ban'), 
+                           ['fileDelete', 'src' => $value],
+                           [
+                            'title' => 'Удалить', 
+                            'style' =>'color: #d9534f;',   
+                            'data' => [
+                            'confirm' => 'Вы действительно хотите удалить файл?',
+                            'method' => 'post',
+                                 ],
+                            ]) .
+                    
+                    "</p>";
         }
     }
     ?>

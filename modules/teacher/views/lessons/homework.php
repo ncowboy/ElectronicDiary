@@ -14,8 +14,10 @@ $this->title = 'Домашнее задание к уроку: ' . date('d/m/Y �
 $this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/teacher/lessons']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$files = FileHelper::findFiles('uploads/hw/lesson' . $model->id);
-
+$dir = 'uploads/hw/lesson' . $model->id;
+if(is_dir($dir))    {
+    $files = FileHelper::findFiles($dir);
+  }
 ?>
 
 <div class="lessons-homework">
