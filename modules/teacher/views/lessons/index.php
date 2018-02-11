@@ -45,6 +45,16 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                     ],
                  'subjectAlias', 
                  'theme',
+                 [
+                   'attribute' => 'homework',
+                   'value' => function($model){
+                     return !isset($model->hw_text) ? 
+                          Html::a(' добавить', Url::to(['/teacher/lessons/add-homework', 'id' => $model->id])):
+                         Html::a('просмотр', Url::to(['/teacher/lessons/homework', 'id' => $model->id])) . 
+                             ' / ' . Html::a('редактировать', Url::to(['/teacher/lessons/homework-update', 'id' => $model->id])) ;
+                   },
+                     'format' => 'raw',   
+                 ],           
                  'comment',
                 ['class' => 'yii\grid\ActionColumn',
                         'template' => ' {view} {update} {results}',

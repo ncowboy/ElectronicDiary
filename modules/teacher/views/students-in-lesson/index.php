@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="students-in-lesson-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::a('К списку уроков', ['/lessons'], ['class'=>'btn btn-warning']) ?>
+    <?= Html::a('К списку уроков', ['/teacher/lessons'], ['class'=>'btn btn-warning']) ?>
     <?php
     
    echo GridView::widget([

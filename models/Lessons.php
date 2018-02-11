@@ -23,6 +23,8 @@ class Lessons extends \yii\db\ActiveRecord {
     public static function tableName() {
         return 'lessons';
     }
+    
+    public $hw_files;
 
     /**
      * @inheritdoc
@@ -34,6 +36,9 @@ class Lessons extends \yii\db\ActiveRecord {
             [['theme'], 'string', 'max' => 256],
             [['comment'], 'string', 'max' => 1024],
             [['comment'], 'default', 'value' => NULL],
+            [['hw_text'], 'string', 'max' => 3060],
+            [['hw_text'], 'default', 'value' => NULL],
+            [['hw_files'], 'file', 'maxFiles' => 10, 'extensions' => ['jpg','png','jpeg', 'gif', 'pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'ppsx']],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['group_id' => 'id']],
         ];
     }
@@ -49,6 +54,7 @@ class Lessons extends \yii\db\ActiveRecord {
             'group_id' => 'Код группы',
             'subjectAlias' => 'Предмет',
             'comment' => 'Комментарий',
+            'homework' => 'Домашнее задание'
         ];
     }
 
