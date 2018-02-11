@@ -13,7 +13,7 @@ class m180208_111808_alter_table_lessons_add_homework extends Migration
     public function safeUp()
     {
       $this->addColumn('lessons', 'hw_text', 'varchar(3060) default null');
-      $this->addColumn('lessons', 'hw_file', 'varchar(255) default null');
+ 
     }
 
     /**

@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 
 
@@ -107,33 +108,42 @@ class LessonsController extends Controller
         }
      }
      
-     public function actionAddHomework($id) {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post())) {
-           $model->hw_file = UploadedFile::getInstances($model, 'hw_file');
-            if ($model->hw_file && $model->validate()) {
-              foreach ($model->hw_file as $value) {
-                $value->saveAs('uploads/' . $value->baseName . '.' . $value->extension);
-              } 
-            $model->hw_file = implode(',', $model->hw_file);
+     
+     
+     public function actionHomework($id) {
+         $model = $this->findModel($id);
+         if($this->isAllowedTeacher($id)){  
+            return $this->render('homework', [
+                  'model' => $model
+            ]);
+                }else{
+             throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+        }    
+     }
+     
+     public function actionHomeworkUpdate($id) {
+         $model = $this->findModel($id);
+         if($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()){
+           return $this->redirect(['/teacher/lessons/homework', 'id' => $model->id]);
+        }else if(!$this->isAllowedTeacher($id)) {
+                throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+            } else {
+                return $this->render('homework-update', [
+                    'model' => $model
+                ]);
             }
-            $model->save();
-            return $this->refresh();
+     }
+     
+     public function actionAddHomework($id) {
+        $model = $this->findModel($id); 
+        if ($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()) {
+            return $this->redirect(['/teacher/lessons/homework', 'id' => $model->id]);
         }else{
             return $this->render('add-homework', [
            'model' => $model,
          ]);
             
         }
-            
-            
-         /*               
-              
-            }
-            
-          }
-         
-   */
      }
 
     /**
@@ -158,5 +168,21 @@ class LessonsController extends Controller
      $teacher = Teachers::findOne(['id' => $group->teacher_id]);
      return \Yii::$app->user->id === $teacher->user_id; 
      
+    }
+    protected function filesUpload($id) {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+           $model->hw_files = UploadedFile::getInstances($model, 'hw_files');
+            if ($model->hw_files && $model->validate()) {
+             $dir = 'uploads/hw/lesson' . $model->id . '/';
+             if(!is_dir($dir)){
+                 FileHelper::createDirectory($dir);
+             }
+              foreach ($model->hw_files as $value) {
+                $value->saveAs($dir . $value->baseName . '.' . $value->extension);
+              }
+             }
+           }    
+        return $model->save();    
     }
 }

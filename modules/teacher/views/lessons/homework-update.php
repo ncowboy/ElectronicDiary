@@ -10,11 +10,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 ?>
-<div class="lessons-add-homework">
+<div class="lessons-update-homework">
     <h1><?= Html::encode($this->title) ?></h1>
     <?= $this->render('_hw_form', [
         'model' => $model,
-        'action' => 'add'
+        'action' => 'update'
     ]); ?>
 </div>
 
