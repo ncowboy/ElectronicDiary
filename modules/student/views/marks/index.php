@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use kartik\export\ExportMenu;
+use rmrevin\yii\fontawesome\FA;
 
 $this->title = 'Успеваемость ученика';
 $this->params['breadcrumbs'][] = ['label' => 'Оценки'];
@@ -22,6 +23,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Оценки'];
     'dropdownOptions' => [
       'icon' => '<i class="fa fa-share-square-o"></i>',
       'label' => ' Экспорт',
+      'title' => 'Загрузить отчет в выбранном формате',
       'class' => 'btn btn-default'
     ],
     'columns'=>[
@@ -84,9 +86,21 @@ $this->params['breadcrumbs'][] = ['label' => 'Оценки'];
       'footer' => false
       ],
     'toolbar' =>  [
-        $export
+        $export,
+        Html::a(FA::icon('envelope-o') . ' Отправить', 
+            [
+            '/student/marks/send-report', 
+            'id' => $id
+            ], 
+            [
+              'class' => 'btn btn-default',
+              'title' => 'Отправить отчет на email представителя',
+              'data' => [
+                          'confirm' => 'Отправить отчет на email?',
+                ]
+              ])
     ],
-    // set export properties
+  
   
     'columns'=>[
       [
