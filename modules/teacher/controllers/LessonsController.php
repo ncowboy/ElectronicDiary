@@ -145,14 +145,14 @@ class LessonsController extends Controller
             
         }
      }
+     
+     public function actionFileDelete($src, $lessonId) {
+       if(file_exists($src) && unlink($src)){
+        return $this->redirect(['/teacher/lessons/homework-update', 'id' => $lessonId]);
+       }
+     }
 
-    /**
-     * Finds the Lessons model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Lessons the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+  
     protected function findModel($id)
     {
         if (($model = Lessons::findOne($id)) !== null) {

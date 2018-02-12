@@ -54,7 +54,7 @@ $files = FileHelper::findFiles($dir);
                 'target' => '_blank'
             ])
             . ' ' . Html::a(FA::icon('ban'), 
-                           ['fileDelete', 'src' => $value],
+                           ['file-delete', 'src' => $value, 'lessonId' => $model->id],
                            [
                             'title' => 'Удалить', 
                             'style' =>'color: #d9534f;',   
