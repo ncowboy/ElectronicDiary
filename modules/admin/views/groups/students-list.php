@@ -1,15 +1,29 @@
-<?php
+  <?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\Students;
+use app\models\StudentsInGroup;
+use yii\helpers\ArrayHelper;
 
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Groups */
+$studentsInGroup = StudentsInGroup::findAll(['group_id' => $groupId]);
+$arr = [];
+if(isset($studentsInGroup)){
+  foreach ($studentsInGroup as $value){
+    array_push($arr, $value['student_id']);
+  }
+}
 
 $query = Students::find()->where('id > 0');
+if(!empty($arr)){
+  $query->andWhere('id NOT IN (' . implode(',', $arr) . ')') ;
+}
+
+
  $dataProvider = new ActiveDataProvider([
      'query' => $query
  ]);

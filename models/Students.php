@@ -36,7 +36,7 @@ class Students extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'integer'],
-            [['phone_number', 'parents_number'], 'required'],
+            [['phone_number', 'parents_number'], 'required', 'message' => 'Поле не может быть пустым'],
             [['birth'], 'safe'],
             [['phone_number', 'parents_number'], 'string', 'max' => 20],
             [['parents_name'], 'string', 'max' => 50],
