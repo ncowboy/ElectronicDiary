@@ -15,6 +15,6 @@ namespace app\helpers;
 
 class Hasher {
     public static function hash($string) {
-        return md5($string);
+        return \Yii::$app->getSecurity()->generatePasswordHash($string, 10);
     }
 }
