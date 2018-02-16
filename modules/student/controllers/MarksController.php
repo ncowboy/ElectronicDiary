@@ -3,15 +3,38 @@
 namespace app\modules\student\controllers;
 
 use yii\web\Controller;
+use app\models\MyAccessControl;
 use app\models\Students;
 use yii\data\ActiveDataProvider;
 use app\models\Users;
 use app\models\MailerForm;
+use yii\filters\VerbFilter;
 
 
 
 class MarksController extends Controller
 {
+      public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => MyAccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['student_module'],
+                    ],
+                ],
+            ],
+            
+        ];
+    }
     
     public function actionIndex()
     {

@@ -46,6 +46,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Мои оценки', 'url' => ['/student/marks']],
+            ['label' => 'Мои задания', 'url' => ['/student/homeworks']],
           
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/login']]
