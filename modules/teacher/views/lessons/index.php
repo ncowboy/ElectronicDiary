@@ -20,6 +20,9 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 <div class="lessons-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <?= Html::a('Добавить урок', ['create'], ['class' => 'btn btn-success']); ?>
+    </p>
       <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,

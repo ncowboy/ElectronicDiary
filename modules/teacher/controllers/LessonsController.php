@@ -77,6 +77,24 @@ class LessonsController extends Controller
           throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
       }
     }
+    
+     /**
+     * Creates a new Lessons model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Lessons();
+          if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->setStudentsInLessons($model->id);
+              return $this->redirect(['/teacher/lessons']);
+            } else {
+              return $this->render('create', [
+                'model' => $model,
+            ]);
+        } 
+    }
 
     
     /**

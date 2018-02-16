@@ -4,11 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\datetime\DateTimePicker;
 use yii\helpers\ArrayHelper;
+use app\models\Teachers;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lessons */
 /* @var $form yii\widgets\ActiveForm */
 
-$groups = \app\models\Groups::find()->all();
+$user = Yii::$app->user->identity;
+$teacher = Teachers::findOne(['user_id' => $user->id]);
+$groups = \app\models\Groups::findAll(['teacher_id' => $teacher->id]);
 $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 ?>
 
@@ -24,7 +27,6 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
             'options' => ['placeholder' => 'Выберите дату...'],
             'language' => 'ru',
             'type' => DateTimePicker::TYPE_INPUT,
-            'disabled' => TRUE,
             'pluginOptions' => [
                 'autoclose' => true,
             ]
@@ -34,7 +36,6 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
 
     <?= $form->field($model, 'group_id')->dropDownList($groupItems, [
             'prompt' => 'Выберите группу',
-            'disabled' => TRUE,
         ]) ?>
     <?= $form->field($model, 'comment')->textArea(['maxlength' => true]) ?>
 
