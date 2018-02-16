@@ -31,9 +31,11 @@ class Lessons extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['datetime'], 'safe'],
+            [['datetime'], 'required'],
             [['group_id'], 'integer'],
+            [['group_id'], 'required', 'message' => 'Выберите группу'],
             [['theme'], 'string', 'max' => 256],
+            [['theme'], 'required', 'message' => 'Укажите тему урока'],
             [['comment'], 'string', 'max' => 1024],
             [['comment'], 'default', 'value' => NULL],
             [['hw_text'], 'string', 'max' => 3060],
@@ -99,12 +101,14 @@ class Lessons extends \yii\db\ActiveRecord {
     public function setStudentsInLessons($lessonId) {
         $lesson = $this->findOne($lessonId);
         $students = $lesson->group->students;
-        foreach ($students as $value) {
+        if (isset($students)) {
+          foreach ($students as $value) {
             $model = new StudentsInLesson();
             $model->student_id = $value[id];
             $model->lesson_id = $lesson->id;
             $model->save();
         }
+      }  
     }
 
 }

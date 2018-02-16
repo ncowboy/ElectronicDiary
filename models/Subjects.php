@@ -29,7 +29,7 @@ class Subjects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'alias'], 'required'],
+            [['name', 'alias'], 'required', 'message'=>'Поле не может быть пустым'],
             [['name', 'alias'], 'string', 'max' => 50],
         ];
     }

@@ -32,7 +32,7 @@ class Buildings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'alias', 'region', 'metro', 'adress'], 'required'],
+            [['name', 'alias', 'region', 'metro', 'adress'], 'required', 'message' => 'поле не может быть пустым' ],
             [['name', 'alias', 'region', 'metro'], 'string', 'max' => 50],
             [['adress'], 'string', 'max' => 128],
         ];

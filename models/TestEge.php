@@ -32,7 +32,7 @@ class TestEge extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['student_id', 'teacher_id', 'date', 'mark'], 'required'],
+            [['student_id', 'teacher_id', 'date', 'mark'], 'required', 'message'=>'Поле не может быть пустым'],
             [['student_id', 'teacher_id', 'mark'], 'integer'],
             [['date'], 'safe'],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => Students::className(), 'targetAttribute' => ['student_id' => 'id']],
