@@ -30,7 +30,7 @@ class GroupTypes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_code', 'type_alias', 'description'], 'required'],
+            [['type_code', 'type_alias', 'description'], 'required', 'message' => 'поле не может быть пустым'],
             [['type_code', 'type_alias'], 'string', 'max' => 20],
             [['description'], 'string', 'max' => 50],
         ];

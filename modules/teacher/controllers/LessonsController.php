@@ -11,6 +11,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
+
+
+
 
 
 /**
@@ -101,15 +106,53 @@ class LessonsController extends Controller
         }else{
             throw new ForbiddenHttpException('Вам запрещено просматривать оценки студентов из групп, не закрепленных за вами');
         }
-     }    
+     }
+     
+     
+     
+     public function actionHomework($id) {
+         $model = $this->findModel($id);
+         if($this->isAllowedTeacher($id)){  
+            return $this->render('homework', [
+                  'model' => $model
+            ]);
+                }else{
+             throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+        }    
+     }
+     
+     public function actionHomeworkUpdate($id) {
+         $model = $this->findModel($id);
+         if($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()){
+           return $this->redirect(['/teacher/lessons/homework', 'id' => $model->id]);
+        }else if(!$this->isAllowedTeacher($id)) {
+                throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+            } else {
+                return $this->render('homework-update', [
+                    'model' => $model
+                ]);
+            }
+     }
+     
+     public function actionAddHomework($id) {
+        $model = $this->findModel($id); 
+        if ($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()) {
+            return $this->redirect(['/teacher/lessons/homework', 'id' => $model->id]);
+        }else{
+            return $this->render('add-homework', [
+           'model' => $model,
+         ]);
+            
+        }
+     }
+     
+     public function actionFileDelete($src, $lessonId) {
+       if(file_exists($src) && unlink($src)){
+        return $this->redirect(['/teacher/lessons/homework-update', 'id' => $lessonId]);
+       }
+     }
 
-    /**
-     * Finds the Lessons model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Lessons the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+  
     protected function findModel($id)
     {
         if (($model = Lessons::findOne($id)) !== null) {
@@ -125,5 +168,21 @@ class LessonsController extends Controller
      $teacher = Teachers::findOne(['id' => $group->teacher_id]);
      return \Yii::$app->user->id === $teacher->user_id; 
      
+    }
+    protected function filesUpload($id) {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+           $model->hw_files = UploadedFile::getInstances($model, 'hw_files');
+            if ($model->hw_files && $model->validate()) {
+             $dir = 'uploads/hw/lesson' . $model->id . '/';
+             if(!is_dir($dir)){
+                 FileHelper::createDirectory($dir);
+             }
+              foreach ($model->hw_files as $value) {
+                $value->saveAs($dir . $value->baseName . '.' . $value->extension);
+              }
+             }
+           }    
+        return $model->save();    
     }
 }
