@@ -126,8 +126,6 @@ class LessonsController extends Controller
         }
      }
      
-     
-     
      public function actionHomework($id) {
          $model = $this->findModel($id);
          if($this->isAllowedTeacher($id)){  
@@ -135,7 +133,7 @@ class LessonsController extends Controller
                   'model' => $model
             ]);
                 }else{
-             throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+             throw new ForbiddenHttpException('Вам запрещен доступ к урокам групп, не закрепленных за вами');
         }    
      }
      
@@ -144,7 +142,7 @@ class LessonsController extends Controller
          if($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()){
            return $this->redirect(['/teacher/lessons/homework', 'id' => $model->id]);
         }else if(!$this->isAllowedTeacher($id)) {
-                throw new ForbiddenHttpException('Вам запрещено просматривать уроки групп, не закрепленных за вами');
+                throw new ForbiddenHttpException('Вам запрещен доступ к урокам групп, не закрепленных за вами');
             } else {
                 return $this->render('homework-update', [
                     'model' => $model
@@ -156,11 +154,12 @@ class LessonsController extends Controller
         $model = $this->findModel($id); 
         if ($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()) {
             return $this->redirect(['/teacher/lessons/homework', 'id' => $model->id]);
-        }else{
-            return $this->render('add-homework', [
-           'model' => $model,
-         ]);
-            
+        }else if(!$this->isAllowedTeacher($id)){
+            throw new ForbiddenHttpException('Вам запрещен доступ к урокам групп, не закрепленных за вами');
+           }else{
+                return $this->render('add-homework', [
+              'model' => $model,
+            ]);  
         }
      }
      
