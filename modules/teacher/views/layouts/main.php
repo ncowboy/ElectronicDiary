@@ -33,7 +33,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    
+     $url = Yii::$app->request->getUrl();
     NavBar::begin([
         'brandLabel' => '',
         'brandUrl' => Yii::$app->homeUrl,
@@ -45,9 +45,9 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Мои группы', 'url' => ['/teacher/groups']],
-            ['label' => 'Мои ученики', 'url' => ['/teacher/students']],
-            ['label' => 'Мои уроки', 'url' => ['/teacher/lessons']] ,
+            ['label' => 'Мои группы', 'url' => ['/teacher/groups'], 'active' => $url == Url::toRoute(['/teacher/groups'])],
+            ['label' => 'Мои ученики', 'url' => ['/teacher/students'], 'active' => $url == Url::toRoute(['/teacher/students'])],
+            ['label' => 'Мои уроки', 'url' => ['/teacher/lessons'], 'active' => $url == Url::toRoute(['/teacher/lessons'])] ,
           
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/login']]

@@ -45,6 +45,7 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'encodeLabels' => false,
+        'activateItems' => true,
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
           

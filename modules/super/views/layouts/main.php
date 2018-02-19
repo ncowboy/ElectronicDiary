@@ -33,7 +33,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    
+    $url = Yii::$app->request->getUrl();
     NavBar::begin([
         'brandLabel' => '',
         'brandUrl' => Yii::$app->homeUrl,
@@ -41,19 +41,20 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
+  echo Nav::widget([
         'encodeLabels' => false,
+        'activateParents' => true, 
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Пользователи', 'url' => ['/super/users']],
-            ['label' => 'Учебные группы', 'url' => ['/super/groups']],
-            ['label' => 'Ученики', 'url' => ['/super/students']],
-            ['label' => 'Преподаватели', 'url' => ['/super/teachers']],
-            ['label' => 'Уроки', 'url' => ['/super/lessons']] ,
+            ['label' => 'Пользователи', 'url' => ['/super/users'], 'active' => $url == Url::toRoute(['/super/users'])],
+            ['label' => 'Учебные группы', 'url' => ['/super/groups'], 'active' => $url == Url::toRoute(['/super/groups'])],
+            ['label' => 'Ученики', 'url' => ['/super/students'], 'active' => $url == Url::toRoute(['/super/students'])],
+            ['label' => 'Преподаватели', 'url' => ['/super/teachers'], 'active' => $url == Url::toRoute(['/super/teachers'])],
+            ['label' => 'Уроки', 'url' => ['/super/lessons'], 'active' => $url == Url::toRoute(['/super/lessons'])] ,
             ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => ['/super/buildings']],
-                ['label' => 'Предметы', 'url' => ['/super/subjects']],
-                ['label' => 'Типы групп', 'url' => ['/super/group-types']]
+                ['label' => 'Филиалы', 'url' => ['/super/buildings'], 'active' => $url == Url::toRoute(['/super/buildings'])],
+                ['label' => 'Предметы', 'url' => ['/super/subjects'], 'active' => $url == Url::toRoute(['/super/subjects'])],
+                ['label' => 'Типы групп', 'url' => ['/super/group-types'], 'active' => $url == Url::toRoute(['/super/group-types'])]
             ]],
           
             Yii::$app->user->isGuest ? (
@@ -61,7 +62,7 @@ AppAsset::register($this);
             ) :        
        (       
                 ['label' => '<span class="glyphicon glyphicon-user"></span>', 'items' =>[
-                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/super')).'</div>',
+                    '<div class="container-fluid personal-label-header">'.Html::a(Html::encode($loggedUserLabel), Url::to('/super/personal')).'</div>',
                     '<li>' . Html::a('Выход', '/site/logout', ['data' => [
                 'confirm' => 'Выйти?',
                 'method' => 'post',

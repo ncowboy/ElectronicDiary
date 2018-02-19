@@ -33,7 +33,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    
+    $url = Yii::$app->request->getUrl();
     NavBar::begin([
         'brandLabel' => '',
         'brandUrl' => Yii::$app->homeUrl,
@@ -43,17 +43,18 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'encodeLabels' => false,
+        'activateParents' => true, 
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Пользователи', 'url' => ['/admin/users']],
-            ['label' => 'Учебные группы', 'url' => ['/admin/groups']],
-            ['label' => 'Ученики', 'url' => ['/admin/students']],
-            ['label' => 'Преподаватели', 'url' => ['/admin/teachers']],
-            ['label' => 'Уроки', 'url' => ['/admin/lessons']] ,
+            ['label' => 'Пользователи', 'url' => ['/admin/users'], 'active' => $url == Url::toRoute(['/admin/users'])],
+            ['label' => 'Учебные группы', 'url' => ['/admin/groups'], 'active' => $url == Url::toRoute(['/admin/groups'])],
+            ['label' => 'Ученики', 'url' => ['/admin/students'], 'active' => $url == Url::toRoute(['/admin/students'])],
+            ['label' => 'Преподаватели', 'url' => ['/admin/teachers'], 'active' => $url == Url::toRoute(['/admin/teachers'])],
+            ['label' => 'Уроки', 'url' => ['/admin/lessons'], 'active' => $url == Url::toRoute(['/admin/lessons'])] ,
             ['label' => 'Каталог', 'items' => [
-                ['label' => 'Филиалы', 'url' => ['/admin/buildings']],
-                ['label' => 'Предметы', 'url' => ['/admin/subjects']],
-                ['label' => 'Типы групп', 'url' => ['/admin/group-types']]
+                ['label' => 'Филиалы', 'url' => ['/admin/buildings'], 'active' => $url == Url::toRoute(['/admin/buildings'])],
+                ['label' => 'Предметы', 'url' => ['/admin/subjects'], 'active' => $url == Url::toRoute(['/admin/subjects'])],
+                ['label' => 'Типы групп', 'url' => ['/admin/group-types'], 'active' => $url == Url::toRoute(['/admin/group-types'])]
             ]],
           
             Yii::$app->user->isGuest ? (
