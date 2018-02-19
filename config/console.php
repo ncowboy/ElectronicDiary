@@ -5,6 +5,10 @@ $db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic-console',
+    'aliases' => [
+        '@webroot' => dirname(dirname(__FILE__)) . '/web',
+        '@web' => dirname(dirname(__FILE__)),
+      ],
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
