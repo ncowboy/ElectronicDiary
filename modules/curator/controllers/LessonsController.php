@@ -78,6 +78,13 @@ class LessonsController extends Controller
     {
          return $this->redirect(['/curator/students-in-lesson', 'id' => $id] );    
         }
+        
+     public function actionHomework($id) {
+         $model = $this->findModel($id);
+            return $this->render('homework', [
+                  'model' => $model
+            ]);
+     }    
 
     /**
      * Finds the Lessons model based on its primary key value.

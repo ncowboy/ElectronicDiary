@@ -7,6 +7,8 @@ use yii\base\Model;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use yii\helpers\ArrayHelper;
+//use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+//use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class MailerForm extends Model
 {
@@ -26,11 +28,11 @@ class MailerForm extends Model
     public function sendEmail()
     {
       $student = Students::findOne(['id' => $this->id]);
-      if ($this->validate() && $this->createFile()) {
+      if ($this->validate() && $this->createFile() ) {
             Yii::$app->mailer->compose()
                 ->setTo($this->email)->setFrom('merlin.ege@gmail.com')
                 ->setSubject('Отчет об успеваемости студента: ' . $this->fullName)
-                ->attach('uploads/reportStudentId' . $student->id . '.xlsx')
+                ->attach('web/uploads/reportStudentId' . $student->id . '.xls')
                 ->setHtmlBody('<p>Отчет об успеваемости студента находится во вложении</p>'
                     . '<p>Данное письмо автоматическое, пожалуйста, не отвечайте на него.</p>'
                     . '<p>С уважением, <br>учебный центр Merlin.</p>')
@@ -103,8 +105,8 @@ class MailerForm extends Model
            ->getStyle()->getFont()->setItalic(true)->setSize(9)->setBold(true);
        $sheet->mergeCells('A' . (string)(count($inLesson)+2) . ':I' . (string)(count($inLesson)+2));
       
-      $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-      $file = 'uploads/reportStudentId' . $student->id . '.xlsx';
+      $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+      $file = 'web/uploads/reportStudentId' . $student->id . '.xls';
       $writer->save($file);
       
       return true;

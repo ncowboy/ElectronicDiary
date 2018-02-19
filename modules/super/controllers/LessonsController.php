@@ -8,6 +8,8 @@ use app\models\LessonsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 
 /**
@@ -119,6 +121,58 @@ class LessonsController extends Controller
     {
          return $this->redirect(['/super/students-in-lesson', 'id' => $id] );    
         }
+    
+    public function actionHomework($id) {
+         $model = $this->findModel($id);
+            return $this->render('homework', [
+                  'model' => $model
+            ]);
+     }
+     
+     public function actionHomeworkUpdate($id) {
+         $model = $this->findModel($id);
+         if($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()){
+           return $this->redirect(['/super/lessons/homework', 'id' => $model->id]);
+        }else {
+                return $this->render('homework-update', [
+                    'model' => $model
+                ]);
+            }
+     }
+     
+     public function actionAddHomework($id) {
+        $model = $this->findModel($id); 
+        if ($model->load(Yii::$app->request->post()) && $this->filesUpload($id) && $model->save()) {
+            return $this->redirect(['/super/lessons/homework', 'id' => $model->id]);
+        }else{
+                return $this->render('add-homework', [
+              'model' => $model,
+            ]);  
+        }
+     }
+     
+     public function actionFileDelete($src, $lessonId) {
+       if(file_exists($src) && unlink($src)){
+        return $this->redirect(['/super/lessons/homework-update', 'id' => $lessonId]);
+       }
+     }
+     
+       protected function filesUpload($id) {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+           $model->hw_files = UploadedFile::getInstances($model, 'hw_files');
+            if ($model->hw_files && $model->validate()) {
+             $dir = 'uploads/hw/lesson' . $model->id . '/';
+             if(!is_dir($dir)){
+                 FileHelper::createDirectory($dir);
+             }
+              foreach ($model->hw_files as $value) {
+                $value->saveAs($dir . $value->baseName . '.' . $value->extension);
+              }
+             }
+           }    
+        return $model->save();    
+    }    
 
     /**
      * Finds the Lessons model based on its primary key value.

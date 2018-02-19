@@ -45,6 +45,14 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                     ],
                  'subjectAlias', 
                  'theme',
+                 [
+                   'attribute' => 'homework',
+                   'value' => function($model){
+                     return !isset($model->hw_text) ? '' :
+                         Html::a('просмотр', Url::to(['/curator/lessons/homework', 'id' => $model->id])) ;
+                   },
+                     'format' => 'raw',   
+                 ], 
                  'comment',
                 ['class' => 'yii\grid\ActionColumn',
                         'template' => ' {view} {results}',

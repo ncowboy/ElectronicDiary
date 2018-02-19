@@ -43,6 +43,7 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'encodeLabels' => false,
+        'activateParents' => true, 
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Мои группы', 'url' => ['/teacher/groups'], 'active' => $url == Url::toRoute(['/teacher/groups'])],

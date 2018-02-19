@@ -20,6 +20,18 @@ $config = [
                 ],
             ],
         ],
+        'mailer' => [
+          'class' => 'yii\swiftmailer\Mailer',
+          'useFileTransport' => false,
+          'transport' => [
+              'class' => 'Swift_SmtpTransport',
+              'host' => 'smtp.gmail.com',
+              'username' => 'merlin.ege@gmail.com',
+              'password' => 'Merlin11223344',
+              'port' => '587',
+              'encryption' => 'tls',
+              ],
+    ],
         'db' => $db,
         'authManager' => [
             'class' => yii\rbac\DbManager::className()

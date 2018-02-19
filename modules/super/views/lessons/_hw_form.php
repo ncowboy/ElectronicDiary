@@ -40,7 +40,7 @@ $files = FileHelper::findFiles($dir);
         
     ])->label('');?> 
     <?= Html::submitButton($action !=='update' ? 'Добавить' : 'Сохранить', ['class' => 'btn btn-success']); ?>
-    <?= Html::a('Отменить', '/teacher/lessons', ['class' => 'btn btn-danger']);?>  
+    <?= Html::a('Отменить', '/super/lessons', ['class' => 'btn btn-danger']);?>  
     <?php ActiveForm::end(); ?>
   </div>
 </div>

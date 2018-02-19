@@ -120,6 +120,22 @@ class SiteController extends Controller
         
         }
       }
-        return $this->redirect('/site/index');
        }
+       
+       public function actionSend()
+    {
+         $students = Students::find()->all();
+      if(isset($students)) {
+        foreach ($students as $value) {
+        $email = new MailerForm();
+        $email->setAttributes([
+        'id' => $value->id,
+        'email' => $value->parents_email,
+        'fullName' => $value->userFullName
+        ]);
+        $email->sendEmail();
+        
+        }
+      }
+    }
 }

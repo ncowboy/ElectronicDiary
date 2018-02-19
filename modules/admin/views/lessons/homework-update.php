@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Lessons */
 
 $this->title = 'Домашнее задание к уроку: ' . date('d/m/Y в H:i', strtotime($model->datetime));
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/teacher/lessons']];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['/admin/lessons']];
 $this->params['breadcrumbs'][] = $this->title;
 
 
