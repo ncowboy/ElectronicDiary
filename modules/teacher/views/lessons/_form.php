@@ -12,7 +12,7 @@ use app\models\Teachers;
 $user = Yii::$app->user->identity;
 $teacher = Teachers::findOne(['user_id' => $user->id]);
 $groups = \app\models\Groups::findAll(['teacher_id' => $teacher->id]);
-$groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
+$groupItems = ArrayHelper::map($groups, 'id', 'groupInfo');
 ?>
 
 <div class="lessons-form">

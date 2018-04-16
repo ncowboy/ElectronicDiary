@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 /* @var $form yii\widgets\ActiveForm */
 
 $groups = \app\models\Groups::find()->all();
-$groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
+$groupItems = ArrayHelper::map($groups, 'id', 'groupInfo');
 ?>
 
 <div class="lessons-form">
