@@ -10,7 +10,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use app\helpers\Hasher;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -74,7 +73,7 @@ class UsersController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->password = Hasher::hash($model->password);
+            $model->password = \Yii::$app->getSecurity()->generatePasswordHash($model->password);
             if ($model->save()){
             return $this->redirect(['view', 'id' => $model->id]);
             }

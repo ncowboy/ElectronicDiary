@@ -10,7 +10,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use app\helpers\Hasher;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -76,7 +75,7 @@ class UsersController extends Controller
           throw new ForbiddenHttpException('Вы не можете изменять пароль администратора');
         } else {
             if ($model->load(Yii::$app->request->post())) {
-                $model->password = Hasher::hash($model->password);
+                $model->password = \Yii::$app->getSecurity()->generatePasswordHash($model->password);
                 if ($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
               }
