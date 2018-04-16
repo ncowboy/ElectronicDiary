@@ -63,12 +63,15 @@ class Groups extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     
-    
-    
     /* buildings getter */
     public function getBuilding()
     {
         return $this->hasOne(Buildings::className(), ['id' => 'building_id']);
+    }
+    
+    public function getGroupInfo()
+    {
+        return $this->groupCode . ' / '. $this->buildingName . ' / ' . $this->subjectName;
     }
     
     public function getBuildingName(){
