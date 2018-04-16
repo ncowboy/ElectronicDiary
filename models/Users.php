@@ -1,14 +1,11 @@
 <?php
 
 namespace app\models;
-use app\helpers\Hasher;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use Yii;
 use app\models\Students;
 use app\models\Teachers;
-
-
 
 /**
  * This is the model class for table "users".
@@ -111,7 +108,7 @@ class Users extends \yii\db\ActiveRecord
         if ($insert) {
            $am->assign($role, $this->id);
            $user = Users::findOne(['id' => $this->id]);
-           $user->password = Hasher::hash($this->password);
+           $user->password = \Yii::$app->security()->generatePasswordHash($this->password);
            $user->save();
                 } else {
            $am->revokeAll($this->id);

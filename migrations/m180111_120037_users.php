@@ -9,7 +9,7 @@ class m180111_120037_users extends Migration
         $this->createTable('users', [
            'id' => $this->primaryKey()->notNull(),
            'username' => $this->string(50)->notNull(),
-           'password' => $this->string(50)->notNull(),
+           'password' => $this->string(128)->notNull(),
            'email' => $this->string(128)->notNull(),
            'surname' => $this->string(20)->notNull(),
            'name' => $this->string(20)->notNull(), 

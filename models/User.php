@@ -2,9 +2,6 @@
 
 namespace app\models;
 use app\models\Users;
-use app\helpers\Hasher;
-
-
 
 class User extends \yii\base\Object implements \yii\web\IdentityInterface
 {
@@ -89,7 +86,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === Hasher::hash($password);
+        return $this->password == \Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
     
    
