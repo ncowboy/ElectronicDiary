@@ -9,7 +9,7 @@ use app\models\Students;
 /* @var $this yii\web\View */
 /* @var $model app\models\Groups */
 
-$query = Students::find()->where('id > 0');
+$query = Students::find()->where('id > 0')->andWhere('user_id IS NOT NULL');
  $dataProvider = new ActiveDataProvider([
      'query' => $query
  ]);

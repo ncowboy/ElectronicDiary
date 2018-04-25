@@ -108,7 +108,7 @@ class Users extends \yii\db\ActiveRecord
         if ($insert) {
            $am->assign($role, $this->id);
            $user = Users::findOne(['id' => $this->id]);
-           $user->password = \Yii::$app->security()->generatePasswordHash($this->password);
+           $user->password = \Yii::$app->getSecurity()->generatePasswordHash($this->password);
            $user->save();
                 } else {
            $am->revokeAll($this->id);

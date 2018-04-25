@@ -5,8 +5,6 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\Students;
 use app\models\StudentsInGroup;
-use yii\helpers\ArrayHelper;
-
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Groups */
@@ -18,7 +16,7 @@ if(isset($studentsInGroup)){
   }
 }
 
-$query = Students::find()->where('id > 0');
+$query = Students::find()->where('id > 0')->andWhere('user_id IS NOT NULL');
 if(!empty($arr)){
   $query->andWhere('id NOT IN (' . implode(',', $arr) . ')') ;
 }
