@@ -79,8 +79,8 @@ class LessonsSearch extends Lessons
         'attributes' => [
             
             'datetime' => [
-                'asc' => ['datetime' => SORT_ASC],
-                'desc' => ['datetime' => SORT_DESC]
+                'asc' => ['datetime' => SORT_DESC],
+                'desc' => ['datetime' => SORT_ASC]
             ],
             'theme' => [
                 'asc' => ['theme' => SORT_ASC],

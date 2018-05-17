@@ -99,7 +99,9 @@ class StudentsInGroup extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            $lessons = Lessons::findAll(['group_id' => $this->group_id]);
+            $studentCreateDate = $this->student->user->created_at;
+            $lessons = Lessons::find()->where(['group_id' => $this->group_id])
+                ->andWhere("datetime > '$studentCreateDate'")->all();
             $lessonsArr = ArrayHelper::toArray($lessons, [
                 'app\models\Lessons' => ['id']
             ]);
