@@ -1,9 +1,18 @@
-<?php
+﻿<?php
 use yii\helpers\Html;
 use app\models\Users;
 $model = Users::findOne(Yii::$app->user->id);
 $this->title = 'Личный кабинет пользователя ' . $model->userFullName;
 $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет'];
+
+echo '<pre>';
+print_r($_COOKIE);
+echo '</pre>';
+
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
+
 ?>
 
 <div class="users-view row">  
