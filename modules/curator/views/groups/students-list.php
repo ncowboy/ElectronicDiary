@@ -11,7 +11,8 @@ use app\models\Students;
 
 $query = Students::find()->where('id > 0')->andWhere('user_id IS NOT NULL');
  $dataProvider = new ActiveDataProvider([
-     'query' => $query
+     'query' => $query,
+     'pagination' => false
  ]);
  echo Html::beginForm(['add-students', 'post', [
      'groupId' => $groupId

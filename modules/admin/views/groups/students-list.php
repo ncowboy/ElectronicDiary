@@ -23,14 +23,14 @@ if(!empty($arr)){
 
 
  $dataProvider = new ActiveDataProvider([
-     'query' => $query
+     'query' => $query,
+     'pagination' => false
  ]);
  echo Html::beginForm(['add-students', 'post', [
      'groupId' => $groupId
  ]]);
 
  echo GridView::widget([
-     
         'dataProvider' => $dataProvider,
         'summary' => '',
         'columns' => [

@@ -56,11 +56,7 @@ class GroupsController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Groups model.
-     * @param integer $id
-     * @return mixed
-     */
+
     public function actionView($id)
     {
       $model = $this->findModel($id);

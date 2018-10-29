@@ -152,7 +152,8 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="modal-body">
        <?php 
             echo $this->render('students-list', [
-                'groupId' => $model->id
+                'groupId' => $model->id,
+                'searchModel' => $newSearchModel
             ]);
        ?>
       </div>
