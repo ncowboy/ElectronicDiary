@@ -114,4 +114,14 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     {
         return $this->lesson->group->groupCode;
     }
+
+    public function beforeSave($insert)
+    {
+      if(!$insert){
+        if($this->oldAttributes['mark_dictation'] === null ) {
+          $this->attendance = false;
+        }
+      }
+      return true;
+    }
 }

@@ -99,7 +99,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     '5'=> 5, 
                     '4'=> 4,
                     '3'=> 3,
-                    '2'=> 2
+                    '2'=> 2,
+                    null => 'б/о'
                     ],
                      ],
             'pageSummary'=>true
@@ -124,7 +125,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     '5'=> 5, 
                     '4'=> 4,
                     '3'=> 3,
-                    '2'=> 2
+                    '2'=> 2,
+                     null => 'б/о'
                     ],
                      ],
             'pageSummary'=>true
@@ -149,7 +151,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     '5'=> 5, 
                     '4'=> 4,
                     '3'=> 3,
-                    '2'=> 2
+                    '2'=> 2,
+                     null => 'б/о'
                     ],
                      ],
             'pageSummary'=>true
