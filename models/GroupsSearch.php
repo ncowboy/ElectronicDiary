@@ -20,13 +20,13 @@ class GroupsSearch extends Groups
     public $buildingName;
     public $subjectName;
     public $groupCode;
-    public $teacherName;
+    public $groupTypeCode;
     
     public function rules()
     {
         return [
             [['id', 'building_id', 'subject_id', 'group_type_id'], 'integer'],
-            [['buildingName', 'subjectName', 'teacherName', 'groupCode'], 'safe']
+            [['buildingName', 'subjectName', 'teacherName', 'groupCode', 'groupTypeCode'], 'safe']
         ];
     }
 
@@ -47,7 +47,7 @@ class GroupsSearch extends Groups
      * @return ActiveDataProvider
      */
     
-    protected function addCondition($query, $attribute, $partialMatch = false)
+    protected function addCondition($query, $attribute, $partialMatch = true)
 {
     if (($pos = strrpos($attribute, '.')) !== false) {
         $modelAttribute = substr($attribute, $pos + 1);
@@ -88,8 +88,8 @@ class GroupsSearch extends Groups
                 'desc' => ['subjects.alias' => SORT_DESC],
             ],
             'groupCode' => [
-                'asc' => ['building_id' => SORT_ASC, 'subject_id' => SORT_ASC, 'id' => SORT_ASC],
-                'desc' => ['building_id' => SORT_DESC, 'subject_id' => SORT_DESC, 'id' => SORT_DESC],
+                'asc' => ['building_id' => SORT_ASC, 'subject_id' => SORT_ASC, 'group_types.type_alias' => SORT_ASC, 'id' => SORT_ASC],
+                'desc' => ['building_id' => SORT_DESC, 'subject_id' => SORT_DESC, 'group_types.type_alias' => SORT_DESC, 'id' => SORT_DESC],
             ],
             
         ]
@@ -98,7 +98,7 @@ class GroupsSearch extends Groups
         $this->load($params);
 
         if (!$this->validate()) {
-            $query->joinWith(['building'])->joinWith(['subjects'])->joinWith(['teachers']);
+            $query->joinWith(['building'])->joinWith(['subjects'])->joinWith(['group_types']);
             return $dataProvider;
         }
        $this->addCondition($query, 'building_id');
@@ -108,13 +108,19 @@ class GroupsSearch extends Groups
         // grid filtering conditions
     
         $query->joinWith(['building' => function ($q) {
-        $q->where('buildings.alias LIKE "%' . $this->buildingName . '%"');
-    }])->joinWith(['subject' => function ($q) {
-        $q->where('subjects.alias LIKE "%' . $this->subjectName . '%"');
-    }]);
-    $query->andWhere('groups.id LIKE "%' . $this->groupCode . '%"');
-    
-  
-        return $dataProvider;
-    }
+          $q->where('buildings.alias LIKE "%' . $this->buildingName . '%"');
+        }])
+              ->joinWith(['subject' => function ($q) {
+                $q->where('subjects.alias LIKE "%' . $this->subjectName . '%"');
+            }])
+              ->joinWith(['groupType' => function ($q) {
+                $q->where('group_types.type_alias LIKE "%' . $this->groupTypeCode . '%"');
+              }]);
+
+        $query->andWhere('CONCAT(IF (buildings.id < 10, CONCAT (0, buildings.id), buildings.id), ".", 
+        IF (subjects.id < 10, CONCAT (0, subjects.id), subjects.id), "-", group_types.type_alias, "-", 
+        IF (groups.id < 10, CONCAT (0, groups.id), groups.id)) LIKE "%' . $this->groupCode . '%"');
+            return $dataProvider;
+        }
+
 }
