@@ -2,6 +2,8 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\StudentsSearch;
+use app\models\TeachersSearch;
 use Yii;
 use app\models\Groups;
 use app\models\GroupsSearch;
@@ -9,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StudentsInGroup;
+use app\models\UsersSearch;
 
 /**
  * GroupsController implements the CRUD actions for Groups model.
@@ -101,7 +104,12 @@ class GroupsController extends Controller
     }
     public function actionTeachersList()
     {
-        return $this->render('teacher-list');
+        $searchModel = new TeachersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('teachers-list', [
+          'searchModel' => $searchModel,
+          'dataProvider' => $dataProvider
+        ]);
     }
     
     public function actionTeacherSet($group_id, $teacher_id)
@@ -129,8 +137,24 @@ class GroupsController extends Controller
      public function actionGroupContent($id)
     {
       $model = $this->findModel($id);
+      $teachersSearchModel = new TeachersSearch();
+      $teachersDataProvider = $teachersSearchModel->search(Yii::$app->request->queryParams);
+      $teachersDataProvider->setPagination(['pageSize' => 15]);
+      $studentsSearchModel = new StudentsSearch();
+      $studentsDataProvider = $studentsSearchModel->search(Yii::$app->request->queryParams);
+      $studentsDataProvider->setPagination(['pageSize' => 15]);
+      $curatorsSearchModel = new UsersSearch();
+      $curatorsDataProvider = $curatorsSearchModel->search(Yii::$app->request->queryParams);
+      $curatorsDataProvider->query->andWhere(['user_role' => 3]);
+      $curatorsDataProvider->setPagination(['pageSize' => 15]);
       return $this->render('group-content', [
-        'model' => $model
+        'model' => $model,
+        'teachersSearchModel' => $teachersSearchModel,
+        'teachersDataProvider' => $teachersDataProvider,
+        'studentsSearchModel' => $studentsSearchModel,
+        'studentsDataProvider' => $studentsDataProvider,
+        'curatorsSearchModel' => $curatorsSearchModel,
+        'curatorsDataProvider' => $curatorsDataProvider
       ]);  
     }
     

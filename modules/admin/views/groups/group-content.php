@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use kartik\grid\GridView;
 use app\assets\GroupContentAsset;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -25,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             Modal::begin([
                 'header' => '<h3>Выберите преподавателя</h3>',
+                'clientOptions' => ['backdrop' => 'static', 'keyboard' => false],
                 'toggleButton' => [
                     'tag' => 'a',
                     'class' => 'dropdown-toggle',
@@ -32,10 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => $label,
                 ]
             ]);
- 
+ Pjax::begin();
             echo $this->render('teachers-list', [
-                'group_id' => $model->id
+                'group_id' => $model->id,
+                'searchModel' => $teachersSearchModel,
+                'dataProvider' => $teachersDataProvider
             ]);
+ Pjax::end();
             Modal::end();
              ?>
           
@@ -59,17 +64,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => $label,
                 ]
             ]);
- 
+      Pjax::begin();
             echo $this->render('curators-list', [
-                'group_id' => $model->id
+                'group_id' => $model->id,
+                'searchModel' => $curatorsSearchModel,
+                'dataProvider' => $curatorsDataProvider
             ]);
+      Pjax::end();
             Modal::end();
              ?>
         </div>  
   </div>  
   <div class="col-md-12">  
     <?php 
-       $searchModel = new \app\models\StudentsInGroup;
+      $searchModel = new \app\models\StudentsInGroup;
        $dataProvider = new \yii\data\ActiveDataProvider([
           'query' => $searchModel->find()->where(['group_id' => $model->id]) 
        ]);
@@ -146,19 +154,22 @@ $this->params['breadcrumbs'][] = $this->title;
        ?>
   </div>
 </div>
+<?php Pjax::begin(); ?>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-       <?php 
+       <?php
             echo $this->render('students-list', [
                 'groupId' => $model->id,
-                'searchModel' => $newSearchModel
+                'searchModel' => $studentsSearchModel,
+                'dataProvider' => $studentsDataProvider
             ]);
        ?>
       </div>
     </div>
   </div>
 </div>
+<?php Pjax::end();?>
 
 

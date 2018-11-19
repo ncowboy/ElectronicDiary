@@ -32,6 +32,7 @@ if(!empty($arr)){
 
  echo GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchmodel,
         'summary' => '',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
