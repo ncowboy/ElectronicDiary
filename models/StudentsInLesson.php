@@ -118,7 +118,7 @@ class StudentsInLesson extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
       if(!$insert){
-        if($this->oldAttributes['mark_dictation'] === null ) {
+        if($this->mark_work_at_lesson == null && $this->mark_dictation == null) {
           $this->attendance = false;
         }
       }
