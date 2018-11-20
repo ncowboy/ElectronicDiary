@@ -7,6 +7,7 @@ use app\models\TeachersSearch;
 use Yii;
 use app\models\Groups;
 use app\models\GroupsSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -147,6 +148,13 @@ class GroupsController extends Controller
       $curatorsDataProvider = $curatorsSearchModel->search(Yii::$app->request->queryParams);
       $curatorsDataProvider->query->andWhere(['user_role' => 3]);
       $curatorsDataProvider->setPagination(['pageSize' => 15]);
+      $studentsInGroup = StudentsInGroup::findAll(['group_id' => $id]);
+      $ids = [];
+      foreach ($studentsInGroup as $student){
+        array_push($ids, $student['student_id']);
+      }
+      $studentsDataProvider->query->having(['id' => $ids]);
+
       return $this->render('group-content', [
         'model' => $model,
         'teachersSearchModel' => $teachersSearchModel,

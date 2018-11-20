@@ -13,6 +13,8 @@ GroupContentAsset::register($this);
 $this->title = $model->groupCode;
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="group-content"> 
   <div class="panel panel-info col-md-4" >
@@ -77,15 +79,19 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>  
   <div class="col-md-12">  
     <?php 
-      $searchModel = new \app\models\StudentsInGroup;
-       $dataProvider = new \yii\data\ActiveDataProvider([
-          'query' => $searchModel->find()->where(['group_id' => $model->id]) 
-       ]);
+    //  $searchModel = new \app\models\StudentsInGroup;
+     /*  $dataProvider = new \yii\data\ActiveDataProvider([
+          'query' => $searchModel->find()->where(['group_id' => $model->id]),
+          'pagination' => [
+              'pageSize' => 10
+          ]
+       ]);*/
        echo GridView::widget([
             'id' => 'kv-grid-students',
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $studentsDataProvider,
             'krajeeDialogSettings' => [ 'useNative'=>true ],
             'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
+            'filterModel' => $studentsSearchModel,
             'containerOptions' => ['style' => 'overflow: auto'], 
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
             'filterRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -123,7 +129,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'afterOptions' => [
                   'align' => 'right'  
                 ],
-                'footer' => false,
             ],
                'persistResize' => false,
                'toggleDataOptions' => ['minCount' => 20],
@@ -139,12 +144,12 @@ $this->params['breadcrumbs'][] = $this->title;
                  'contentOptions'=>['class'=>'kartik-sheet-style'],
                 ],
                 [
-                 'attribute'=>'studentFullName', 
+                 'attribute'=>'userFullName',
                  'vAlign'=>'middle',
                  'hAlign'=>'left',
                 ], 
-                'studentPhone',
-                'studentEmail:email',
+                'phone_number',
+                'userEmail:email',
                 [
                  'class' => 'kartik\grid\CheckboxColumn',
                  'headerOptions' => ['class' => 'kartik-sheet-style'],
@@ -154,22 +159,20 @@ $this->params['breadcrumbs'][] = $this->title;
        ?>
   </div>
 </div>
-<?php Pjax::begin(); ?>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
        <?php
+          Pjax::begin();
             echo $this->render('students-list', [
-                'groupId' => $model->id,
-                'searchModel' => $studentsSearchModel,
-                'dataProvider' => $studentsDataProvider
+                'groupId' => $model->id
             ]);
+          Pjax::end();
        ?>
       </div>
     </div>
   </div>
 </div>
-<?php Pjax::end();?>
 
 

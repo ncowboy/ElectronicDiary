@@ -15,6 +15,7 @@ class StudentsSearch extends Students
      * @inheritdoc
      */
     public $userFullName;
+    public $userEmail;
     public $userName;
     public $useRole;
     
@@ -22,7 +23,7 @@ class StudentsSearch extends Students
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['phone_number', 'parents_name', 'parents_number', 'parents_email', 'birth', 'userName', 'userFullName'], 'safe'],
+            [['phone_number', 'parents_name', 'parents_number', 'parents_email', 'birth', 'userName', 'userFullName', 'userEmail'], 'safe'],
         ];
     }
 
@@ -55,13 +56,7 @@ class StudentsSearch extends Students
         return;
     }
  
-     $attribute = "buildings.$attribute";
- 
-    if ($partialMatch) {
-        $query->andWhere(['like', $attribute, $value]);
-    } else {
-        $query->andWhere([$attribute => $value]);
-    }
+
 }
     public function search($params)
     {
@@ -105,6 +100,10 @@ class StudentsSearch extends Students
                 'asc' => [ 'users.username' => SORT_ASC],
                 'desc' => ['users.username' => SORT_DESC],
             ],
+            'userEmail' => [
+                'asc' => [ 'users.email' => SORT_ASC],
+                'desc' => ['users.email' => SORT_DESC],
+            ],
             
         ]
     ]);
@@ -133,8 +132,11 @@ class StudentsSearch extends Students
         $q->where('users.surname LIKE "%' . $this->userFullName . '%" ' .
         'OR users.name LIKE "%' . $this->userFullName . '%"' .
         'OR users.patronymic LIKE "%' . $this->userFullName . '%"'        
-    )->andWhere('users.username LIKE "%' . $this->userName . '%" ')->andWhere('users.user_role = 5');
+    )->andWhere('users.username LIKE "%' . $this->userName . '%" ')
+          ->andWhere('users.email LIKE "%' . $this->userEmail . '%" ')
+          ->andWhere('users.user_role = 5');
     }]);
-        return $dataProvider;
+
+         return $dataProvider;
     }
 }
