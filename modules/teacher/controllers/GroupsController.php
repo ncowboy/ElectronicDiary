@@ -2,9 +2,10 @@
 
 namespace app\modules\teacher\controllers;
 
+use app\models\Teachers;
 use Yii;
 use app\models\Groups;
-use app\modules\teacher\models\TeacherGroupsSearch;
+use app\models\GroupsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,8 +51,10 @@ class GroupsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TeacherGroupsSearch();
+        $searchModel = new GroupsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]);
+        $dataProvider->query->andWhere(['teacher_id' => $teacher->id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

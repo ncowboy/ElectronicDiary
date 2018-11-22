@@ -4,9 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use rmrevin\yii\fontawesome\FA;
-rmrevin\yii\fontawesome\AssetBundle::register($this);
 use app\models\Buildings;
 use app\models\Subjects;
+
+rmrevin\yii\fontawesome\AssetBundle::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\GroupsSearch */
