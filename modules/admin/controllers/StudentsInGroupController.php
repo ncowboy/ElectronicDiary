@@ -53,13 +53,6 @@ class StudentsInGroupController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single StudentsInGroup model.
-     * @param integer $group_id
-     * @param integer $student_id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($group_id, $student_id)
     {
         return $this->render('view', [
@@ -67,11 +60,6 @@ class StudentsInGroupController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new StudentsInGroup model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new StudentsInGroup();
@@ -85,14 +73,7 @@ class StudentsInGroupController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing StudentsInGroup model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $group_id
-     * @param integer $student_id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($group_id, $student_id)
     {
         $model = $this->findModel($group_id, $student_id);
@@ -106,14 +87,6 @@ class StudentsInGroupController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing StudentsInGroup model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $group_id
-     * @param integer $student_id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($group_id, $student_id)
     {
         $this->findModel($group_id, $student_id)->delete();
@@ -125,7 +98,7 @@ class StudentsInGroupController extends Controller
     {
         if (\Yii::$app->request->post()) {
             $response = Yii::$app->request->post();
-            foreach($response['students'] as $key => $value){      
+            foreach($response['students'] as $key => $value){
                 $this->findModel($response['group'], $response['students'][$key])->delete();
             };
         }

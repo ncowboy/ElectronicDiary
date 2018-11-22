@@ -54,6 +54,7 @@ class Students extends \yii\db\ActiveRecord
             'userFullName' => 'ФИО',
             'groupsAsString' => 'Группы',
             'userName' => 'Логин',
+            'userEmail' => 'Email',
             'phone_number' => 'Телефон',
             'parents_name' => 'Представитель',
             'parents_number' => 'Телефон представителя',
@@ -73,6 +74,10 @@ class Students extends \yii\db\ActiveRecord
      public function getUserName() {
        return $this->user->username;
     }
+
+  public function getUserEmail() {
+    return $this->user->email;
+  }
     
     public function getUserRole() {
        return $this->user->user_role;

@@ -16,12 +16,13 @@ class UsersSearch extends Users
      * @inheritdoc
      */
     public $userRoleAlias;
+    public $userFullName;
     
     public function rules()
     {
         return [
             [['id', 'user_role'], 'integer'],
-            [['username', 'password', 'email', 'surname', 'name', 'patronymic', 'userRoleAlias'], 'safe'],
+            [['username', 'password', 'email', 'surname', 'name', 'patronymic', 'userRoleAlias', 'userFullName'], 'safe'],
         ];
     }
 
@@ -99,6 +100,10 @@ class UsersSearch extends Users
                 'asc' => ['patronymic' => SORT_ASC],
                 'desc' => ['patronymic' => SORT_DESC]
             ],
+             'userFullName' => [
+               'asc' => [ 'users.surname' => SORT_ASC, 'users.name' => SORT_ASC, 'users.patronymic' => SORT_ASC],
+               'desc' => ['users.surname' => SORT_DESC, 'users.name' => SORT_DESC, 'users.patronymic' => SORT_DESC],
+             ],
              'created_at' => [
                 'asc' => ['created_at' => SORT_ASC],
                 'desc' => ['created_at' => SORT_DESC]
@@ -132,10 +137,13 @@ class UsersSearch extends Users
             ->andFilterWhere(['like', 'surname', $this->surname])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'patronymic', $this->patronymic]);
-        
+
         $query->joinWith(['userRoles' => function ($q) {
         $q->where('user_roles.role_alias LIKE "%' . $this->userRoleAlias . '%"');
     }]);
+        $query->andWhere('users.surname LIKE "%' . $this->userFullName . '%" ' .
+          'OR users.name LIKE "%' . $this->userFullName . '%"' .
+          'OR users.patronymic LIKE "%' . $this->userFullName . '%"');
 
         return $dataProvider;
        

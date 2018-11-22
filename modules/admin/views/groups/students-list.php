@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
-use app\models\Students;
 use app\models\StudentsInGroup;
 
 /* @var $this yii\web\View */
@@ -16,22 +14,21 @@ if(isset($studentsInGroup)){
   }
 }
 
-$query = Students::find()->where('id > 0')->andWhere('user_id IS NOT NULL');
-if(!empty($arr)){
-  $query->andWhere('id NOT IN (' . implode(',', $arr) . ')') ;
-}
+ $searchmodel = new \app\models\StudentsSearch();
+ $dataProvider = $searchmodel->search(Yii::$app->request->queryParams);
+ $dataProvider->query->andWhere(['>', 'students.id', '0']);
+ $dataProvider->query->andWhere(['IS NOT', 'user_id', NULL]);
 
-
- $dataProvider = new ActiveDataProvider([
-     'query' => $query,
-     'pagination' => false
- ]);
+  if(!empty($arr)){
+    $dataProvider->query->andWhere(["NOT IN", 'students.id', $arr]);
+  }
  echo Html::beginForm(['add-students', 'post', [
      'groupId' => $groupId
  ]]);
 
  echo GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchmodel,
         'summary' => '',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],

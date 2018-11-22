@@ -75,6 +75,10 @@ class StudentsInGroup extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Students::className(), ['id' => 'student_id']);
     }
+
+    public function getUser(){
+      return $this->hasOne(Users::className(), ['id' => $this->student->user_id]);
+    }
     
     public function getStudentFullName()
     {

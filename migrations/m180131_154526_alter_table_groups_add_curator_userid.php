@@ -12,7 +12,7 @@ class m180131_154526_alter_table_groups_add_curator_userid extends Migration
      */
     public function safeUp()
     {
-      $this->addColumn('groups', 'curator_userid', 'tinyint(1)');
+      $this->addColumn('groups', 'curator_userid', 'int(11)');
     }
 
     /**

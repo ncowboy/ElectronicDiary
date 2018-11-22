@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use kartik\grid\GridView;
 use app\assets\GroupContentAsset;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Students */
@@ -12,6 +13,8 @@ GroupContentAsset::register($this);
 $this->title = $model->groupCode;
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="group-content"> 
   <div class="panel panel-info col-md-4" >
@@ -25,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             Modal::begin([
                 'header' => '<h3>Выберите преподавателя</h3>',
+                'clientOptions' => ['backdrop' => 'static', 'keyboard' => false],
                 'toggleButton' => [
                     'tag' => 'a',
                     'class' => 'dropdown-toggle',
@@ -32,10 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => $label,
                 ]
             ]);
- 
+ Pjax::begin();
             echo $this->render('teachers-list', [
-                'group_id' => $model->id
+                'group_id' => $model->id,
+                'searchModel' => $teachersSearchModel,
+                'dataProvider' => $teachersDataProvider
             ]);
+ Pjax::end();
             Modal::end();
              ?>
           
@@ -59,25 +66,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => $label,
                 ]
             ]);
- 
+      Pjax::begin();
             echo $this->render('curators-list', [
-                'group_id' => $model->id
+                'group_id' => $model->id,
+                'searchModel' => $curatorsSearchModel,
+                'dataProvider' => $curatorsDataProvider
             ]);
+      Pjax::end();
             Modal::end();
              ?>
         </div>  
   </div>  
-  <div class="col-md-12">  
-    <?php 
-       $searchModel = new \app\models\StudentsInGroup;
-       $dataProvider = new \yii\data\ActiveDataProvider([
-          'query' => $searchModel->find()->where(['group_id' => $model->id]) 
-       ]);
+  <div class="col-md-12 group-grid" id="group-id-<?= $model->id ?>">
+    <?php
        echo GridView::widget([
             'id' => 'kv-grid-students',
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $studentsDataProvider,
             'krajeeDialogSettings' => [ 'useNative'=>true ],
             'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
+            'filterModel' => $studentsSearchModel,
             'containerOptions' => ['style' => 'overflow: auto'], 
             'headerRowOptions' => ['class' => 'kartik-sheet-style'],
             'filterRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -115,7 +122,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'afterOptions' => [
                   'align' => 'right'  
                 ],
-                'footer' => false,
             ],
                'persistResize' => false,
                'toggleDataOptions' => ['minCount' => 20],
@@ -131,12 +137,12 @@ $this->params['breadcrumbs'][] = $this->title;
                  'contentOptions'=>['class'=>'kartik-sheet-style'],
                 ],
                 [
-                 'attribute'=>'studentFullName', 
+                 'attribute'=>'userFullName',
                  'vAlign'=>'middle',
                  'hAlign'=>'left',
                 ], 
-                'studentPhone',
-                'studentEmail:email',
+                'phone_number',
+                'userEmail:email',
                 [
                  'class' => 'kartik\grid\CheckboxColumn',
                  'headerOptions' => ['class' => 'kartik-sheet-style'],
@@ -149,12 +155,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-body">
-       <?php 
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Выберите учеников</h3>
+    </div>
+    <div class="modal-body">
+       <?php
+          Pjax::begin();
             echo $this->render('students-list', [
-                'groupId' => $model->id,
-                'searchModel' => $newSearchModel
+                'groupId' => $model->id
             ]);
+          Pjax::end();
        ?>
       </div>
     </div>
