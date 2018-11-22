@@ -14,24 +14,14 @@ if(isset($studentsInGroup)){
   }
 }
 
-/*$query = Students::find()->where('id > 0')->andWhere('user_id IS NOT NULL');
-if(!empty($arr)){
-  $query->andWhere('id NOT IN (' . implode(',', $arr) . ')') ;
-}
-*/
  $searchmodel = new \app\models\StudentsSearch();
  $dataProvider = $searchmodel->search(Yii::$app->request->queryParams);
  $dataProvider->query->andWhere(['>', 'students.id', '0']);
  $dataProvider->query->andWhere(['IS NOT', 'user_id', NULL]);
 
   if(!empty($arr)){
-    $dataProvider->query->andWhere(['NOT IN', 'students.id', implode(',', $arr)]);
+    $dataProvider->query->andWhere(["NOT IN", 'students.id', $arr]);
   }
- /* echo '<pre>';
-  print_r ($studentsInGroup);
-  echo '</pre>';*/
-
-
  echo Html::beginForm(['add-students', 'post', [
      'groupId' => $groupId
  ]]);

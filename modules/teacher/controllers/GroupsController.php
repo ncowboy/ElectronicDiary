@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StudentsInGroup;
 use yii\web\ForbiddenHttpException;
+use app\models\StudentsSearch;
+
 
 /**
  * GroupsController implements the CRUD actions for Groups model.
@@ -107,9 +109,21 @@ class GroupsController extends Controller
         if($model->teachers->user->id !== $user->id) {
            throw new ForbiddenHttpException('Вам запрещено просматривать группы, не закрепленные за вами');
         }else{
-              return $this->render('group-content', [
-              'model' => $model
-               ]);  
+          $studentsSearchModel = new StudentsSearch();
+          $studentsDataProvider = $studentsSearchModel->search(Yii::$app->request->queryParams);
+          $studentsDataProvider->setPagination(['pageSize' => 15]);
+          $studentsInGroup = StudentsInGroup::findAll(['group_id' => $id]);
+          $ids = [];
+          foreach ($studentsInGroup as $student){
+            array_push($ids, $student['student_id']);
+          }
+          $studentsDataProvider->query->having(['id' => $ids]);
+
+          return $this->render('group-content', [
+            'model' => $model,
+            'studentsSearchModel' => $studentsSearchModel,
+            'studentsDataProvider' => $studentsDataProvider,
+          ]);
         }  
     }
     

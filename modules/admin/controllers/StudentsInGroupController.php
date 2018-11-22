@@ -98,7 +98,7 @@ class StudentsInGroupController extends Controller
     {
         if (\Yii::$app->request->post()) {
             $response = Yii::$app->request->post();
-            foreach($response['students'] as $key => $value){      
+            foreach($response['students'] as $key => $value){
                 $this->findModel($response['group'], $response['students'][$key])->delete();
             };
         }

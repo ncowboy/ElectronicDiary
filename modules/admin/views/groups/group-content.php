@@ -77,15 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
              ?>
         </div>  
   </div>  
-  <div class="col-md-12">  
-    <?php 
-    //  $searchModel = new \app\models\StudentsInGroup;
-     /*  $dataProvider = new \yii\data\ActiveDataProvider([
-          'query' => $searchModel->find()->where(['group_id' => $model->id]),
-          'pagination' => [
-              'pageSize' => 10
-          ]
-       ]);*/
+  <div class="col-md-12 group-grid" id="group-id-<?= $model->id ?>">
+    <?php
        echo GridView::widget([
             'id' => 'kv-grid-students',
             'dataProvider' => $studentsDataProvider,
@@ -162,7 +155,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-body">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Выберите учеников</h3>
+    </div>
+    <div class="modal-body">
        <?php
           Pjax::begin();
             echo $this->render('students-list', [
