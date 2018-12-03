@@ -12,10 +12,6 @@ use yii\helpers\Url;
 
 $this->title = 'Уроки';
 $this->params['breadcrumbs'][] = $this->title;
-
-$groups = \app\models\Groups::find()->all();
-$groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
-
 ?>
 <div class="lessons-index">
 
@@ -37,7 +33,6 @@ $groupItems = ArrayHelper::map($groups, 'id', 'groupCode');
                  ],
                 [
                       'attribute' =>  'groupCode',
-                      'filter' => $groupItems,
                       'value' => function ($model) {
                         return Html::a(Html::encode($model->groupCode), Url::to([
                           'groups/view', 'id' => $model->group_id

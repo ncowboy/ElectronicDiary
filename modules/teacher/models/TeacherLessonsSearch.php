@@ -15,20 +15,6 @@ class TeacherLessonsSearch extends LessonsSearch
     /**
      * @inheritdoc
      */
-    
-    public $groupCode;
-    
-    public function rules()
-    {
-        return [
-            [['id', 'group_id'], 'integer'],
-            [['theme', 'groupCode'], 'safe'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -55,8 +41,6 @@ class TeacherLessonsSearch extends LessonsSearch
         return;
     }
 
-    
-    $attribute = "user_roles.$attribute";
 
     if ($partialMatch) {
         $query->andWhere(['like', $attribute, $value]);
@@ -74,25 +58,29 @@ class TeacherLessonsSearch extends LessonsSearch
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        
-        $dataProvider->setSort([
+
+      $dataProvider->setSort([
         'attributes' => [
-            
-            'datetime' => [
-                'asc' => ['datetime' => SORT_ASC],
-                'desc' => ['datetime' => SORT_DESC]
-            ],
-            'theme' => [
-                'asc' => ['theme' => SORT_ASC],
-                'desc' => ['theme' => SORT_DESC]
-            ],
-            'groupCode' => [
-                'asc' => ['id' => SORT_ASC],
-                'desc' => ['id' => SORT_DESC],
-            ],
+
+          'datetime' => [
+            'asc' => ['datetime' => SORT_DESC],
+            'desc' => ['datetime' => SORT_ASC]
+          ],
+          'theme' => [
+            'asc' => ['theme' => SORT_ASC],
+            'desc' => ['theme' => SORT_DESC]
+          ],
+          'subjectAlias' => [
+            'asc' => ['subjects.alias' => SORT_ASC],
+            'desc' => ['subjects.alias' => SORT_DESC]
+          ],
+          'groupCode' => [
+            'asc' => ['groups.building_id' => SORT_ASC, 'groups.subject_id' => SORT_ASC, 'group_types.type_alias' => SORT_ASC, 'groups.id' => SORT_ASC],
+            'desc' => ['groups.building_id' => SORT_DESC, 'groups.subject_id' => SORT_DESC, 'group_types.type_alias' => SORT_DESC, 'groups.id' => SORT_DESC],
+          ],
         ],
-            'defaultOrder' => ['datetime' => SORT_ASC]
-    ]);
+        'defaultOrder' => ['datetime' => SORT_ASC]
+      ]);
 
         $this->load($params);
 

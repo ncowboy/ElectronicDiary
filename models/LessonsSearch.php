@@ -17,12 +17,13 @@ class LessonsSearch extends Lessons
      */
     
     public $groupCode;
-    
+    public $subjectAlias;
+
     public function rules()
     {
         return [
             [['id', 'group_id'], 'integer'],
-            [['theme', 'groupCode'], 'safe'],
+            [['theme', 'groupCode', 'subjectAlias'], 'safe'],
         ];
     }
 
@@ -55,9 +56,6 @@ class LessonsSearch extends Lessons
         return;
     }
 
-    
-    $attribute = "user_roles.$attribute";
-
     if ($partialMatch) {
         $query->andWhere(['like', $attribute, $value]);
     } else {
@@ -86,9 +84,13 @@ class LessonsSearch extends Lessons
                 'asc' => ['theme' => SORT_ASC],
                 'desc' => ['theme' => SORT_DESC]
             ],
+            'subjectAlias' => [
+                'asc' => ['subjects.alias' => SORT_ASC],
+                'desc' => ['subjects.alias' => SORT_DESC]
+            ],
             'groupCode' => [
-                'asc' => ['id' => SORT_ASC],
-                'desc' => ['id' => SORT_DESC],
+              'asc' => ['groups.building_id' => SORT_ASC, 'groups.subject_id' => SORT_ASC, 'group_types.type_alias' => SORT_ASC, 'groups.id' => SORT_ASC],
+              'desc' => ['groups.building_id' => SORT_DESC, 'groups.subject_id' => SORT_DESC, 'group_types.type_alias' => SORT_DESC, 'groups.id' => SORT_DESC],
             ],
         ],
             'defaultOrder' => ['datetime' => SORT_ASC]
@@ -97,9 +99,7 @@ class LessonsSearch extends Lessons
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            $query->joinWith(['groups'])->joinWith(['subjects']);
+            $query->joinWith(['group']);
             return $dataProvider;
         }
 
@@ -112,9 +112,28 @@ class LessonsSearch extends Lessons
 
         $query->andFilterWhere(['like', 'datetime', $this->datetime])
             ->andFilterWhere(['like', 'theme', $this->theme]);
-        
-    
-    $query->andWhere('lessons.group_id LIKE "%' . $this->groupCode . '%"');
+
+        $query->joinWith(['group' => function ($q) {
+          $q->where('groups.id LIKE "%' . $this->group_id . '%"');
+        }])
+          ->join('LEFT JOIN', 'group_types', 'groups.group_type_id = group_types.id')
+          ->join('LEFT JOIN', 'subjects', 'groups.subject_id = subjects.id');
+
+        $query->andWhere('CONCAT(
+                            IF (groups.building_id < 10, 
+                                CONCAT (0, groups.building_id), groups.building_id),
+                            ".", 
+                            IF (groups.subject_id < 10, 
+                                CONCAT (0, groups.subject_id), groups.subject_id), 
+                            "-", 
+                            group_types.type_alias, 
+                            "-", 
+                            IF (groups.id < 10, 
+                                CONCAT (0, groups.id), groups.id)
+                            ) 
+                        LIKE "%' . $this->groupCode . '%"');
+
+        $query->andWhere('subjects.alias LIKE "%' . $this->subjectAlias . '%"');
         return $dataProvider;
     }
 }
