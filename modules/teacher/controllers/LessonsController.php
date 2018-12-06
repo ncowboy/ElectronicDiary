@@ -6,7 +6,7 @@ use Yii;
 use app\models\Lessons;
 use app\models\Groups;
 use app\models\Teachers;
-use app\modules\teacher\models\TeacherLessonsSearch;
+use app\models\LessonsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -53,8 +53,15 @@ class LessonsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TeacherLessonsSearch();
+        $searchModel = new LessonsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $teacher = Teachers::findOne(['user_id' => Yii::$app->user->id]);
+        $groups = Groups::findAll(['teacher_id' => $teacher->id]);
+        $ids = [];
+        if(isset($groups)){
+          foreach($groups as $group) {array_push($ids, $group['id']);}
+        }
+        $dataProvider->query->andWhere(['IN', 'group_id', $ids]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
