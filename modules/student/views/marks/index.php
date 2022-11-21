@@ -75,9 +75,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Оценки'];
 
   <?= GridView::widget([
     'dataProvider' => $dataProvider,
-    'showPageSummary' => true,
     'pjax' => true,
     'striped' => false,
+    'responsive' => false,
     'krajeeDialogSettings' => ['useNative' => true],
     'formatter' => ['class' => 'yii\i18n\Formatter', 'nullDisplay' => 'б/о'],
     'summary' => "Показано с <strong>{begin}</strong> по <strong>{end}</strong> из <strong>{totalCount}</strong>",
