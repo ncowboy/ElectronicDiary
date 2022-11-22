@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
-use dosamigos\ckeditor\CKEditor;
 use yii\helpers\FileHelper;
 use rmrevin\yii\fontawesome\FA;
 
@@ -13,13 +12,19 @@ if(is_dir($dir)) {
 $files = FileHelper::findFiles($dir);
 }
 
+$this->registerJs("CKEDITOR.plugins.addExternal('autolink', '/autolink/plugin.js', '');");
+
 ?>
 <div class="lessons-update-homework">
   <div class="col-md-8 <?php if ($action=='add'):?> col-md-offset-2 <?php endif; ?>">  
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
     <?= $form->field($model, 'hw_text')->textarea([
         'rows' => '20'
-    ])->label('')->widget(CKEditor::className())
+    ])->label('')->widget('dosamigos\ckeditor\CKEditor', [
+        'clientOptions' => [
+            'extraPlugins' => 'autolink',
+            ]
+    ]);
 ; ?>
     <?= $form->field($model, 'hw_files[]')->fileInput(['multiple' => true])->widget(FileInput::className(), [
       'language' => 'ru',
@@ -35,7 +40,7 @@ $files = FileHelper::findFiles($dir);
           'browseIcon' => '<i class="fa fa-lg fa-folder-open"></i> ',
           'browseLabel' => 'Выбрать...',
           'allowedFileExtensions' => ['jpg','png','jpeg', 'gif', 'pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt',
-           'pptx', 'pps', 'ppsx' ],
+           'pptx', 'pps', 'ppsx', 'zip', '7z', 'rar', 'gz'],
     ],
         
     ])->label('');?> 
