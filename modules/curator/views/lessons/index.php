@@ -43,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                  'theme',
                  [
                    'attribute' => 'homework',
-                   'value' => function($model){
-                     return !isset($model->hw_text) ? '' :
+                   'value' => function(\app\models\Lessons $model){
+                     return !$model->hasHomework() ? '' :
                          Html::a('просмотр', Url::to(['/curator/lessons/homework', 'id' => $model->id])) ;
                    },
                      'format' => 'raw',   

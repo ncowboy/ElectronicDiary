@@ -46,8 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                  'theme',
                  [
                    'attribute' => 'homework',
-                   'value' => function($model){
-                     return !isset($model->hw_text) ? 
+                   'value' => function(\app\models\Lessons $model){
+                     return !$model->hasHomework() ?
                           Html::a(' добавить', Url::to(['/admin/lessons/add-homework', 'id' => $model->id])):
                          Html::a('просмотр', Url::to(['/admin/lessons/homework', 'id' => $model->id])) . 
                              ' / ' . Html::a('редактировать', Url::to(['/admin/lessons/homework-update', 'id' => $model->id])) ;

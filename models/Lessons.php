@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "lessons".
@@ -125,6 +126,8 @@ class Lessons extends \yii\db\ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
+        // Если изменилась группа, удаляем из урока учеников из старой группы
+
         if ($changedAttributes['group_id'] !== (int)$this->group_id) {
 
             $studentToDelete = Students::find()->select('id')->where([
@@ -140,6 +143,19 @@ class Lessons extends \yii\db\ActiveRecord
             ]);
 
         }
+    }
+
+    /**
+     * Проверяет, есть ли для урока домашняя работа (текст или приложенный файл)
+     * @return bool
+     */
+    public function hasHomework()
+    {
+        $dir = 'uploads/hw/lesson' . $this->id;
+        if (is_dir($dir)) {
+            $files = FileHelper::findFiles($dir);
+        }
+        return isset($files) || isset($model->hw_text);
     }
 
 }
