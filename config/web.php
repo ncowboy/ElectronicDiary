@@ -96,6 +96,9 @@ $config = [
         'class' => '\kartik\datecontrol\Module'
     ]
     ],
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset'
+    ]
 ];
 
 if (YII_ENV_DEV) {

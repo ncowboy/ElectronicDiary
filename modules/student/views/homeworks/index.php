@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Домашние задания'];
     'panel'=>[
       'type'=>'primary', 
       'heading'=> 'Мои домашние задания',
-      'footer' => false
+      //'footer' => false
       ],
    'toolbar' => false,
    'columns' => [
