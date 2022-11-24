@@ -155,7 +155,7 @@ class Lessons extends \yii\db\ActiveRecord
         if (is_dir($dir)) {
             $files = FileHelper::findFiles($dir);
         }
-        return isset($files) || isset($model->hw_text);
+        return isset($files) || isset($this->hw_text);
     }
 
 }
