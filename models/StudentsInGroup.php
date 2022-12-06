@@ -62,7 +62,7 @@ class StudentsInGroup extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Groups::className(), ['id' => 'group_id']);
     }
-    
+
     public function getGroupCode()
     {
         return $this->group->getGroupCode();
@@ -76,31 +76,35 @@ class StudentsInGroup extends \yii\db\ActiveRecord
         return $this->hasOne(Students::className(), ['id' => 'student_id']);
     }
 
-    public function getUser(){
-      return $this->hasOne(Users::className(), ['id' => $this->student->user_id]);
+    public function getUser()
+    {
+        return $this->hasOne(Users::className(), ['id' => $this->student->user_id]);
     }
-    
+
     public function getStudentFullName()
     {
         return $this->student->user->userFullName;
     }
-    
+
     public function getStudentPhone()
     {
         return $this->student->phone_number;
     }
-    
+
     public function getStudentEmail()
     {
         return $this->student->user->email;
     }
-    
-    public function getStudentGroupsList(){
+
+    public function getStudentGroupsList()
+    {
         return $this->hasMany(Students::className(), ['student_id' => 'id'])
             ->viaTable('students_in_group', ['group_id' => 'id']);
     }
-      //При добавлении ученика в группу добавляем его во все уроки группы
-    public function afterSave($insert, $changedAttributes) {
+
+    //При добавлении ученика в группу добавляем его во все уроки группы
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
             $studentCreateDate = $this->student->user->created_at;
@@ -113,7 +117,7 @@ class StudentsInGroup extends \yii\db\ActiveRecord
             foreach ($lessonsArr as $value) {
                 array_push($lessonsIds, $value['id']);
             }
-            if(isset($lessonsIds)){
+            if (isset($lessonsIds)) {
                 foreach ($lessonsIds as $value) {
                     $model = new StudentsInLesson();
                     $model->student_id = $this->student_id;
@@ -121,28 +125,34 @@ class StudentsInGroup extends \yii\db\ActiveRecord
                     $model->save();
                 }
             }
-        }   
-    }
-     //При удалении ученика из группы удаляем его изо всех уроков группы
-    public function beforeDelete() {
-        parent::beforeDelete();
-        $lessons = Lessons::findAll(['group_id' => $this->group_id]);
-        $lessonsArr = ArrayHelper::toArray($lessons, [
-        'app\models\Lessons' => ['id']
-        ]);
-        $lessonsIds = [];
-        foreach ($lessonsArr as $value) {
-        array_push($lessonsIds, $value['id']);
         }
-        if(isset($lessonsIds)){
-            foreach ($lessonsIds as $value) {
-            $model = StudentsInLesson::findOne(['student_id' => $this->student_id, 'lesson_id' => $value]);
-            $model->delete();
+    }
+
+    /**
+     * При удалении ученика из группы удаляем его изо всех уроков группы
+     * @return bool
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function beforeDelete()
+    {
+        parent::beforeDelete();
+
+        $lessonIds = Lessons::find()->where(['group_id' => $this->group_id])->column();
+
+        if (isset($lessonIds)) {
+            foreach ($lessonIds as $value) {
+                if ($model = StudentsInLesson::findOne([
+                    'student_id' => $this->student_id,
+                    'lesson_id' => $value
+                ])) {
+                    $model->delete();
                 }
             }
-            return TRUE;
-        
         }
+        return TRUE;
+
+    }
 }
 
 
